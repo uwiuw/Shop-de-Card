@@ -1,0 +1,207 @@
+/* 
+    Document   : style
+    Created on : Dec 21, 2011, 10:37:43 AM
+    Author     : haidar
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+body {  
+    margin:0px; padding:0px;  
+    background-color:#f6f6f6;  
+}  
+
+#main {  
+    background-color:#f6f6f6;  
+}
+
+.container {  
+    position: relative;
+    width:1020px;  
+    margin:0 auto;  
+}  
+
+#top_nav{
+    float:left;
+
+}
+.top_nav_left{
+    float:left;
+    background:url(../images/top_nav_left.png) no-repeat; 
+    width:10px;  
+    height:19px;  
+}
+.top_nav_center{
+    float:left;
+    background:url(../images/top_nav_center.png) repeat-x; 
+    width:995px;  
+    height:19px;  
+
+}
+.top_nav_right{
+    float:left;
+    background:url(../images/top_nav_right.png) no-repeat; 
+    width:10px;  
+    height:19px;  
+}
+
+.nav_top{
+    float: right;
+    color: #fff;
+}
+#logo{
+    float:left;
+
+}
+.top_left{
+    float:left;
+    background:url(../images/top_left.png) repeat-y; 
+    width:10px;  
+    height:149px; 
+
+}
+.top_center{
+    float:left;
+    background:url(../images/logo.png)  no-repeat; 
+    width:995px;  
+    height:149px;  
+
+}
+.top_right{
+    float:left;
+    background:url(../images/top_right.png) repeat-y; 
+    width:10px;  
+    height:149px;
+
+}
+#search_bar{
+    float:left; 
+}
+.search_bar_left{
+    float:left;
+    background:url(../images/search_bar_left.png) no-repeat; 
+    width:10px;  
+    height:32px;  
+}
+.search_bar_center{
+    float:left;
+    background:url(../images/search_bar_center.png) repeat-x; 
+    width:995px;  
+    height:32px;  
+
+}
+.search_bar_right{
+    float:left;
+    background:url(../images/search_bar_right.png) no-repeat; 
+    width:10px;  
+    height:32px;  
+}
+ol, ul{
+    list-style: none;
+}
+.side_menu{
+    padding:20px;
+    position: absolute;
+}
+#main_product{
+    float: left;
+}
+.product_left{
+    float:left;
+    background:url(../images/product_left.png) repeat-y; 
+    width: 8px;
+    height: 381px;
+}
+.product_center{
+    float:left;
+    background-color: #ebecf1;
+    width: 999px;
+    height: 381px;
+
+}
+.product_right{
+    float:left;
+    background:url(../images/product_right.png) no-repeat; 
+    width: 8px;
+    height: 381px;
+
+}
+
+#items{
+    float: left;
+    
+}
+.items_left{
+    float:left;
+    background:url(../images/items_left.png) repeat-y; 
+    width: 8px;
+    height: 461px;
+    
+}
+.items_center{
+    float:left;
+    background-color: #fff;
+    width: 999px;
+    height: 461px;
+    
+}
+.items_right{
+    float:left;
+    background:url(../images/items_right.png) repeat-y; 
+    width: 8px;
+    height: 461px;
+    
+}
+
+#bottom{
+    float: left; 
+}
+.bottom_left{
+    float:left;
+    background:url(../images/bottom_left.png) repeat-y  #000; 
+    width: 8px;
+    height: 216px;
+}
+.bottom_center{
+    float:left;
+    background:url(../images/bottom_center.png) repeat-x #000;
+    width: 999px;
+    height: 216px;
+}
+.bottom_right{
+    float:left;
+    background:url(../images/bottom_right.png) repeat-y  #000; 
+    width: 8px;
+    height: 216px;  
+}
+#footer {  
+    clear: left;
+    color:white;  
+}  
+.footer_left{
+    float:left;
+    background:url(../images/footer_left.png) repeat-y  #000; 
+    width: 8px;
+    height: 62px;
+}
+.footer_center{
+    float:left;
+    background:url(../images/footer_center.png) repeat-x #000;
+    width: 999px;
+    height: 62px;
+}
+.footer_right{
+    float:left;
+    background:url(../images/footer_right.png) repeat-y  #000; 
+    width: 8px;
+    height: 62px;  
+}
