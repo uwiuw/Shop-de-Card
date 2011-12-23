@@ -9,6 +9,112 @@ function get_tag_condition($condition, $pre="AND") {
     } return false;
 }
 
+function createfoldername($string) {
+    $string = mb_strtolower($string, 'utf-8');
+    $regexp = '/( |g)/iU';
+    // $regexp = '/( |å|ø|æ|Å|Ø|Æ|Ã¥|Ã¸|Ã¦|Ã…|Ã˜|Ã†)/iU';
+    $replace_char = '_';
+    $data = preg_replace($regexp, $replace_char, $string);
+    return $data;
+}
+
+/*
+ * This will replace non English to similar letter in English
+ *
+ */
+
+function createdirname($string) {
+
+    $forbidden = array(" ", "å", "Å", "ø", "Ø", "æ", "Æ", "ã…", "ã˜", "ã†", "ã¥", "ã¸", "ã¦");
+    // order is space, å, Å,ø, Ø,æ, Æ, and Å, Ø, Æ, å,ø,æ
+    $normal = array("_", "aa", "aa", "o", "o", "ae", "ae", "aa", "o", "ae", "aa", "o", "ae");
+    $string = str_replace($forbidden, $normal, $string);
+    $data = mb_strtolower($string, 'utf-8');
+    return $data;
+}
+
+function create_path($folder) {
+    // create dir if not exists
+    $folder = explode("/", $folder);
+    $mkfolder = "";
+    //sets the complete directory path
+    for ($i = 0; isset($folder[$i]); $i++) {
+        $mkfolder .= $folder[$i] . '/';
+        if (!is_dir($mkfolder)) {
+            mkdir("$mkfolder");
+            mkdir("$mkfolder/thumbnails");
+        }
+    }
+}
+
+function recursive_remove_directory($directory, $empty=FALSE) {
+    // if the path has a slash at the end we remove it here
+    if (substr($directory, -1) == '/') {
+        $directory = substr($directory, 0, -1);
+    }
+
+    // if the path is not valid or is not a directory ...
+    if (!file_exists($directory) || !is_dir($directory)) {
+        // ... we return false and exit the function
+        return FALSE;
+
+        // ... if the path is not readable
+    } elseif (!is_readable($directory)) {
+        // ... we return false and exit the function
+        return FALSE;
+
+        // ... else if the path is readable
+    } else {
+
+        // we open the directory
+        $handle = opendir($directory);
+
+        // and scan through the items inside
+        while (FALSE !== ($item = readdir($handle))) {
+            // if the filepointer is not the current directory
+            // or the parent directory
+            if ($item != '.' && $item != '..') {
+                // we build the new path to delete
+                $path = $directory . '/' . $item;
+
+                // if the new path is a directory
+                if (is_dir($path)) {
+                    // we call this function with the new path
+                    // you need to change to $this->recursive_remove_directory($path);
+                    // in controller.
+                    recursive_remove_directory($path);
+
+                    // if the new path is a file
+                } else {
+                    // we remove the file
+                    unlink($path);
+                }
+            }
+        }
+        // close the directory
+        closedir($handle);
+
+        // if the option to empty is not set to true
+        if ($empty == FALSE) {
+            // try to delete the now empty directory
+            if (!rmdir($directory)) {
+                // return false if not possible
+                return FALSE;
+            }
+        }
+        // return success
+        return TRUE;
+    }
+}
+
+function id_clean($id, $size=11) {
+    return intval(substr($id, 0, $size));
+}
+
+function db_clean($string, $size=255) {
+    return xss_clean((substr($string, 0, $size)));
+}
+
 function id_user() {
     return $_SESSION['bid_user_s'];
 }
@@ -47,13 +153,22 @@ function get_now() {
     return date('Y-m-d H:i:s');
 }
 
-function get_local_no($phone) {
-    $clean_no = preg_replace('/[^0-9]/', '', $phone);
-    $local_code = substr($clean_no, 0, 3);
-    if (preg_match("/" . $_SESSION['local_no'] . "/i", $local_code))
-        return substr($clean_no, 3, 100);
-    else
-        return $clean_no;
+function dohash($str, $type = 'sha1') {
+    if ($type == 'sha1') {
+        if (!function_exists('sha1')) {
+            if (!function_exists('mhash')) {
+                require_once(BASEPATH . 'libraries/Sha1' . EXT);
+                $SH = new CI_SHA;
+                return $SH->generate($str);
+            } else {
+                return bin2hex(mhash(MHASH_SHA1, $str));
+            }
+        } else {
+            return sha1($str);
+        }
+    } else {
+        return md5($str);
+    }
 }
 
 function price_format($price) {
@@ -73,6 +188,7 @@ function date_formating($date) {
         return strftime('%d-%b-%y', $dated);
     }
 }
+
 function max_broken_date() {
     $sum = strtotime(date("Y-m-d", strtotime(date("Y-m-d"))) . "-9 days");
     $maxbrokendate = date('Y-m-d', $sum);
