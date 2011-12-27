@@ -1,9 +1,9 @@
 
 <h2><?php echo $title;?></h2>
-<p><?php echo anchor("categories/admin/create", "Create new category");?> | <?php echo anchor("categories/admin/export","Export");?></p>
+<p><?php echo anchor("categories/create", "Create new category");?> | <?php echo anchor("categories/export","Export");?></p>
 <?php
 if ($this->session->flashdata('message')){
-	echo "<div class='status_box'>".$this->session->flashdata('message')."</div>";
+	echo "<div class='status_box success'>".$this->session->flashdata('message')."</div>";
 }
 
 if (count($categories)){
@@ -17,16 +17,16 @@ if (count($categories)){
 		echo "<td>".$list['name']."</td>\n";
 
 		echo "<td align='center'>";
-		echo anchor('categories/admin/changeCatStatus/'.$list['category_id'],$list['status'], array('class' => $list['status']));
+		echo anchor('categories/changeCatStatus/'.$list['category_id'],$list['status'], array('class' => $list['status']));
 		echo "</td>\n";
 
 		// echo "<td align='center'>".$list['status']."</td>\n";
 
 		echo "<td align='center'>".$list['parentid']."</td>\n";
 		echo "<td align='center'>";
-		echo anchor('categories/admin/edit/'.$list['category_id'],'edit');
+		echo anchor('categories/edit/'.$list['category_id'],'edit');
 		echo " | ";
-		echo anchor('categories/admin/delete/'.$list['category_id'],'delete', array('class' => 'delete_link'));
+		echo anchor('categories/delete/'.$list['category_id'],'delete', array('class' => 'delete_link'));
 		echo "</td>\n";
 		echo "</tr>\n";
 	}

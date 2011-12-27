@@ -26,11 +26,11 @@ if (count($orders)){
 		echo "<td align='center'>".$list['payment_date']."</td>\n";
 		echo "<td align='center'>".$list['city']."</td>\n";
 		echo "<td align='center'>";
-		echo anchor('orders/admin/paid/'.$list['order_id'],'paid');
+		echo anchor('orders/paid/'.$list['order_id'],'paid');
 		echo " | ";
-		echo anchor('orders/admin/delivered/'.$list['order_id'],'delivered');
+		echo anchor('orders/delivered/'.$list['order_id'],'delivered');
 		echo " | ";
-		echo anchor('orders/admin/details/'.$list['order_id'],'details');
+		echo anchor('orders/details/'.$list['order_id'],'details');
 		echo "</td>\n";
 		echo "</tr>\n";
 	}

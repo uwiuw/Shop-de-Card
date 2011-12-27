@@ -13,6 +13,7 @@ class Webshop extends Shop_Controller {
         // you need to change webshop_lang $lang['webshop_folder'] = 'webshop';
         // according to your folder name.
         $webshop = $this->lang->line('webshop_folder');
+        $page = $this->mpages->getPagePath($webshop);
         //echo 'we='.$webshop;exit;
         $featureimages = $this->mproducts->getFrontFeature($webshop);
 
@@ -22,7 +23,7 @@ class Webshop extends Shop_Controller {
         $catname = "Slideshow";
         $slideimages = $this->mproducts->getFeatureProducts($catname);
         $data['slides'] = $slideimages;
-
+        $data['content'] = 'cart/products'; // Select view to display
         $data['images'] = $featureimages;
         $data['title'] = $page['name'];
         $data['module'] = lang('webshop_folder');
@@ -62,6 +63,12 @@ class Webshop extends Shop_Controller {
         $data['category'] = $cat;
         $data['module'] = lang('webshop_folder');
         $this->template->load($this->_container, 'category', $data);
+    }
+
+    // show cart
+    function cart(){
+        $data['cart'] = 'cart';
+        $this->template->load($this->_container, 'cart', $data);
     }
 
     function product($id) {
@@ -255,18 +262,18 @@ class Webshop extends Shop_Controller {
             $pw = $this->input->post('password');
             $this->mcustomers->verifyCustomer($e, $pw);
             if (isset($_SESSION['customer_id'])) {
-                $this->session->set_flashdata('info', lang('success'));
-                //flashMsg('info', lang('login_logged_in'));
+                //$this->session->set_flashdata('info', lang('success'));
+                flashMsg('message', 'Success login');
                 //echo 'success';exit;
                 redirect(lang('webshop_folder') . '/', 'refresh');
             }
             //echo 'failed';exit;
-            //flashMsg('info', lang('login_email_pw_incorrect'));
-            $this->session->set_flashdata('info', lang('incorrect'));
+            flashMsg('message', 'Login incorrect');
+            //$this->session->set_flashdata('info', lang('incorrect'));
             redirect(lang('webshop_folder') . '/login', 'refresh');
         }
-        $data['title'] = lang('webshop_shop_name') . " | " . "Customer Login";
-        $data['module'] = lang('webshop_folder');
+        $data['title'] =  "Customer Login";
+        //$data['module'] = lang('webshop_folder');
         $this->template->load($this->_container, 'customerlogin', $data);
     }
 
@@ -295,7 +302,7 @@ class Webshop extends Shop_Controller {
             $fields['email'] = lang('webshop_email');
             $fields['name'] = lang('subscribe_name');
             $fields['recaptcha_response_field'] = 'Recaptcha';
-
+            $this->_generate_captcha('test');
             $this->form_validation->set_fields($fields);
 
             if ($this->form_validation->run() == FALSE) {
@@ -350,8 +357,49 @@ class Webshop extends Shop_Controller {
             }
         }
     }
+    function insert(){
+        $data = array(
+               'id'      => 'sku_123ABC',
+               'qty'     => 1,
+               'price'   => 39.95,
+               'name'    => 'T-Shirt',
+               'options' => array('Size' => 'L', 'Color' => 'Red')
+            );
 
-    function cart($productid=0) {
+        $this->cart->insert($data);
+        print_r($this->cart->contents());
+    }
+    function add_cart_item(){
+            $id = $this->input->post('product_id');
+            if($this->cart_model->validate_add_cart_item($id) == TRUE){
+            
+                    // Check if user has javascript enabled
+                    if($this->input->post('ajax') != '1'){
+                        //echo 'test';exit;
+                            redirect('webshop/index'); // If javascript is not enabled, reload the page with new data
+                    }else{
+                            echo 'true'; // If javascript is enabled, return true, so the cart gets updated
+                    }
+            }
+
+	}
+
+    function update_cart(){
+            $this->cart_model->validate_update_cart();
+            redirect('webshop');
+    }
+
+    function show_cart(){
+            $this->load->view('webshop/cart');
+            //$this->load->view('webshop');
+    }
+
+    function empty_cart(){
+            $this->cart->destroy();
+            redirect('webshop');
+    }
+    // No use
+    function _cart($productid=0) {
         $shippingprice = $this->shippingprice();
         $data['shippingprice'] = $shippingprice['shippingprice'];
         if ($productid > 0) {
@@ -363,23 +411,25 @@ class Webshop extends Shop_Controller {
 
             if (isset($_SESSION['cart'])) {
                 $data['module'] = lang('webshop_folder');
-                $this->load->view($this->_container, $data);
+                $this->template->load($this->_container, 'shoppingcart', $data);
             } else {
                 //flashMsg('info', lang('orders_no_item_yet'));
-                // $this->session->set_flashdata('msg',lang('orders_no_item_yet'));
+                $this->session->set_flashdata('msg',"empty");
                 $data['module'] = lang('webshop_folder');
                 $this->template->load($this->_container, 'shoppingcart', $data);
             }
         }
     }
-
-    function ajax_cart() {
+    
+    // No use
+    function _ajax_cart() {
         // this is called by assets/js/shopcustomtools.js
         // this is used when a customer click a update button in /index.php/webcart page
         $this->morders->updateCartAjax($this->input->post('ids'));
     }
 
-    function ajax_cart_remove() {
+    // No use
+    function _ajax_cart_remove() {
         // this is called by assets/js/shopcustomtools.js
         // this is used when a customer click a delete button in /index.php/webcart page
         $this->morders->removeLineItem($this->input->post('id'));
@@ -491,7 +541,7 @@ class Webshop extends Shop_Controller {
         $fields['city'] = lang('orders_post_code');
         $fields['post_code'] = lang('orders_city');
 
-        $this->form_validation->set_fields($fields);
+        $this->form_validation->set_rules($fields);
 
         $rules['customer_first_name'] = 'trim|required|min_length[3]|max_length[20]';
         $rules['customer_last_name'] = 'trim|required|min_length[3]|max_length[20]';

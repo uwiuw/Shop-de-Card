@@ -2,7 +2,7 @@
       <h1><?php echo $title;?></h1>
       <br />
 <?php 
-	if($this->data['customer_status']==1){
+	if(isset($_SESSION['customer_first_name'])){
 		echo "<h2>".lang('customer_login_enjoy_shopping')."</h2>";
 		echo "<br /><h2>".anchor( lang('webshop_folder').'/checkout', lang('general_check_out') )."</h2><br />" ;
 		
@@ -12,9 +12,9 @@
 ?>
 
 <?php
-	if ($this->session->flashdata('msg')){ 
+	if ($this->session->flashdata('message')){ 
 		echo "<div class='status_box'>";
-		echo $this->session->flashdata('msg');
+		echo $this->session->flashdata('message');
 		echo "</div>";
 	}
 ?>

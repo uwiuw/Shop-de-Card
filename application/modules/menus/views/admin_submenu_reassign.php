@@ -17,7 +17,7 @@ echo "</br >";
 </ul>
 
 <?php
-echo form_open('menus/admin/reassign');
+echo form_open('menus/reassign');
 unset($menus[$menu['menu_id']]);
 echo form_dropdown('menus',$menus);
 echo form_hidden('id', $menu['id'] );

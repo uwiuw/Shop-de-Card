@@ -1,7 +1,7 @@
 <h2><?php echo $title;?></h2>
 
 <?php
-echo form_open('menus/admin/edit');
+echo form_open('menus/edit');
 echo "\n<p><label for='menuname'>Name</label><br/>\n";
 $data = array('name'=>'name','menu_id'=>'menuname','size'=>25, 'value' => $menu['name']);
 echo form_input($data) ."</p>\n";

@@ -3,7 +3,7 @@
 <h2><?php echo $title;?></h2>
 <div id="create_edit">
 <?php
-echo form_open('categories/admin/edit');
+echo form_open('categories/edit');
 
 
 

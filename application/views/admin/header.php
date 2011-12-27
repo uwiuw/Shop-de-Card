@@ -1,30 +1,25 @@
 <?php
-/*By Haidar Mar'ie 
- *Email = coder5@ymail.com 
-header */
+/* By Haidar Mar'ie
+ * Email = coder5@ymail.com
+  header */
+$check_url = $this->uri->segment(1);
+$current_url = current_url();
+$active = 'id="menu-active"';
 ?>
-<?php
-        foreach ($this->nav_list as $key => $menu){
-				echo "\n<li class='menuone'>\n";
-				echo anchor ($this->lang->line('webshop_folder')."/pages/".$menu['page_uri'], $menu['name']);
-						if (count($menu['children'])){
-								echo "\n<ul>";
-								foreach ($menu['children'] as $subkey => $submenu){
-								  echo "\n<li class='menutwo'>\n";
-								  echo anchor($this->lang->line('webshop_folder')."/pages/".$submenu['page_uri'],$submenu['name']);
-												if (count($submenu['children'])){
-																echo "\n<ul>";
-																foreach ($submenu['children'] as $subkey => $subsubname){
-																		echo "\n<li class='menuthree'>\n";
-																		echo anchor($this->lang->line('webshop_folder')."/cat/",$subsubname['name']);
-																		echo "\n</li>";
-																}
-																echo "\n</ul>";
-												}
-								  echo "\n</li>";
-								}
-						echo "\n</ul>";
-						}
-				echo "\n</li>\n";
-		}
-        ?>
+
+<div id="menu" class="box">
+
+    <ul class="box f-right">
+        <li><a href="<?php echo site_url();?>"><span><strong>Visit Site &raquo;</strong></span></a></li>
+    </ul>
+
+    <ul class="box">
+        <li <?php echo $check_url =='categories'?$active:''?>><a href="<?php echo site_url(); ?>/categories"><span>Categories</span> </a></li>
+        <li <?php echo $check_url =='products'?$active:''?>><a href="<?php echo site_url(); ?>/products"><span>Products</span></a></li>
+        <li <?php echo $check_url =='customers'?$active:''?>><a href="<?php echo site_url(); ?>/customers"><span>Customers</span></a></li>
+        <li <?php echo $check_url =='orders'?$active:''?>><a href="<?php echo site_url(); ?>/orders"><span>Orders</span></a></li>
+        <li <?php echo $check_url =='menus'?$active:''?>><a href="<?php echo site_url(); ?>/menus"><span>Menu</span></a></li>
+        <li <?php echo $check_url =='pages'?$active:''?>><a href="<?php echo site_url(); ?>/pages"><span>Pages</span></a></li>
+    </ul>
+
+</div> 

@@ -2,7 +2,7 @@
 <div id="create_edit">
 <h2><?php echo $title;?></h2>
 <?php
-echo form_open_multipart('products/admin/edit/'.$product['product_id']);
+echo form_open_multipart('products/edit/'.$product['product_id']);
 
 echo "\n<p><label for='parent'>Category</label><br/>\n";
 echo form_dropdown('category_id',$categories,$product['category_id']) ."</p>\n";

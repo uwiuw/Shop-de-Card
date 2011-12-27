@@ -17,7 +17,7 @@ if (count($orderdetails)){
 		echo "<td align='center'>".$list['quantity']."</td>\n";
 		echo "<td align='center'>".$list['price']."</td>\n";
 		echo "<td align='center'>";
-		echo anchor('orders/admin/deleteitem/'.$list['order_id'].'/'.$list['order_item_id'],'delete');
+		echo anchor('orders/deleteitem/'.$list['order_id'].'/'.$list['order_item_id'],'delete');
 		echo "</td>\n";
 		echo "</tr>\n";
 	}

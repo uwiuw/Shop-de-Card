@@ -2,7 +2,7 @@
 <div id="create_edit">
 <?php
 
-echo form_open('pages/admin/create');
+echo form_open('pages/create');
 echo "\n<p><label for='pname'>Name</label><br/>\n";
 $data = array('name'=>'name','page_id'=>'pname','size'=>25);
 echo form_input($data) ."</p>\n";

@@ -1,7 +1,9 @@
 <h2><?php echo $title;?></h2>
-<p><?php echo anchor("customers/admin/create", "Create new customer");?>
+<p><?php echo anchor("customers/create", "Create new customer");?>
 <?php
-
+if ($this->session->flashdata('message')){
+	echo "<div class='status_box'>".$this->session->flashdata('message')."</div>";
+}
 if (count($customers)){
 	echo "<table id='tablesorter' class='tablesorter' border='1' cellspacing='0' cellpadding='3' width='100%'>\n";
 	echo "<thead>\n<tr valign='top'>\n";
@@ -17,9 +19,9 @@ if (count($customers)){
 		echo "<td align='center'>".$list['address']."</td>\n";
 		echo "<td align='center'>".$list['city']."</td>\n";
 		echo "<td align='center'>";
-		echo anchor('customers/admin/edit/'.$list['customer_id'],'edit');
+		echo anchor('customers/edit/'.$list['customer_id'],'edit');
 		echo " | ";
-		echo anchor('customers/admin/delete/'.$list['customer_id'],'delete');
+		echo anchor('customers/delete/'.$list['customer_id'],'delete');
 		echo "</td>\n";
 		echo "</tr>\n";
 	}

@@ -9,6 +9,20 @@ function get_tag_condition($condition, $pre="AND") {
     } return false;
 }
 
+function css_dir(){
+    return base_url().'assets/css/';
+}
+
+function js_dir(){
+    return base_url().'assets/js/';
+}
+
+function img_dir(){
+    return base_url().'assets/images/';
+}
+function backend_img_dir(){
+    return base_url().'assets/backend_img/';
+}
 function createfoldername($string) {
     $string = mb_strtolower($string, 'utf-8');
     $regexp = '/( |g)/iU';
@@ -116,24 +130,13 @@ function db_clean($string, $size=255) {
 }
 
 function id_user() {
-    return $_SESSION['bid_user_s'];
+    return $_SESSION['cid_user_'];
 }
 
 function user_name() {
-    return $_SESSION['bsname_s'];
+    return $_SESSION['csname'];
 }
 
-function level() {
-    return $_SESSION['blevel'];
-}
-
-function is_reminder() {
-    return $_SESSION['is_reminder'];
-}
-
-function shift() {
-    return $_SESSION['shift'];
-}
 
 function basic_path() {
     $fr_loc = explode('/', $_SERVER['SCRIPT_NAME']);
@@ -367,5 +370,39 @@ function alpha2num($a) {
     for ($i = 0; $i < $l; $i++)
         $n = $n * 26 + ord($a[$i]) - 0x40;
     return $n - 1;
+}
+
+function create_breadcrumb() {
+    $CI = &get_instance();
+    $i = 1;
+    $uri = $CI->uri->segment($i);
+    $link = '';
+
+    while ($uri != '') {
+        $prep_link = '';
+        for ($j = 1; $j <= $i; $j++) {
+            $prep_link .= $CI->uri->segment($j) . '/';
+        }
+
+        if ($CI->uri->segment($i + 1) == '') {
+            $link.='» <a href="' . site_url($prep_link) . '"><b>' . $CI->uri->segment($i) . '</b></a> ';
+        } else {
+            $link.='» <a href="' . site_url($prep_link) . '">' . $CI->uri->segment($i) . '</a> ';
+        }
+
+        $i++;
+        $uri = $CI->uri->segment($i);
+    }
+    $link .= '';
+    return $link;
+}
+
+/* 
+ * Create flash message more like displaystatus() and flashdata
+ */
+
+function flashMsg($type= NULL, $message=NULL) {
+    $CI = &get_instance();
+    return $CI->session->set_flashdata($type, $message);
 }
 ?>

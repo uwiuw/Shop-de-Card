@@ -8,7 +8,7 @@
     <h2><?php echo $title; ?></h2>
     <div id="create_edit">
 <?php
-echo form_open('categories/admin/create');
+echo form_open('categories/create');
 echo "\n<p><label for='catname'>Name</label><br/>\n";
 $data = array('name' => 'name', 'id' => 'catname', 'size' => 25);
 echo form_input($data) . "</p>\n";

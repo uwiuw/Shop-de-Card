@@ -1,17 +1,14 @@
 <h2><?php echo $title;?></h2>
 <p>
 <?php
-echo anchor("pages/admin/create", "Create new page");
+echo anchor("pages/create", "Create new page");
 ?>
 </p>
 <?php
-/*
- This is how CI display flash data. but we don't use it. 
 
 if ($this->session->flashdata('message')){
 	echo "<div class='status_box'>".$this->session->flashdata('message')."</div>";
 }
-*/
 if (count($pages)){
 	echo "<table id='tablesorter' class='tablesorter' border='1' cellspacing='0' cellpadding='3' width='100%'>\n";
 	echo "<thead>\n<tr valign='top'>\n";
@@ -33,12 +30,12 @@ if (count($pages)){
 		}
 		echo "</td>";
 		echo "<td align='center'>";
-		echo anchor('pages/admin/changePageStatus/'.$list['page_id'],$list['status'], array('class' => $list['status']));
+		echo anchor('pages/changePageStatus/'.$list['page_id'],$list['status'], array('class' => $list['status']));
 		echo "</td>\n";
 		echo "<td align='center'>";
-		echo anchor('pages/admin/edit/'.$list['page_id'],'edit');
+		echo anchor('pages/edit/'.$list['page_id'],'edit');
 		echo " | ";
-		echo anchor('pages/admin/delete/'.$list['page_id'],'delete');
+		echo anchor('pages/delete/'.$list['page_id'],'delete');
 		echo "</td>\n";
 		echo "</tr>\n";
 	}

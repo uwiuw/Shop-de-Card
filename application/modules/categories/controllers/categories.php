@@ -1,9 +1,10 @@
 <?php
 
-class Admin extends MX_Controller {
+class Categories extends Admin_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->check();
         $this->load->model('mcats');
         // Your own constructor code
     }
@@ -11,10 +12,8 @@ class Admin extends MX_Controller {
     function index() {
         $data['title'] = "Manage Categories";
         $data['categories'] = $this->mcats->getAllCategories();
-        //$data['header'] = $this->lang->line('backendpro_access_control');
-        //$data['page'] = $this->config->item('backendpro_template_admin') . "admin_cat_home";
         $data['module'] = 'categories';
-        $this->load->view('admin_cat_home', $data);
+        $this->template->load($this->_container, 'admin_cat_home', $data);
     }
 
     function create() {
@@ -28,10 +27,11 @@ class Admin extends MX_Controller {
             $folder = 'assets/images/' . $folder;
             create_path($folder);
 
-            // we used to use like this. $this->session->set_flashdata('message','Category created');
+            // we used to use like this. flashMsg('message','Category created');
             // now we are using Bep's flashMsg function to show messages.
             //flashMsg('success', $this->lang->line('userlib_category_created'));
-            redirect('categories/admin/index', 'refresh');
+            flashMsg('message', 'Category created');
+            redirect('categories/', 'refresh');
         } else {
             $data['title'] = "Create Category";
             $data['categories'] = $this->mcats->getTopCategories();
@@ -40,12 +40,8 @@ class Admin extends MX_Controller {
             // Set breadcrumb
             //$this->bep_site->set_crumb($this->lang->line('userlib_category_create'), 'categories/admin/create');
 
-            $data['header'] = $this->lang->line('backendpro_access_control');
-
-            // This is how BackendPro do
-            $data['page'] = $this->config->item('backendpro_template_admin') . "admin_cat_create";
             $data['module'] = 'categories';
-            $this->load->view('admin_cat_create', $data);
+            $this->template->load($this->_container, 'admin_cat_create', $data);
         }
     }
 
@@ -55,8 +51,9 @@ class Admin extends MX_Controller {
         if ($this->input->post('name')) {
             $this->mcats->updateCategory();
 
+            flashMsg('message', 'Category Edited');
             //flashMsg('success', $this->lang->line('userlib_category_updated'));
-            redirect('categories/admin/index', 'refresh');
+            redirect('categories/', 'refresh');
         } else {
             //$id = $this->uri->segment(4);
             $data['title'] = "Edit Category";
@@ -66,26 +63,26 @@ class Admin extends MX_Controller {
             $data['categories'] = $this->mcats->getTopCategories();
             $data['right'] = 'admin/category_right';
             if (!count($data['category'])) {
-                redirect('admin/categories/index', 'refresh');
+                redirect('categories', 'refresh');
             }
 
             // Set breadcrumb
             //$this->bep_site->set_crumb($this->lang->line('userlib_category_edit'), 'categories/admin/edit');
 
-            $data['header'] = $this->lang->line('backendpro_access_control');
             $data['module'] = 'categories';
-            $this->load->view('admin_cat_edit', $data);
+            $this->template->load($this->_container, 'admin_cat_edit', $data);
         }
     }
 
-    function changeCatStatus($id){
-		//$id = $this->uri->segment(4);
-		$this->mcats->changeCatStatus($id);
+    function changeCatStatus($id) {
+        //$id = $this->uri->segment(4);
+        $this->mcats->changeCatStatus($id);
 
-		//flashMsg('success',$this->lang->line('userlib_category_status'));
-		redirect('categories/admin/index','refresh');
-  	}
-        
+        flashMsg('message', 'Category Change Status');
+        //flashMsg('success',$this->lang->line('userlib_category_status'));
+        redirect('categories/', 'refresh');
+    }
+
     function delete($id) {
 
         $cat = $this->mcats->getCategory($id);
@@ -97,12 +94,13 @@ class Admin extends MX_Controller {
         $orphans = $this->mcats->checkOrphans($id);
         if (count($orphans)) {
             $this->session->set_userdata('orphans', $orphans);
-            redirect('categories/admin/reassign/' . $id, 'refresh');
+            redirect('categories/reassign/' . $id, 'refresh');
         } else {
             $this->mcats->deleteCategory($id);
 
+            flashMsg('message', 'Category Deleted');
             //flashMsg('success', $this->lang->line('userlib_category_deleted'));
-            redirect('categories/admin/index', 'refresh');
+            redirect('categories/index', 'refresh');
         }
     }
 

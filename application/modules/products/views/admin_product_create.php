@@ -3,7 +3,7 @@
 <div id="create_edit">
 <h2><?php echo $title;?></h2>
 <?php
-echo form_open_multipart('products/admin/create')."\n";
+echo form_open_multipart('products/create')."\n";
 
 echo "<p><label for='parent'>Category</label><br/>\n";
 echo form_dropdown('category_id',$categories) ."</p>\n";

@@ -1,4 +1,4 @@
-<?php print displayStatus();?>
+<?php //print displayStatus();?>
 
 <h1><?php echo lang('orders_plz_confirm'); ?></h1>
 <p class="padnmgn"><?php echo lang('orders_confirm_before'); ?>
@@ -21,21 +21,21 @@ echo "</h2><br />"; }
 <h2>Order details</h2><br />
 <?php echo form_open(lang('webshop_folder')."/emailorder"); ?>
 <?php
-
-if (isset($_SESSION['cart'])){
+echo 'Total '.$this->cart->total();
+if ($this->cart->total()){
 	$count = 1;
-	foreach ($_SESSION['cart'] as $PID => $row){	
-		echo "<p class='padnmgn'><b>". $row['count'] . " " . $row['name'] . " @ " . $row['price']."</b></p><br/>\n";
-		echo "<input type='hidden' name='item_name_".$count."' value='".$row['name']."'/>\n";
-		echo "<input type='hidden' name='item_quantity_".$count."' value='".$row['count']."'/>\n";
-		echo "<input type='hidden' name='item_price_".$count."' value='".$row['price']."'/>\n";
+	foreach($this->cart->contents() as $items){
+		echo "<p class='padnmgn'><b>". $items['qty'] . " " . $items['name'] . " @ " . $items['price']."</b></p><br/>\n";
+		echo "<input type='hidden' name='item_name_".$count."' value='".$items['name']."'/>\n";
+		echo "<input type='hidden' name='item_quantity_".$count."' value='".$items['qty']."'/>\n";
+		echo "<input type='hidden' name='item_price_".$count."' value='".$items['price']."'/>\n";
 		echo "<input type='hidden' name='item_currency_".$count."' value='NOK'/>\n";
 		echo "<input type='hidden' name='ship_method_name_".$count."' value='Posten'/>\n";
 		echo "<input type='hidden' name='ship_method_price_".$count."' value='".$shippingprice."'/>\n";
 	}
 }
-if(isset($_SESSION['totalprice'])){
-$totalprice = $_SESSION['totalprice'];
+if(!$this->cart->total()){
+$totalprice = $this->cart->total();
 $grandtotal = (int)$totalprice + $shippingprice ;
 echo "<p class='padnmgn'><b>". lang('orders_sub_total_nor').number_format($totalprice,2,'.',','). "</b></p>\n";
 }

@@ -1,5 +1,5 @@
 <h2><?php echo $title;?></h2>
-<p><?php echo anchor("menus/admin/create", "Create new menu");?> | <?php echo anchor("menus/admin/export","Export");?></p>
+<p><?php echo anchor("menus/create", "Create new menu");?> | <?php echo anchor("menus/export","Export");?></p>
 <?php
 if ($this->session->flashdata('message')){
 	echo "<div class='status_box'>".$this->session->flashdata('message')."</div>";
@@ -18,10 +18,10 @@ function generateRowsByLevel($level, &$output, $depth = 0) {
     foreach ($level as $row) {
         $output .= "<tr valign='top'>\n";
         $output .= "<td>". $row['menu_id']."</td>\n";
-        $output .= "<td class=\"" . $depthClassMapping[$depth] . "\"><a href=\"". site_url(). '/menus/admin/edit/' .  $row['menu_id'] . '">' . $row['name']."</a></td>\n";
+        $output .= "<td class=\"" . $depthClassMapping[$depth] . "\"><a href=\"". site_url(). '/menus/edit/' .  $row['menu_id'] . '">' . $row['name']."</a></td>\n";
        
 				$output .= "<td align='center'>";
-				$output .= anchor('menus/admin/changeMenuStatus/'.$row['menu_id'],$row['status'], array('class' => $row['status']));
+				$output .= anchor('menus/changeMenuStatus/'.$row['menu_id'],$row['status'], array('class' => $row['status']));
 				$output .= "</td>\n";
 			 
 			  //$output .= "<td align='center'>". $row['status']."</td>\n";
@@ -30,9 +30,9 @@ function generateRowsByLevel($level, &$output, $depth = 0) {
 				$output .= "<td class=\"" . $depthClassMapping[$depth] . "\" >". $row['order']."</td>\n";
 				$output .= "<td align='center'>". $row['page_uri']."</td>\n";
         $output .= "<td align='center'>";
-        $output .= anchor('menus/admin/edit/'. $row['menu_id'],'edit');
+        $output .= anchor('menus/edit/'. $row['menu_id'],'edit');
         $output .= " | ";
-        $output .= anchor('menus/admin/deleteMenu/'. $row['menu_id'],'delete', array('class' => 'delete_link', 'menu_id' => 'delete_link_'.$row['menu_id']));
+        $output .= anchor('menus/deleteMenu/'. $row['menu_id'],'delete', array('class' => 'delete_link', 'menu_id' => 'delete_link_'.$row['menu_id']));
         $output .= "</td>\n";
         $output .= "</tr>\n";
 

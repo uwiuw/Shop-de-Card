@@ -1,7 +1,7 @@
 <h2><?php echo $title;?></h2>
 
 <?php
-echo form_open('menus/admin/create');
+echo form_open('menus/create');
 echo "\n<p><label for='menuname'>Name</label><br/>\n";
 $data = array('name'=>'name','menu_id'=>'menuname','size'=>25);
 echo form_input($data) ."</p>\n";

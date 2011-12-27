@@ -1,8 +1,8 @@
 <h2><?php echo $title;?></h2>
-<p><?php echo anchor("products/admin/create", "Create new product");?> | <?php echo anchor("products/admin/export","Export");?></p>
+<p><?php echo anchor("products/create", "Create new product");?> | <?php echo anchor("products/export","Export");?></p>
 
 <?php
-echo form_open_multipart("products/admin/import");
+echo form_open_multipart("products/import");
 $data = array('name' => 'csvfile', 'size'=>15);
 echo form_upload($data);
 echo form_hidden('csvinit',true);
@@ -11,13 +11,11 @@ echo form_close();
 ?>
 
 <?php
-/* We not using this CI flashmsg
 if ($this->session->flashdata('message')){
 	echo "<div class='status_box'>".$this->session->flashdata('message')."</div>";
 }
-*/
 if (count($products)){
-	echo form_open("products/admin/batchmode");
+	echo form_open("products/batchmode");
 	echo "<p>Category: ". form_dropdown('category_id',$categories);
 	echo "&nbsp;";
 	$data = array('name'=>'grouping','size'=>'10');
@@ -38,7 +36,7 @@ if (count($products)){
 
 		echo "<td align='center'>";
                 $status = $list['status']=='1'?'Active':'InActive';
-		echo anchor('products/admin/changeProductStatus/'.$list['product_id'],$status, array('class' => $status));
+		echo anchor('products/changeProductStatus/'.$list['product_id'],$status, array('class' => $status));
 		echo "</td>\n";
 
 		// echo "<td align='center'>".$list['category_id']."</td>\n";
@@ -46,9 +44,9 @@ if (count($products)){
 		echo "<td align='center'>".$list['featured']."</td>\n";
 		echo "<td align='center'>".$list['price']."</td>\n";
 		echo "<td align='center'>";
-		echo anchor('products/admin/edit/'.$list['product_id'],'edit');
+		echo anchor('products/edit/'.$list['product_id'],'edit');
 		echo " | ";
-		echo anchor('products/admin/delete/'.$list['product_id'],'delete');
+		echo anchor('products/delete/'.$list['product_id'],'delete');
 		echo "</td>\n";
 		echo "</tr>\n";
 	}
