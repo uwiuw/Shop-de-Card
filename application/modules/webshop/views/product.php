@@ -10,7 +10,7 @@
     $imageinfo = $product['image'];
     $image = convert_image_path(base_url() . $imageinfo);
     echo "<img src='" . $image . "' border='0' align='left'/>\n";
-    echo "<div class=\"procont\"><h2>" . $product['name'] . "</h2>\n";
+    echo "<div class=\"product_buy\"><h2>" . $product['name'] . "</h2>\n";
     echo $product['shortdesc'] . "<br />\n";
     echo $product['longdesc'] . "\n";
     echo "<br />";

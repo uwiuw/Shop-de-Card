@@ -17,11 +17,10 @@ class Cart_model extends CI_Model {
 
         // Get the total number of items in cart
         $total = $this->cart->total_items();
-
+        //echo 'masuk';exit;
         // Retrieve the posted information
         $item = $this->input->post('rowid');
         $qty = $this->input->post('qty');
-
         // Cycle true all items and update them
         for ($i = 0; $i < $total; $i++) {
             // Create an array with the products rowid's and quantities.
@@ -32,6 +31,20 @@ class Cart_model extends CI_Model {
 
             // Update the cart with the new information
             $this->cart->update($data);
+        }
+    }
+
+    // Delete items
+    function validate_delete_item($id) {
+        $data = array(
+            'rowid' => $id,
+            'qty' => 0
+        );
+
+        if($this->cart->update($data)){
+            return TRUE;
+        } else {
+            return FALSE;
         }
     }
 

@@ -16,7 +16,7 @@
 </div>
 <div id="frontproducttable">
 
-<?php
+    <?php
         foreach ($images as $image) {
             $imageinfo = $image['thumbnail'];
             $thumbnail = convert_image_path($imageinfo);
@@ -28,10 +28,14 @@
             echo $image['name'] . "</a></span><br />\n";
             echo $image['shortdesc'] . "</div>\n";
             echo "<div class='vt ar'><b>" . lang('webshop_price') . "</b>: <span class='price'>" . lang('webshop_currency_symbol') . $image['price'] . "</span><br />\n";
-            echo '<a href="' . site_url() . "/" . lang('webshop_folder') . '/cart/' . $image['product_id'] . '"><p class="addtocart">' . lang('webshop_buy') . '</p></a></div>';
+            echo '</div>';
+            echo "<div class=\"product_buy\"> ";
+            echo "<input type='hidden' value='{$image["product_id"]}' name='product_id' /> ";
+            echo '<input type="button" value="Buy"  name="add" />';
+            echo "</div>";
             echo "\n</div>\n</div>\n";
         }
-?>
+    ?>
 
 </div>
 

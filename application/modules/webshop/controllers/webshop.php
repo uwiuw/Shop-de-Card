@@ -65,11 +65,7 @@ class Webshop extends Shop_Controller {
         $this->template->load($this->_container, 'category', $data);
     }
 
-    // show cart
-    function cart(){
-        $data['cart'] = 'cart';
-        $this->template->load($this->_container, 'cart', $data);
-    }
+   
 
     function product($id) {
         $product = $this->mproducts->getProduct($id);
@@ -272,7 +268,7 @@ class Webshop extends Shop_Controller {
             //$this->session->set_flashdata('info', lang('incorrect'));
             redirect(lang('webshop_folder') . '/login', 'refresh');
         }
-        $data['title'] =  "Customer Login";
+        $data['title'] = "Customer Login";
         //$data['module'] = lang('webshop_folder');
         $this->template->load($this->_container, 'customerlogin', $data);
     }
@@ -357,83 +353,100 @@ class Webshop extends Shop_Controller {
             }
         }
     }
-    function insert(){
+
+    function insert() {
         $data = array(
-               'id'      => 'sku_123ABC',
-               'qty'     => 1,
-               'price'   => 39.95,
-               'name'    => 'T-Shirt',
-               'options' => array('Size' => 'L', 'Color' => 'Red')
-            );
+            'id' => 'sku_123ABC',
+            'qty' => 1,
+            'price' => 39.95,
+            'name' => 'T-Shirt',
+            'options' => array('Size' => 'L', 'Color' => 'Red')
+        );
 
         $this->cart->insert($data);
         print_r($this->cart->contents());
     }
-    function add_cart_item(){
-            $id = $this->input->post('product_id');
-            if($this->cart_model->validate_add_cart_item($id) == TRUE){
-            
-                    // Check if user has javascript enabled
-                    if($this->input->post('ajax') != '1'){
-                        //echo 'test';exit;
-                            redirect('webshop/index'); // If javascript is not enabled, reload the page with new data
-                    }else{
-                            echo 'true'; // If javascript is enabled, return true, so the cart gets updated
-                    }
-            }
 
-	}
-
-    function update_cart(){
-            $this->cart_model->validate_update_cart();
-            redirect('webshop');
+    /*
+     *  show shopping cart details
+     */
+    
+    function cart() {
+        $data['cart'] = 'cart';
+        $data['title'] = 'Your Shopping Cart';
+        $this->template->load($this->_container, 'cart', $data);
     }
 
-    function show_cart(){
-            $this->load->view('webshop/cart');
-            //$this->load->view('webshop');
-    }
+    /*
+     *  Add item shopping cart using CodeIgniter Shopping Cart Class
+     */
+    
+    function add_cart_item() {
+        $id = $this->input->post('product_id');
+        if ($this->cart_model->validate_add_cart_item($id) == TRUE) {
 
-    function empty_cart(){
-            $this->cart->destroy();
-            redirect('webshop');
-    }
-    // No use
-    function _cart($productid=0) {
-        $shippingprice = $this->shippingprice();
-        $data['shippingprice'] = $shippingprice['shippingprice'];
-        if ($productid > 0) {
-            $fullproduct = $this->mproducts->getProduct($productid);
-            $this->morders->updateCart($productid, $fullproduct);
-            redirect(lang('webshop_folder') . '/product/' . $productid, 'refresh');
-        } else {
-            $data['title'] = lang('webshop_shop_name') . " | " . "Shopping Cart";
-
-            if (isset($_SESSION['cart'])) {
-                $data['module'] = lang('webshop_folder');
-                $this->template->load($this->_container, 'shoppingcart', $data);
+            // Check if user has javascript enabled
+            if ($this->input->post('ajax') != '1') {
+                //echo 'test';exit;
+                redirect('webshop/index'); // If javascript is not enabled, reload the page with new data
             } else {
-                //flashMsg('info', lang('orders_no_item_yet'));
-                $this->session->set_flashdata('msg',"empty");
-                $data['module'] = lang('webshop_folder');
-                $this->template->load($this->_container, 'shoppingcart', $data);
+                echo 'true'; // If javascript is enabled, return true, so the cart gets updated
             }
         }
     }
-    
-    // No use
-    function _ajax_cart() {
-        // this is called by assets/js/shopcustomtools.js
-        // this is used when a customer click a update button in /index.php/webcart page
-        $this->morders->updateCartAjax($this->input->post('ids'));
+
+    /*
+     *  Update shopping cart using CodeIgniter Shopping Cart Class
+     */
+
+    function update_cart() {
+        $this->cart_model->validate_update_cart();
+        redirect('webshop/cart');
     }
 
-    // No use
-    function _ajax_cart_remove() {
-        // this is called by assets/js/shopcustomtools.js
-        // this is used when a customer click a delete button in /index.php/webcart page
-        $this->morders->removeLineItem($this->input->post('id'));
+    /*
+     *  Update shopping cart using CodeIgniter Shopping Cart Class
+     */
+
+    function delete_item(){
+        $id = $this->input->post('rowid');
+       // echo $id;
+        //echo 'test';
+        if ($this->cart_model->validate_delete_item($id) == TRUE) {
+            //echo $id;
+            // Check if user has javascript enabled
+            if ($this->input->post('ajax') != '1') {
+                //echo 'test';exit;
+                redirect('webshop/index'); // If javascript is not enabled, reload the page with new data
+            } else {
+                echo 'true'; // If javascript is enabled, return true, so the cart gets updated
+            }
+        }
     }
+    /*
+     *  Show total cart
+     */
+    function total_cart(){
+        echo $this->cart->total();
+    }
+    /*
+     *  Show shopping cart using CodeIgniter Shopping Cart Class
+     */
+    
+    function show_cart() {
+        $this->load->view('webshop/cart');
+        //$this->load->view('webshop');
+    }
+
+    /*
+     *  Empty shopping cart using CodeIgniter Shopping Cart Class
+     */
+    
+    function empty_cart() {
+        $this->cart->destroy();
+        redirect('webshop');
+    }
+
 
     function shippingprice() {
         // You need to modify this. This is for Norwegian system. At the moment, if a max of individual product is more
@@ -574,9 +587,9 @@ class Webshop extends Shop_Controller {
              * 5. redirect to ordersuccess page and display thanks message
              *
              */
-            $totalprice = $_SESSION['totalprice'];
+            $totalprice = $this->cart->total();
 
-            $this->morders->enterorder($totalprice);
+            $this->morders->enterorder();
 
             //Create body of message by cleaning each field and then appending each name and value to it
 
@@ -636,8 +649,7 @@ class Webshop extends Shop_Controller {
 
     function ordersuccess() {
 
-        unset($_SESSION['cart']);
-        unset($_SESSION['totalprice']);
+        $this->cart->destroy();
         $data['title'] = lang('webshop_shop_name') . " | " . "Contact us";
         $data['module'] = lang('webshop_folder');
         $this->template->load($this->_container, 'ordersuccess', $data);

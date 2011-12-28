@@ -216,7 +216,7 @@ class Morders extends CI_Model {
         return number_format($number, 2, '.', ',');
     }
 
-    function enterorder($totalprice) {
+    function enterorder() {
 
         $data = array(
             'customer_last_name' => db_clean($this->input->post('customer_last_name')),
@@ -246,18 +246,18 @@ class Morders extends CI_Model {
 
         $data = array(
             'customer_id' => $customer_id,
-            'total' => $totalprice
+            'total' => $this->cart->total()
         );
         $this->db->set('order_date', 'NOW()', FALSE);
         $this->db->insert('order', $data);
         $order_id = $this->db->insert_id();
         $cart = $_SESSION['cart'];
-        foreach ($cart as $id => $product) {
+         foreach ($this->cart->contents() as $items){
             $data = array(
                 'order_id' => $order_id,
-                'product_id' => $id,
-                'quantity' => $product['count'],
-                'price' => $product['price']
+                'product_id' => $items['id'],
+                'quantity' => $items['qty'],
+                'price' => $items['price']
             );
             $this->db->insert('order_item', $data);
         }
