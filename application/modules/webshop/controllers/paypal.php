@@ -20,7 +20,7 @@ class Paypal extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		//$this->load->library('paypal_lib');
+		$this->load->library('Paypal_Lib');
 	}
 	
 	function index()
