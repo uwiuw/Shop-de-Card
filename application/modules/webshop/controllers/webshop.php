@@ -27,8 +27,8 @@ class Webshop extends Shop_Controller {
         $data['images'] = $featureimages;
         $data['title'] = $page['name'];
         $data['module'] = lang('webshop_folder');
-
-        $this->template->load($this->_container, 'frontpage', $data);
+        
+        $this->template->load($this->_home, 'frontpage', $data);
     }
 
     function cat($id) {

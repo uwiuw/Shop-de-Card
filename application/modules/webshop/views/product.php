@@ -18,6 +18,7 @@
     echo '<input type="submit" value="Buy" name="add" />';
     echo '<input type="hidden" name="product_id" value="' . $product['product_id'] . '" />';
     echo '<input type="hidden" name="qty" value="1" />';
+    echo '</div>'
     //echo '<p><a class="cartlinkbut" href="' . site_url() . "/" .
     //$this->lang->line('webshop_folder') . '/add_cart_item/' . $product['product_id'] .
     //'"><span class="addtocart addcart">' . $this->lang->line('webshop_buy') . '</span></a></p></div>';

@@ -18,12 +18,13 @@ class Shop_Controller Extends CI_Controller {
         $this->load->model('products/mproducts');
         $this->lang->load('webshop');
         // navigation
-        $nav = array();
-        $this->mmenus->generateTree($nav, $parentid = 0);
+        $nav = $this->mmenus->generateTree($nav, $parentid = 0);
+        
         $this->template->set('nav', $nav);
         $this->nav_list = $nav;
         // Set Container Template
         $this->_container = 'shop/container';
+        $this->_home = 'shop/home';
 
         // This part is used in all the pages so load it here
         // For customer login status

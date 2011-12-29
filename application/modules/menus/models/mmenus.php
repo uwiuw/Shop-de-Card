@@ -11,20 +11,13 @@ class MMenus extends CI_Model {
 
     function generateTree(&$tree, $parentid = 0) {
         $this->db->select('menu_id,name,shortdesc,status,parentid,page_uri,order');
-        $this->db->where('parentid', $parentid);
         $this->db->where('status', 'active');
         $this->db->order_by('order asc, parentid asc');
         $res = $this->db->get('menu');
         if ($res->num_rows() > 0) {
-            foreach ($res->result_array() as $r) {
-
-                // push found result onto existing tree
-                $tree[$r['menu_id']] = $r;
-                // create placeholder for children
-                $tree[$r['menu_id']]['children'] = array();
-                // find any children of currently found child
-                $this->generateTree($tree[$r['menu_id']]['children'], $r['menu_id']);
-            }
+            return $res->result_array();
+        } else {
+            return false;
         }
     }
 

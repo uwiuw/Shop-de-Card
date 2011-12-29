@@ -135,7 +135,7 @@ class MProducts extends CI_Model {
         $data = array();
         $this->db->where('featured', $feature);
         $this->db->where('status', 'active');
-        $this->db->LIMIT(9);
+        $this->db->LIMIT(4);
         $this->db->order_by('name', 'random');
         $Q = $this->db->get('product');
         if ($Q->num_rows() > 0) {
@@ -155,7 +155,7 @@ class MProducts extends CI_Model {
 	                   ON C.category_id = P.category_id
 	                   WHERE C.Name = '$catname'
 	                   AND P.status = 'active'
-	                   ORDER BY RAND()
+	                   ORDER BY RAND() LIMIT 4
 	                   ");
         if ($Q->num_rows() > 0) {
             foreach ($Q->result_array() as $row) {
