@@ -16,7 +16,7 @@
                     <div id="top_nav">
                         <div class="top_nav_left"></div>
                         <div class="top_nav_center">
-                            <div class="nav_top">Welcome User &nbsp; &nbsp; My Account | Logout</div>
+                            <div class="nav_top">Welcome User &nbsp; &nbsp; <span class="my_account">My Account &nbsp; |  &nbsp; Logout&nbsp;&nbsp;&nbsp;</span></div>
                         </div>
                         <div class="top_nav_right"></div>
                     </div>
@@ -25,7 +25,7 @@
                     <div id="logo">
                         <div class="top_left"></div>
                         <div class="top_center">
-                            <div class="cart"></div>
+                            <div class="cart">your cart</div> <div class="phone"></div>
                         </div>
                         <div class="top_right"></div>
                     </div>
@@ -34,38 +34,111 @@
                     <div id="search_bar">
                         <div class="search_bar_left"></div>
                         <div class="search_bar_center">
-                            <div class="search"></div>
+                            <div class="search">Search</div>
                         </div>
                         <div class="search_bar_right"></div>
                     </div>
 
                 </div>  
                 <!--Side Menu-->
-                    <ul class="side_menu">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="http://www.pixel2life.com">Pixel2life</a></li>
-                        <li><a href="http://www.hv-designs.co.uk">HV-Designs</a></li>
-                        <li><a href="http://www.sb-designs.co.uk">SB-Designs</a></li>
-                    </ul>
+
                 <!--main product-->
-                <div id="main_product">
+                <div class="main_product">
+                    <div class="leftbar">
+                        <div class="categories_left"></div>
+                        <div class="categories_center">
+                            <div class="categories">
+                                <div class="product_title"><div class="prod_cat">Product Categories</div></div>
+                                <ul class="cat">
+                                    <li>Categories 1</li>
+                                    <li>Categories 2</li>
+                                    <li>Categories 3</li>
+                                    <li>Categories 4</li>
+                                    <li>Categories 5</li>
+                                    <li>Categories 6</li>
+                                    <li>Categories 7</li>
+                                    <li>Categories 8</li>
+                                    <li>Categories 9</li>
+                                    <li>Categories 10</li>
+                                    <li>Categories 11</li>
+                                    <li>Categories 12</li>
+                                </ul>
+                                <div class="testi">
+                                    <p class="client">Client Testimonial</p>
+                                    <p class="testi_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                        Ut sit amet augue enim, id interdum arcu. Suspendisse vehicula, 
+                                        nisl sit amet ultricies aliquam.</p>
+
+                                    <p  class="testi_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                        Ut sit amet augue enim, id interdum arcu. Suspendisse vehicula, 
+                                        nisl sit amet ultricies aliquam.</p>
+                                    <div class="testi_bottom"></div>
+                                </div>
+                                <!--                                    <div class="testi_right"></div>-->
+
+                            </div>
+                        </div>
+                        <div class="categories_right"></div>
+                    </div>
+
+                    <!-- Product Main Highlight -->
                     <div class="product_left"></div>
-                    <div class="product_center"></div>
+                    <div class="product_center">
+                        <div class="prod_highlight">
+                            <p class="p_highlight">Lorem ipsum dolor sit amet</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                                Ut sit amet augue enim, id interdum arcu. Suspendisse vehicula, 
+                                nisl sit amet ultricies aliquam.</p>
+
+                            <a href="#" class="check_product_button">Check Product</a>
+                        </div>
+                    </div>
                     <div class="product_right"></div>
-                </div>
 
-                <!--items-->
-                <div id="items">
-                    <div class="items_left"></div>
-                    <div class="items_center"></div>
-                    <div class="items_right"></div>
-                </div>
+                    <!--items-->
+                    <div class="items">
 
-                <!--bottom-->
-                <div id="bottom">
-                    <div class="bottom_left"></div>
-                    <div class="bottom_center"></div>
-                    <div class="bottom_right"></div>
+                        <div class="items_left"></div>
+                        <div class="items_center">
+
+                            <div class="item_in"><h3>Item you might be interest in</h3></div>
+                            <div class="products">
+                                <div class="product_list">
+                                    <a href="klematis4_big.htm">
+                                        <img src="<?= img_dir() ?>spray.png" alt="Klematis" width="118" height="150" />
+                                    </a>
+                                    <div class="product_desc">Add a description of the image here</div>
+                                </div>
+                                <div class="product_list">
+                                    <a href="klematis4_big.htm">
+                                        <img src="<?= img_dir() ?>spray.png" alt="Klematis" width="118" height="150" />
+                                    </a>
+                                    <div class="product_desc">Add a description of the image here</div>
+                                </div>
+                                <div class="product_list">
+                                    <a href="klematis4_big.htm">
+                                        <img src="<?= img_dir() ?>spray.png" alt="Klematis" width="118" height="150" />
+                                    </a>
+                                    <div class="product_desc">Add a description of the image here</div>
+                                </div>
+                                <div class="product_list">
+                                    <a href="klematis4_big.htm">
+                                        <img src="<?= img_dir() ?>spray.png" alt="Klematis" width="118" height="150" />
+                                    </a>
+                                    <div class="product_desc">Add a description of the image here</div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="items_right"></div>
+                    </div>
+
+                    <!--bottom-->
+                    <div id="bottom">
+                        <div class="bottom_left"></div>
+                        <div class="bottom_center"></div>
+                        <div class="bottom_right"></div>
+                    </div>
                 </div>
 
             </div>  

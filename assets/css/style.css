@@ -18,6 +18,7 @@ root {
 body {  
     margin:0px; padding:0px;  
     background-color:#f6f6f6;  
+    font-family: Arial;
 }  
 
 #main {  
@@ -57,6 +58,11 @@ body {
 .nav_top{
     float: right;
     color: #fff;
+    font-size: 10pt;
+}
+.my_account{
+    font-weight: bold;
+    font-style: italic;
 }
 #logo{
     float:left;
@@ -71,10 +77,31 @@ body {
 }
 .top_center{
     float:left;
-    background:url(../images/logo.png)  no-repeat; 
+    background:url(../images/cherub_logo.png)  no-repeat #fff; 
     width:995px;  
     height:149px;  
 
+}
+.cart{
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    width: 295px;
+    height: 85px;
+    background-color: #eeeeee;
+    text-align: center;
+    text-transform: uppercase;
+    border: 1px solid #dddddd;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+.phone{
+    float: right;
+    margin-top: 100px;
+    margin-right: -300px;
+    background:url(../images/phone_no.png)  no-repeat; 
+    width:296px;  
+    height:57px;  
 }
 .top_right{
     float:left;
@@ -85,6 +112,14 @@ body {
 }
 #search_bar{
     float:left; 
+}
+.search{
+    float: right;
+    padding-top: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-style: italic;
+    color: #fff;
 }
 .search_bar_left{
     float:left;
@@ -105,14 +140,117 @@ body {
     width:10px;  
     height:32px;  
 }
+
+.leftbar{
+    position:absolute; 
+}
+.categories{
+    float:left; 
+    width:227px;  
+    height: auto;
+    border: 5px solid white;
+    background-color: #fff;
+}
+.product_title{
+    display: block;
+    height:28px;  
+    font-weight:bold;
+    background:url(../images/product_cat.png) repeat-x #000 ;
+}
+.prod_cat{
+    padding-left: 18px;
+    padding-top: 5px;
+    color: #FFF;
+    text-transform:uppercase;
+    font-size: 12pt;
+}
+.categories_center{
+    float:left;
+    display: block;
+    margin-top: -50px;
+    margin-left: 29px;
+    width:227px;  
+    height:30px;  
+}
+.categories_left{
+    float: left;
+    margin-left: 24px;
+    position:absolute; 
+    background:url(../images/category_left2.png)  no-repeat; 
+    width:10px; 
+    height: 692px;
+}
+.categories_right{
+    float: left;
+    margin-left: 266px;
+    display: block;
+    position:absolute; 
+    background:url(../images/category_right2.png) no-repeat; 
+    width:10px;  
+    height: 692px;
+}
+.testi{
+    float: left;
+    margin-left: 10px;
+    background-color: #eaebf0;
+    width: 208px;
+    border-right: 1px solid #c7c7c7;
+    border-left: 1px solid #c7c7c7;
+    border-top: 1px solid #c7c7c7;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.testi_right{
+    float: left;
+    background:url(../images/testi_right.png) no-repeat; 
+    width: 10px;
+    height: 311px;
+}
+p.testi_desc{
+    font-size: 10pt;
+    padding-left: 5px;
+}
+p.client{
+    font-family: TrojanPro;
+    font-size: 14pt;
+    padding-left: 5px;
+    text-transform:uppercase;
+    color: red;
+}
+
+.testi_bottom{
+    float: left;
+    background:url(../images/testi_bottom.png) no-repeat; 
+    display: block; 
+    width: 212px;
+    margin-left: -2px;
+    height: 16px;
+}
+ul.cat  {
+    margin-top: 5px;
+    margin-right: 5px;
+    padding: 0;
+    color: #929292; 
+    width: 230px;
+    font-size: 13pt;
+}
+ul.cat li:first-child {  
+    border-top: none;
+} 
+ul.cat li {  
+    padding-top: 5px;
+    padding-left:10px;
+    padding-bottom: 5px;
+    margin-left: 4px;
+    margin-right: 4px;
+    border-top: 1px solid #c8c8c8;
+} 
 ol, ul{
     list-style: none;
 }
-.side_menu{
-    padding:20px;
-    position: absolute;
-}
-#main_product{
+
+.main_product{
     float: left;
 }
 .product_left{
@@ -123,10 +261,56 @@ ol, ul{
 }
 .product_center{
     float:left;
-    background-color: #ebecf1;
+    display: block;
+    background:url(../images/spray_hand.jpg) no-repeat #ebecf1 right bottom; 
     width: 999px;
     height: 381px;
 
+}
+p.p_highlight{
+    margin-top: -5px;
+    font-size: 28px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.prod_highlight{
+    color: #575757;
+    float: left;
+    width: 500px;
+    height: 500px;
+    margin-left: 270px;
+    padding-top: 10px;
+}
+.products{
+    float: left;
+    border:1px solid #000;
+    width: auto;
+    margin-left: 275px;
+}
+.product_list  {
+    margin-top: 7px;
+    margin-bottom: 7px;
+    border-right:1px solid #000;
+    height:275px;
+    width:177px;
+    float:left;
+    text-align:center;
+}
+.product_list:last-child{
+    border-right: none;
+
+}
+
+.product_list img {
+    display:inline;
+    margin:3px;
+    border:1px solid #ffffff;
+}
+.product_desc{
+    text-align:center;
+    font-weight:normal;
+    width:120px;
+    margin:2px;
 }
 .product_right{
     float:left;
@@ -135,31 +319,53 @@ ol, ul{
     height: 381px;
 
 }
-
-#items{
+.check_product_button{
+    display: block;
+    position: absolute;
+    top: 510px;
+    background:url(../images/check_product_button.png) no-repeat;
+    width: 267px; height: 71px;
+    background-position: top;
+    text-indent: -9999px;
+}
+.testi_left{
+    background:url(../images/testi_left.png) no-repeat; 
+    display: block;
     float: left;
-    
+    border: 1px solid red;
+    width: 10px;
+    height: 311px;
+}
+.items{
+    float: left;
+
+}
+.item_in{
+    text-align: center;
+    color: #7a7a7a;
+    text-transform: uppercase;
+    margin-left:250px;
 }
 .items_left{
     float:left;
     background:url(../images/items_left.png) repeat-y; 
     width: 8px;
     height: 461px;
-    
+
 }
 .items_center{
     float:left;
     background-color: #fff;
     width: 999px;
     height: 461px;
-    
+
 }
 .items_right{
     float:left;
     background:url(../images/items_right.png) repeat-y; 
     width: 8px;
     height: 461px;
-    
+
 }
 
 #bottom{
