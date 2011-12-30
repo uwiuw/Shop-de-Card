@@ -18,8 +18,10 @@ class Shop_Controller Extends CI_Controller {
         $this->load->model('products/mproducts');
         $this->lang->load('webshop');
         // navigation
+        $cats = array();
+        $cats = $this->mcats->getAllCategories();
         $nav = $this->mmenus->generateTree($nav, $parentid = 0);
-        
+        $this->categories = $cats;
         $this->template->set('nav', $nav);
         $this->nav_list = $nav;
         // Set Container Template

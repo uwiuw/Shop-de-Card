@@ -13,13 +13,9 @@
         <link rel="stylesheet" media="screen,projection" type="text/css" href="<?php echo css_dir(); ?>mystyle.css" /> <!-- WRITE YOUR CSS CODE HERE -->
         <link rel="stylesheet" media="screen,projection" type="text/css" href="<?php echo css_dir(); ?>FlashStatus.css" /> <!-- WRITE YOUR CSS CODE HERE -->
         <script type="text/javascript" src="<?php echo js_dir(); ?>jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="<?php echo js_dir(); ?>switcher.js"></script>
-        <script type="text/javascript" src="<?php echo js_dir(); ?>toggle.js"></script>
         <script type="text/javascript" src="<?php echo js_dir(); ?>jquery-ui-1.8.16.custom.min.js"></script>
         <script type="text/javascript">
-	$(document).ready(function(){
-		$(".tabs > ul").tabs();
-	});
+	
         </script>
         <title><?= $title ?></title>
     </head>
@@ -61,7 +57,7 @@
                     <div class="padding box">
 
                         <!-- Logo (Max. width = 200px) -->
-                        <p id="logo"><a href="<?php echo base_url(); ?>"><img src="<?php echo backend_img_dir(); ?>/logo.gif" alt="Our logo" title="Visit Site" /></a></p>
+                        <p id="logo"><a href="<?php echo site_url(); ?>"><img src="<?php echo backend_img_dir(); ?>/cherub.png" alt="Our logo" title="Visit Site" /></a></p>
 
                         <!-- Search -->
                         <form action="#" method="get" id="search">

@@ -16,46 +16,13 @@
                 <?php $this->load->view('shop/header'); ?>
                 <!--main product-->
                 <div class="main_product">
-                    <div class="leftbar">
-                        <div class="categories_left"></div>
-                        <div class="categories_center">
-                            <div class="categories">
-                                <div class="product_title"><div class="prod_cat">Product Categories</div></div>
-                                <ul class="cat">
-                                    <li>Categories 1</li>
-                                    <li>Categories 2</li>
-                                    <li>Categories 3</li>
-                                    <li>Categories 4</li>
-                                    <li>Categories 5</li>
-                                    <li>Categories 6</li>
-                                    <li>Categories 7</li>
-                                    <li>Categories 8</li>
-                                    <li>Categories 9</li>
-                                    <li>Categories 10</li>
-                                    <li>Categories 11</li>
-                                    <li>Categories 12</li>
-                                </ul>
-                                <div class="testi">
-                                    <p class="client">Client Testimonial</p>
-                                    <p class="testi_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Ut sit amet augue enim, id interdum arcu. Suspendisse vehicula,
-                                        nisl sit amet ultricies aliquam.</p>
 
-                                    <p  class="testi_desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                        Ut sit amet augue enim, id interdum arcu. Suspendisse vehicula,
-                                        nisl sit amet ultricies aliquam.</p>
-                                    <div class="testi_bottom"></div>
-                                </div>
-                                <!--                                    <div class="testi_right"></div>-->
-
-                            </div>
-                        </div>
-                        <div class="categories_right"></div>
-                    </div>
+                    <!--Left Bar-->
+                    <?php $this->load->view('shop/left_bar'); ?>
 
                     <!-- Product Main Highlight -->
                     <div class="product_left"></div>
-                    <div class="product_center" style="background-image: url('');">
+                    <div class="product_center" style="background: url('') #fff;height: auto;">
                         <div class="prod_highlight">
                             <?= $contents ?>
                         </div>
@@ -69,31 +36,12 @@
                         <div class="items_center">
 
                             <div class="products">
-                                
+
                             </div>
 
                         </div>
                         <div class="items_right"></div>
                     </div>
 
-                    <!--bottom-->
-                    <div id="bottom">
-                        <div class="bottom_left"></div>
-                        <div class="bottom_center"></div>
-                        <div class="bottom_right"></div>
-                    </div>
-                </div>
-                <div id="dialog" style="display: none;" title="Product Buy">
-                    <p>Thanks you buy this product</p>
-                </div>
-            </div>
-        </div>
-        <div id="footer">
-            <div class="container">
-                <div class="footer_left"></div>
-                <div class="footer_center">Copyright <?= date('Y') ?></div>
-                <div class="footer_right"></div>
-            </div>
-        </div>  
-    </body>
-</html>
+                    <?php $this->load->view('shop/footer'); ?>
+                    

@@ -86,7 +86,9 @@ class Webshop extends Shop_Controller {
         $data['module'] = lang('webshop_folder');
         $this->template->load($this->_container, 'product', $data);
     }
-
+    function page($menu){
+        
+    }
     function pages($path) {
 
         if ($path == lang('webshop_folder')) {
@@ -115,7 +117,7 @@ class Webshop extends Shop_Controller {
     function contact() {
 
         $data['title'] = lang('webshop_shop_name') . " | " . "Contact us";
-        $data['cap_img'] = $this->_generate_captcha();
+        //$data['cap_img'] = $this->_generate_captcha();
         $data['module'] = lang('webshop_folder');
         $this->template->load($this->_container, 'contact', $data);
     }

@@ -1,117 +1,28 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * jQuery File Upload Plugin PHP Example 5.5
+ * https://github.com/blueimp/jQuery-File-Upload
+ *
+ * Copyright 2010, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
  */
 
-class Products extends Admin_Controller {
+error_reporting(E_ALL | E_STRICT);
+
+class Upload extends CI_Controller {
 
     private $options;
 
-    public function __construct($options=null) {
+    function __construct($options=null) {
         parent::__construct();
-
-        $this->check();
-        $this->load->model('mproducts');
-        $this->load->model('categories/mcats');
-        // Your own constructor code
-    }
-
-    function index() {
-        // Setting variables
-        $data['title'] = "Manage Products";
-        $data['products'] = $this->mproducts->getAllProducts();
-        $data['categories'] = $this->mcats->getCategoriesDropDown();
-        // we are pulling a header word from language file
-        $data['module'] = 'products';
-        $this->template->load($this->_container, 'admin_product_home', $data);
-    }
-
-    function create() {
-        // we are using TinyMCE in this page, so load it
-        //$this->bep_assets->load_asset_group('TINYMCE');
-
-        if ($this->input->post('name')) {
-            // fields are filled up so do the followings
-            $this->mproducts->insertProduct();
-            // CI way to set flashdata, but we are not using it
-            // flashMsg('message','Product created');
-            // we are using Bep function for flash msg
-            flashMsg('message', 'Product created');
-            redirect('products/', 'refresh');
-        } else {
-            // this must be the first time, so set variables
-            $data['title'] = "Create Product";
-            $data['categories'] = $this->mcats->getCategoriesDropDown();
-            // loading this for giving some instructions.f
-            //$this->bep_site->set_crumb($this->lang->line('userlib_product_create'),'products/create');
-            $data['module'] = 'products';
-            $this->template->load($this->_container, 'admin_product_create', $data);
-        }
-    }
-
-    function test() {
-        echo 'test';
-    }
-
-    function uploading() {
-        //echo 'test';
-        $data['title'] = "Manage Products";
-        $data['module'] = 'products';
-        $this->template->load($this->_container, 'upload', $data);
-    }
-
-    function edit($id=0) {
-        // we are using TinyMCE in edit as well
-        //$this->bep_assets->load_asset_group('TINYMCE');
-        if ($this->input->post('name')) {
-            // fields filled up so,
-            $this->mproducts->new_updateProduct();
-            // CI way to set flashdata, but we are not using it
-            // flashMsg('message','Product updated');
-            // we are using Bep function for flash msg
-            flashMsg('message', 'Product updated');
-            redirect('products/', 'refresh');
-        } else {
-            //$id = $this->uri->segment(4);
-            $data['title'] = "Edit Product";
-            // $data['main'] = 'admin_product_edit';
-            $data['product'] = $this->mproducts->getProduct($id);
-            $data['categories'] = $this->mcats->getCategoriesDropDown();
-            // I am not using colors and sizes any more. But they are available if you want to use them.
-            // I am loading product_right here which gives instructions.
-            //$data['right'] = 'admin/product_right';
-            if (!count($data['product'])) {
-                redirect('products/', 'refresh');
-            }
-            // 	Set breadcrumb
-            //$this->bep_site->set_crumb($this->lang->line('userlib_product_edit'),'products/edit');
-            //$data['header'] = $this->lang->line('backendpro_access_control');
-            $data['module'] = 'products';
-            $this->template->load($this->_container, 'admin_product_edit', $data);
-        }
-    }
-
-    function delete($id) {
-        $this->mproducts->deleteProduct($id);
-        flashMsg('message', 'Product deleted');
-        redirect('products', 'refresh');
-    }
-
-    function changeProductStatus($id) {
-        $this->mproducts->changeProductStatus($id);
-        flashMsg('message', 'Page status changed');
-        redirect('products', 'refresh');
-    }
-
-    public function uploaders($options=null) {
-        $script_url = site_url() . '/products/uploader';
-        //echo $script_url;
         $this->options = array(
-            'script_url' => $script_url,
-            'upload_dir' => basic_path() . 'assets/images/files/', //dirname(__FILE__) . '/files/',
-            'upload_url' => img_dir(), //$this->getFullUrl() . '/files/',
+            'script_url' => $this->getFullUrl() . '/' . basename(__FILE__),
+            'upload_dir' => dirname(__FILE__) . '/files/',
+            'upload_url' => $this->getFullUrl() . '/files/',
             'param_name' => 'files',
             // The php.ini settings upload_max_filesize and post_max_size
             // take precedence over the following max_file_size setting:
@@ -136,95 +47,26 @@ class Products extends Admin_Controller {
                   ),
                  */
                 'thumbnail' => array(
-                    'upload_dir' => basic_path() . 'assets/images/thumbnails/',
-                    'upload_url' => img_dir() . '/thumbnails/',
+                    'upload_dir' => dirname(__FILE__) . '/thumbnails/',
+                    'upload_url' => $this->getFullUrl() . '/thumbnails/',
                     'max_width' => 80,
                     'max_height' => 80
                 )
             )
         );
-
         if ($options) {
             $this->options = array_replace_recursive($this->options, $options);
         }
-        header('Pragma: no-cache');
-        header('Cache-Control: private, no-cache');
-        header('Content-Disposition: inline; filename="files.json"');
-        header('X-Content-Type-Options: nosniff');
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
-        header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
-
-        switch ($_SERVER['REQUEST_METHOD']) {
-            case 'OPTIONS':
-                break;
-            case 'HEAD':
-            case 'GET':
-                $this->get();
-                break;
-            case 'POST':
-                $this->post();
-                break;
-            case 'DELETE':
-                $this->delete_upload();
-                break;
-            default:
-                header('HTTP/1.1 405 Method Not Allowed');
-        }
     }
 
-    public function post() {
-        //
-        if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
-            return $this->delete_upload();
-        }
-        $upload = isset($_FILES[$this->options['param_name']]) ?
-                $_FILES[$this->options['param_name']] : null;
-        $info = array();
-        //print_r($this->options['param_name']);
-        if ($upload && is_array($upload['tmp_name'])) {
-            foreach ($upload['tmp_name'] as $index => $value) {
-                $info[] = $this->handle_file_upload(
-                                $upload['tmp_name'][$index],
-                                isset($_SERVER['HTTP_X_FILE_NAME']) ?
-                                        $_SERVER['HTTP_X_FILE_NAME'] : $upload['name'][$index],
-                                isset($_SERVER['HTTP_X_FILE_SIZE']) ?
-                                        $_SERVER['HTTP_X_FILE_SIZE'] : $upload['size'][$index],
-                                isset($_SERVER['HTTP_X_FILE_TYPE']) ?
-                                        $_SERVER['HTTP_X_FILE_TYPE'] : $upload['type'][$index],
-                                $upload['error'][$index]
-                );
-            }
-        } elseif ($upload || isset($_SERVER['HTTP_X_FILE_NAME'])) {
-            $info[] = $this->handle_file_upload(
-                            isset($upload['tmp_name']) ? $upload['tmp_name'] : null,
-                            isset($_SERVER['HTTP_X_FILE_NAME']) ?
-                                    $_SERVER['HTTP_X_FILE_NAME'] : (isset($upload['name']) ?
-                                            isset($upload['name']) : null),
-                            isset($_SERVER['HTTP_X_FILE_SIZE']) ?
-                                    $_SERVER['HTTP_X_FILE_SIZE'] : (isset($upload['size']) ?
-                                            isset($upload['size']) : null),
-                            isset($_SERVER['HTTP_X_FILE_TYPE']) ?
-                                    $_SERVER['HTTP_X_FILE_TYPE'] : (isset($upload['type']) ?
-                                            isset($upload['type']) : null),
-                            isset($upload['error']) ? $upload['error'] : null
-            );
-        }
-        header('Vary: Accept');
-        $json = json_encode($info);
-        $redirect = isset($_REQUEST['redirect']) ?
-                stripslashes($_REQUEST['redirect']) : null;
-        if ($redirect) {
-            header('Location: ' . sprintf($redirect, rawurlencode($json)));
-            return;
-        }
-        if (isset($_SERVER['HTTP_ACCEPT']) &&
-                (strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
-            header('Content-type: application/json');
-        } else {
-            header('Content-type: text/plain');
-        }
-        echo $json;
+    function getFullUrl() {
+        return
+        (isset($_SERVER['HTTPS']) ? 'https://' : 'http://') .
+        (isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] . '@' : '') .
+        (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : ($_SERVER['SERVER_NAME'] .
+                (isset($_SERVER['HTTPS']) && $_SERVER['SERVER_PORT'] === 443 ||
+                $_SERVER['SERVER_PORT'] === 80 ? '' : ':' . $_SERVER['SERVER_PORT']))) .
+        substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/'));
     }
 
     private function get_file_object($file_name) {
@@ -240,8 +82,8 @@ class Products extends Admin_Controller {
                             . rawurlencode($file->name);
                 }
             }
-            $file->delete_url = site_url('/products/delete_upload/')
-                    . '/' . rawurlencode($file->name);
+            $file->delete_url = $this->options['script_url']
+                    . '?file=' . rawurlencode($file->name);
             $file->delete_type = 'DELETE';
             return $file;
         }
@@ -257,7 +99,7 @@ class Products extends Admin_Controller {
 
     private function create_scaled_image($file_name, $options) {
         $file_path = $this->options['upload_dir'] . $file_name;
-        $new_file_path = basic_path() . 'assets/images/thumbnails/' . $file_name;
+        $new_file_path = $options['upload_dir'] . $file_name;
         list($img_width, $img_height) = @getimagesize($file_path);
         if (!$img_width || !$img_height) {
             return false;
@@ -445,9 +287,62 @@ class Products extends Admin_Controller {
         echo json_encode($info);
     }
 
-    public function delete_upload($file_name) {
+    public function post() {
+        if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
+            return $this->delete();
+        }
+        $upload = isset($_FILES[$this->options['param_name']]) ?
+                $_FILES[$this->options['param_name']] : null;
+        $info = array();
+        if ($upload && is_array($upload['tmp_name'])) {
+            foreach ($upload['tmp_name'] as $index => $value) {
+                $info[] = $this->handle_file_upload(
+                                $upload['tmp_name'][$index],
+                                isset($_SERVER['HTTP_X_FILE_NAME']) ?
+                                        $_SERVER['HTTP_X_FILE_NAME'] : $upload['name'][$index],
+                                isset($_SERVER['HTTP_X_FILE_SIZE']) ?
+                                        $_SERVER['HTTP_X_FILE_SIZE'] : $upload['size'][$index],
+                                isset($_SERVER['HTTP_X_FILE_TYPE']) ?
+                                        $_SERVER['HTTP_X_FILE_TYPE'] : $upload['type'][$index],
+                                $upload['error'][$index]
+                );
+            }
+        } elseif ($upload || isset($_SERVER['HTTP_X_FILE_NAME'])) {
+            $info[] = $this->handle_file_upload(
+                            isset($upload['tmp_name']) ? $upload['tmp_name'] : null,
+                            isset($_SERVER['HTTP_X_FILE_NAME']) ?
+                                    $_SERVER['HTTP_X_FILE_NAME'] : (isset($upload['name']) ?
+                                            isset($upload['name']) : null),
+                            isset($_SERVER['HTTP_X_FILE_SIZE']) ?
+                                    $_SERVER['HTTP_X_FILE_SIZE'] : (isset($upload['size']) ?
+                                            isset($upload['size']) : null),
+                            isset($_SERVER['HTTP_X_FILE_TYPE']) ?
+                                    $_SERVER['HTTP_X_FILE_TYPE'] : (isset($upload['type']) ?
+                                            isset($upload['type']) : null),
+                            isset($upload['error']) ? $upload['error'] : null
+            );
+        }
+        header('Vary: Accept');
+        $json = json_encode($info);
+        $redirect = isset($_REQUEST['redirect']) ?
+                stripslashes($_REQUEST['redirect']) : null;
+        if ($redirect) {
+            header('Location: ' . sprintf($redirect, rawurlencode($json)));
+            return;
+        }
+        if (isset($_SERVER['HTTP_ACCEPT']) &&
+                (strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false)) {
+            header('Content-type: application/json');
+        } else {
+            header('Content-type: text/plain');
+        }
+        echo $json;
+    }
+
+    public function delete() {
+        $file_name = isset($_REQUEST['file']) ?
+                basename(stripslashes($_REQUEST['file'])) : null;
         $file_path = $this->options['upload_dir'] . $file_name;
-        echo $this->options['upload_dir'];
         $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
         if ($success) {
             foreach ($this->options['image_versions'] as $version => $options) {
@@ -462,3 +357,32 @@ class Products extends Admin_Controller {
     }
 
 }
+/*
+$upload_handler = new UploadHandler();
+
+header('Pragma: no-cache');
+header('Cache-Control: private, no-cache');
+header('Content-Disposition: inline; filename="files.json"');
+header('X-Content-Type-Options: nosniff');
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Methods: OPTIONS, HEAD, GET, POST, PUT, DELETE');
+header('Access-Control-Allow-Headers: X-File-Name, X-File-Type, X-File-Size');
+
+switch ($_SERVER['REQUEST_METHOD']) {
+    case 'OPTIONS':
+        break;
+    case 'HEAD':
+    case 'GET':
+        $upload_handler->get();
+        break;
+    case 'POST':
+        $upload_handler->post();
+        break;
+    case 'DELETE':
+        $upload_handler->delete();
+        break;
+    default:
+        header('HTTP/1.1 405 Method Not Allowed');
+}
+ * 
+ */

@@ -77,17 +77,17 @@ body {
 }
 .top_center{
     float:left;
-    background:url(../images/cherub_logo.png)  no-repeat #fff; 
+    background: #fff;
     width:995px;  
     height:149px;  
 
 }
 .cart{
     float: right;
-    margin-top: 10px;
+    margin-top: 5px;
     margin-right: 10px;
     width: 295px;
-    height: 85px;
+    height: 80px;
     background-color: #eeeeee;
     text-align: center;
     text-transform: uppercase;
@@ -95,10 +95,19 @@ body {
     -moz-border-radius: 5px;
     border-radius: 5px;
 }
+.shop_cart{
+    width: 295px;
+    margin-top: 30px; 
+}
+.total_price{
+    color: red;
+    font-style: italic;
+    font-weight: bold;
+}
 .phone{
     float: right;
-    margin-top: 100px;
-    margin-right: -300px;
+    margin-top: 90px;
+    margin-right: -310px;
     background:url(../images/phone_no.png)  no-repeat; 
     width:296px;  
     height:57px;  
@@ -120,12 +129,26 @@ body {
     font-weight: bold;
     font-style: italic;
     color: #fff;
+    margin-right: 20px;
 }
 .search_bar_left{
     float:left;
     background:url(../images/search_bar_left.png) no-repeat; 
     width:10px;  
     height:32px;  
+}
+input#search {
+    border:none;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    -webkit-box-shadow:0 0 5px #666 inset;
+    -moz-box-shadow:0 0 5px #666 inset;
+    box-shadow:0 0 5px #666 inset;
+    height:20px;
+    line-height:25px;
+    width:200px;
+    text-indent:5px;
 }
 .search_bar_center{
     float:left;
@@ -237,7 +260,13 @@ ul.cat  {
 }
 ul.cat li:first-child {  
     border-top: none;
-} 
+}
+a:active {
+    text-decoration: none;
+}
+a:visited{
+    text-decoration: none;
+}
 ul.cat li {  
     padding-top: 5px;
     padding-left:10px;
@@ -277,7 +306,7 @@ p.p_highlight{
     color: #575757;
     float: left;
     width: 500px;
-    height: 500px;
+    height: auto;
     margin-left: 270px;
     padding-top: 10px;
 }
@@ -309,8 +338,8 @@ p.p_highlight{
 .product_desc{
     text-align:center;
     font-weight:normal;
-    width:120px;
-    margin:2px;
+    width:150px;
+    margin-left: 10px;
 }
 .product_right{
     float:left;
@@ -318,6 +347,22 @@ p.p_highlight{
     width: 8px;
     height: 381px;
 
+}
+.button, .button:visited {
+    background-color: #dddddd; -webkit-box-shadow:: 0 0 9px #333;
+    display: inline-block;
+    margin-top: 7px;
+    padding: 5px 10px 6px;
+    color: red;
+    text-decoration: none;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.6);
+    text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+    border-bottom: 1px solid rgba(0,0,0,0.25);
+    position: relative;
+    cursor: pointer
 }
 .check_product_button{
     display: block;
@@ -383,6 +428,41 @@ p.p_highlight{
     width: 999px;
     height: 216px;
 }
+#sign_up{
+    float: left;
+    margin-top: 10px;
+    border-right: 1px solid #ddd;
+    width: 300px;
+    height: 200px;
+}
+#links{
+    float: left;
+    color: white;
+    margin-top: 0px;
+    border-right: 1px solid #ddd;
+    width: 300px;
+    height: 200px;
+}
+.links a:link {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+
+}
+
+input.sign_up {
+    border:none;
+    -webkit-border-radius:5px;
+    -moz-border-radius:5px;
+    border-radius:5px;
+    -webkit-box-shadow:0 0 5px #666 inset;
+    -moz-box-shadow:0 0 5px #666 inset;
+    box-shadow:0 0 5px #666 inset;
+    height:25px;
+    line-height:25px;
+    width:200px;
+    text-indent:5px;
+}
 .bottom_right{
     float:left;
     background:url(../images/bottom_right.png) repeat-y  #000; 
@@ -401,6 +481,7 @@ p.p_highlight{
 }
 .footer_center{
     float:left;
+    text-align: center;
     background:url(../images/footer_center.png) repeat-x #000;
     width: 999px;
     height: 62px;

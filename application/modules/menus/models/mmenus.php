@@ -12,6 +12,7 @@ class MMenus extends CI_Model {
     function generateTree(&$tree, $parentid = 0) {
         $this->db->select('menu_id,name,shortdesc,status,parentid,page_uri,order');
         $this->db->where('status', 'active');
+        $this->db->where('page_uri !=','0');
         $this->db->order_by('order asc, parentid asc');
         $res = $this->db->get('menu');
         if ($res->num_rows() > 0) {

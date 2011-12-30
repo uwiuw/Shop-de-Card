@@ -8,7 +8,7 @@
     <div id="top_nav">
         <div class="top_nav_left"></div>
         <div class="top_nav_center">
-            <div class="nav_top">Welcome User &nbsp; &nbsp; <span class="my_account">My Account &nbsp; |  &nbsp; Logout&nbsp;&nbsp;&nbsp;</span></div>
+            <div class="nav_top"> &nbsp; &nbsp; <span class="my_account"><?= $this->data['loginstatus']; ?></span></div>
         </div>
         <div class="top_nav_right"></div>
     </div>
@@ -17,7 +17,11 @@
     <div id="logo">
         <div class="top_left"></div>
         <div class="top_center">
-            <div class="cart">your cart</div> <div class="phone"></div>
+            <div class="cart">
+                <div class="shop_cart">your cart <div class="total_price">$ XXX.XX</div></div>
+            </div>
+            <div class="phone"></div>
+            <a href="<?= site_url() ?>"><img src="<?= img_dir() ?>cherub_logo.png" width="675" height="149" /></a>
         </div>
         <div class="top_right"></div>
     </div>
@@ -26,7 +30,7 @@
     <div id="search_bar">
         <div class="search_bar_left"></div>
         <div class="search_bar_center">
-            <div class="search">Search</div>
+            <div class="search">Search &nbsp;&nbsp;&nbsp;<input type="text" name="search" id="search"/></div>
         </div>
         <div class="search_bar_right"></div>
     </div>
@@ -46,19 +50,8 @@ if ($this->cart->total()) {
     </p>    
 </div>
 -->
-<?php /*
-  //print_r($this->nav_list);
-  echo '<ul>';
-  foreach ($this->nav_list as $menu) {
-  echo '<li>';
-  echo $menu['name'];
-  echo '</li>';
-  }
-  echo '</ul>';
-  echo $this->data['loginstatus'];
 
- */ ?>
 
 <div id="cart_content">
-<?php //echo $this->view('webshop/cart.php');  ?>
+    <?php //echo $this->view('webshop/cart.php');  ?>
 </div>

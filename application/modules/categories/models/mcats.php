@@ -46,7 +46,7 @@ class MCats extends CI_Model {
         $this->db->where('parentid', id_clean($catid));
         // When $catid is 7, which has 0 for parent category_id, and looking for items where parentid is this 7 $catid
         $this->db->where('status', 'active');
-        $this->db->orderby('name', 'asc');
+        $this->db->order_by('name', 'asc');
         $Q = $this->db->get('category'); // this will gives series of items such as 1 shoes, 2 shirts, 3 pants etc.
         if ($Q->num_rows() > 0) {// if there are items then
             foreach ($Q->result_array() as $row) {//each item as an array to $row
@@ -246,4 +246,5 @@ class MCats extends CI_Model {
     }
 
 }
+
 ?>
