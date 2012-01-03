@@ -27,7 +27,7 @@ class Webshop extends Shop_Controller {
         $data['images'] = $featureimages;
         $data['title'] = $page['name'];
         $data['module'] = lang('webshop_folder');
-        
+
         $this->template->load($this->_home, 'frontpage', $data);
     }
 
@@ -65,8 +65,6 @@ class Webshop extends Shop_Controller {
         $this->template->load($this->_container, 'category', $data);
     }
 
-   
-
     function product($id) {
         $product = $this->mproducts->getProduct($id);
         /** this returns all, i.e. id, name, shortdesc, longdesc, thumbnail,
@@ -77,29 +75,38 @@ class Webshop extends Shop_Controller {
             // no product so redirect
             redirect(lang('webshop_folder') . '/index', 'refresh');
         }
-        $data['product'] = $product;
-        $data['title'] = lang('webshop_shop_name') . " | " . $product['name'];
+        $images = '';
+        //print_r($product);exit;
+        // Condition for multi image
+        if (isset($product['multi'])) {
+            unset($product['multi']);
+            //print_r($product);exit;
+            foreach ($product as $img) {
+                $images[] = $img['image_id'];
+            }
+            //print_r($images);exit;
+            $data['product'] = $product[0];
+            $data['title'] = lang('webshop_shop_name') . " | " . $product[0]['name'];
+        } else {
+            $data['product'] = $product;
+            $data['title'] = lang('webshop_shop_name') . " | " . $product['name'];
+        }
+        $data['images'] = $images;
 
+        //print_r($product);exit;
         // I am not using colors and sizes, but you can.
         //$data['assigned_colors'] = $this->mproducts->getAssignedColors($id);
         //$data['assigned_sizes'] = $this->mproducts->getAssignedSizes($id);
         $data['module'] = lang('webshop_folder');
         $this->template->load($this->_container, 'product', $data);
     }
-    function page($menu){
+
+    function page($menu) {
         
     }
-    function pages($path) {
 
-        if ($path == lang('webshop_folder')) {
-            redirect('', 'refresh');
-        } elseif ($path == 'contact_us') {
-            redirect(lang('webshop_folder') . '/contact', 'refresh');
-        } elseif ($path == 'cart') {
-            redirect(lang('webshop_folder') . '/cart', 'refresh');
-        } elseif ($path == 'checkout') {
-            redirect(lang('webshop_folder') . '/checkout', 'refresh');
-        } else {
+    function pages($path) {
+      
             $page = $this->mpages->getPagePath($path);
             if (!empty($page)) {//$page will return empty array if there is no page
                 $data['pagecontent'] = $page;
@@ -111,7 +118,6 @@ class Webshop extends Shop_Controller {
             $data['page'] = $this->config->item('backendpro_template_shop') . 'page';
             $data['module'] = lang('webshop_folder');
             $this->template->load($this->_container, 'page', $data);
-        }
     }
 
     function contact() {
@@ -372,7 +378,7 @@ class Webshop extends Shop_Controller {
     /*
      *  show shopping cart details
      */
-    
+
     function cart() {
         $data['cart'] = 'cart';
         $data['title'] = 'Your Shopping Cart';
@@ -382,7 +388,7 @@ class Webshop extends Shop_Controller {
     /*
      *  Add item shopping cart using CodeIgniter Shopping Cart Class
      */
-    
+
     function add_cart_item() {
         $id = $this->input->post('product_id');
         if ($this->cart_model->validate_add_cart_item($id) == TRUE) {
@@ -410,9 +416,9 @@ class Webshop extends Shop_Controller {
      *  Update shopping cart using CodeIgniter Shopping Cart Class
      */
 
-    function delete_item(){
+    function delete_item() {
         $id = $this->input->post('rowid');
-       // echo $id;
+        // echo $id;
         //echo 'test';
         if ($this->cart_model->validate_delete_item($id) == TRUE) {
             //echo $id;
@@ -425,16 +431,19 @@ class Webshop extends Shop_Controller {
             }
         }
     }
+
     /*
      *  Show total cart
      */
-    function total_cart(){
+
+    function total_cart() {
         echo $this->cart->total();
     }
+
     /*
      *  Show shopping cart using CodeIgniter Shopping Cart Class
      */
-    
+
     function show_cart() {
         $this->load->view('webshop/cart');
         //$this->load->view('webshop');
@@ -443,12 +452,11 @@ class Webshop extends Shop_Controller {
     /*
      *  Empty shopping cart using CodeIgniter Shopping Cart Class
      */
-    
+
     function empty_cart() {
         $this->cart->destroy();
         redirect('webshop');
     }
-
 
     function shippingprice() {
         // You need to modify this. This is for Norwegian system. At the moment, if a max of individual product is more

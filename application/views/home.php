@@ -1,3 +1,8 @@
+<?php
+/* By Haidar Mar'ie
+ * Email = coder5@ymail.com
+  footer */
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">  
 <html xmlns="http://www.w3.org/1999/xhtml">  
     <head>  
@@ -101,10 +106,6 @@
 
                     <!--items-->
                     <div class="items">
-
-                        <div class="items_left"></div>
-                        <div class="items_center">
-
                             <div class="item_in"><h3>Item you might be interest in</h3></div>
                             <div class="products">
                                 <div class="product_list">
@@ -137,13 +138,11 @@
                                 </div>
                             </div>
 
-                        </div>
                         <div class="items_right"></div>
                     </div>
 
                     <!--bottom-->
                     <div id="bottom">
-                        <div class="bottom_left"></div>
                         <div class="bottom_center">
                             <!--Sign UP-->
                             <div id="sign_up">
@@ -170,7 +169,6 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="bottom_right"></div>
                     </div>
 
                 </div>

@@ -1,9 +1,10 @@
 /* 
-    Document   : style
+    Document   : stylesheet CSS3
     Created on : Dec 21, 2011, 10:37:43 AM
-    Author     : haidar
+    Author     : Haidar Mar'ie
+    Email      : coder5@ymail.com
     Description:
-        Purpose of the stylesheet follows.
+        Purpose of the stylesheet follows CSS3.
 */
 
 /* 
@@ -17,42 +18,32 @@ root {
 
 body {  
     margin:0px; padding:0px;  
-    background-color:#f6f6f6;  
+    /*    background-color:#f6f6f6;  */
     font-family: Arial;
 }  
 
 #main {  
-    background-color:#f6f6f6;  
+    /*    background-color:#f6f6f6;  */
 }
 
 .container {  
     position: relative;
-    width:1020px;  
+    width:1000px;
     margin:0 auto;  
 }  
-
+.container_wrap{
+    float: left;
+    height: auto;
+    box-shadow: 0px 0px 8px black;
+    -webkit-box-shadow: 0px 0px 8px black;
+    -moz-box-shadow: 0px 0px 8px black;
+}
 #top_nav{
     float:left;
+    background:url(../images/top_nav_center.png) repeat-x;
+    width:1000px;
+    height:19px;
 
-}
-.top_nav_left{
-    float:left;
-    background:url(../images/top_nav_left.png) no-repeat; 
-    width:10px;  
-    height:19px;  
-}
-.top_nav_center{
-    float:left;
-    background:url(../images/top_nav_center.png) repeat-x; 
-    width:995px;  
-    height:19px;  
-
-}
-.top_nav_right{
-    float:left;
-    background:url(../images/top_nav_right.png) no-repeat; 
-    width:10px;  
-    height:19px;  
 }
 
 .nav_top{
@@ -66,20 +57,9 @@ body {
 }
 #logo{
     float:left;
-
-}
-.top_left{
-    float:left;
-    background:url(../images/top_left.png) repeat-y; 
-    width:10px;  
-    height:149px; 
-
-}
-.top_center{
-    float:left;
     background: #fff;
-    width:995px;  
-    height:149px;  
+    width:1000px;
+    height:149px;
 
 }
 .cart{
@@ -107,20 +87,16 @@ body {
 .phone{
     float: right;
     margin-top: 90px;
-    margin-right: -310px;
+    margin-right: -300px;
     background:url(../images/phone_no.png)  no-repeat; 
     width:296px;  
     height:57px;  
 }
-.top_right{
-    float:left;
-    background:url(../images/top_right.png) repeat-y; 
-    width:10px;  
-    height:149px;
-
-}
 #search_bar{
-    float:left; 
+    float:left;
+    background:url(../images/search_bar_center.png) repeat-x;
+    width:1000px;
+    height:32px;
 }
 .search{
     float: right;
@@ -130,12 +106,6 @@ body {
     font-style: italic;
     color: #fff;
     margin-right: 20px;
-}
-.search_bar_left{
-    float:left;
-    background:url(../images/search_bar_left.png) no-repeat; 
-    width:10px;  
-    height:32px;  
 }
 input#search {
     border:none;
@@ -150,20 +120,6 @@ input#search {
     width:200px;
     text-indent:5px;
 }
-.search_bar_center{
-    float:left;
-    background:url(../images/search_bar_center.png) repeat-x; 
-    width:995px;  
-    height:32px;  
-
-}
-.search_bar_right{
-    float:left;
-    background:url(../images/search_bar_right.png) no-repeat; 
-    width:10px;  
-    height:32px;  
-}
-
 .leftbar{
     position:absolute; 
 }
@@ -197,9 +153,9 @@ input#search {
 }
 .categories_left{
     float: left;
-    margin-left: 24px;
+    margin-left: 20px;
     position:absolute; 
-    background:url(../images/category_left2.png)  no-repeat; 
+    background:url(../images/category_left0.png)  no-repeat ; 
     width:10px; 
     height: 692px;
 }
@@ -208,7 +164,7 @@ input#search {
     margin-left: 266px;
     display: block;
     position:absolute; 
-    background:url(../images/category_right2.png) no-repeat; 
+    background:url(../images/category_right0.png) no-repeat ; 
     width:10px;  
     height: 692px;
 }
@@ -282,11 +238,12 @@ ol, ul{
 .main_product{
     float: left;
 }
-.product_left{
+#content{
     float:left;
-    background:url(../images/product_left.png) repeat-y; 
-    width: 8px;
-    height: 381px;
+    background: #fff;
+    margin-left: 300px;
+    position: relative;
+    min-height: 500px;
 }
 .product_center{
     float:left;
@@ -302,12 +259,15 @@ p.p_highlight{
     text-transform: uppercase;
     font-weight: bold;
 }
+p.p_desc{
+    width: 400px;
+}
 .prod_highlight{
     color: #575757;
     float: left;
-    width: 500px;
+    width: auto;
     height: auto;
-    margin-left: 270px;
+    margin-left: 280px;
     padding-top: 10px;
 }
 .products{
@@ -332,6 +292,8 @@ p.p_highlight{
 
 .product_list img {
     display:inline;
+    width: 118px;
+    height: 150px;
     margin:3px;
     border:1px solid #ffffff;
 }
@@ -340,13 +302,6 @@ p.p_highlight{
     font-weight:normal;
     width:150px;
     margin-left: 10px;
-}
-.product_right{
-    float:left;
-    background:url(../images/product_right.png) no-repeat; 
-    width: 8px;
-    height: 381px;
-
 }
 .button, .button:visited {
     background-color: #dddddd; -webkit-box-shadow:: 0 0 9px #333;
@@ -383,7 +338,10 @@ p.p_highlight{
 }
 .items{
     float: left;
-
+    background-color: #fff;
+    width: 1000px;
+    min-height: 261px;
+    margin-bottom: 20px;
 }
 .item_in{
     text-align: center;
@@ -391,43 +349,29 @@ p.p_highlight{
     text-transform: uppercase;
     margin-left:250px;
 }
-.items_left{
-    float:left;
-    background:url(../images/items_left.png) repeat-y; 
-    width: 8px;
-    height: 461px;
 
-}
-.items_center{
-    float:left;
-    background-color: #fff;
-    width: 999px;
-    height: 461px;
-
-}
-.items_right{
-    float:left;
-    background:url(../images/items_right.png) repeat-y; 
-    width: 8px;
-    height: 461px;
-
-}
 
 #bottom{
-    float: left; 
+    float: left;
+    /*    background:url(../images/bottom_center.png) repeat-x #000;*/
+    /* Safari 4-5, Chrome 1-9 */
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#555555), to(#0B0B0B));
+
+    /* Safari 5.1, Chrome 10+ */
+    background: -webkit-linear-gradient(top, #555555, #0B0B0B);
+
+    /* Firefox 3.6+ */
+    background: -moz-linear-gradient(top, #555555, #0B0B0B);
+
+    /* IE 10 */
+    background: -ms-linear-gradient(top, #555555, #0B0B0B);
+
+    /* Opera 11.10+ */
+    background: -o-linear-gradient(top, #555555, #0B0B0B);
+    width: 1000px;
+    height: auto;
 }
-.bottom_left{
-    float:left;
-    background:url(../images/bottom_left.png) repeat-y  #000; 
-    width: 8px;
-    height: 216px;
-}
-.bottom_center{
-    float:left;
-    background:url(../images/bottom_center.png) repeat-x #000;
-    width: 999px;
-    height: 216px;
-}
+
 #sign_up{
     float: left;
     margin-top: 10px;
@@ -435,20 +379,80 @@ p.p_highlight{
     width: 300px;
     height: 200px;
 }
-#links{
-    float: left;
-    color: white;
-    margin-top: 0px;
-    border-right: 1px solid #ddd;
-    width: 300px;
-    height: 200px;
-}
-.links a:link {
-    color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
 
+
+
+/*Links navigation*/
+li a{
+    text-decoration: none;
 }
+#links{
+    /* The navigation menu bar: */
+    float:left;
+    color: white;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-right: 1px solid #DDD;
+    border-left: 1px solid #000;
+    width: 325px;
+    margin: 0px auto ;
+    text-transform: uppercase;
+}
+
+.links li a{
+    /* CSS3 rounded corners for both the navigation bar and the buttons: */
+    -moz-border-radius:4px;
+    -webkit-border-radius:4px;
+    -khtml-border-radius:4px;
+    border-radius:4px;
+    width: 158px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.links li{
+    /* This will arrange the LI-s next to each other */
+    display: block;
+}
+
+.links li a,.links li a:visited{
+    /* Styling the hyperlinks of the menu as buttons */
+
+    font-weight:bold;
+    background:url(img/button_bg.jpg) repeat-x center bottom #666666;
+
+    /* display:block allows for additinal CSS rules to take effect, such as paddings: */
+    display:block;
+    border:1px solid #4D4D4D;
+    color:#CCCCCC;
+    border-top-color:#565656;
+
+    padding:4px 6px;
+    margin:4px 5px;
+    height:16px;
+
+
+    /* Setting a CSS3 box shadow around the button */
+
+    -moz-box-shadow:0 0 1px black;
+    -webkit-box-shadow:0 0 1px black;
+    box-shadow:0 0 1px black;
+
+    /* CSS3 text shadow */
+    text-shadow:0 1px black;
+}
+
+.links li a:hover{
+    color:#000;
+    /* On hover show the top, lighter, part of the background: */
+    background-position:center top;
+}
+
+.clear{
+    /* Old-school clear fix hack to clear the floats: */
+    clear:both;
+}
+/*End Links navigation*/
 
 input.sign_up {
     border:none;
@@ -463,32 +467,17 @@ input.sign_up {
     width:200px;
     text-indent:5px;
 }
-.bottom_right{
-    float:left;
-    background:url(../images/bottom_right.png) repeat-y  #000; 
-    width: 8px;
-    height: 216px;  
-}
+
 #footer {  
     clear: left;
     color:white;  
 }  
-.footer_left{
-    float:left;
-    background:url(../images/footer_left.png) repeat-y  #000; 
-    width: 8px;
-    height: 62px;
-}
+
 .footer_center{
     float:left;
     text-align: center;
     background:url(../images/footer_center.png) repeat-x #000;
-    width: 999px;
+    width: 1000px;
     height: 62px;
 }
-.footer_right{
-    float:left;
-    background:url(../images/footer_right.png) repeat-y  #000; 
-    width: 8px;
-    height: 62px;  
-}
+

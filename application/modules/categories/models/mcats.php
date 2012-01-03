@@ -20,13 +20,27 @@ class MCats extends CI_Model {
         if ($Q->num_rows() > 0) {
             $data = $Q->row_array();
         }
-
+        //echo 'get_category ='.$this->db->last_query();
         $Q->free_result();
         return $data;
     }
 
     function getAllCategories() {
         $data = array();
+        $Q = $this->db->get('category');
+        if ($Q->num_rows() > 0) {
+            foreach ($Q->result_array() as $row) {
+                $data[] = $row;
+            }
+        }
+        $Q->free_result();
+        return $data;
+    }
+
+    function getAllActiveCategories() {
+        $data = array();
+        $this->db->where('status', 'active');
+        $this->db->order_by('name', 'asc');
         $Q = $this->db->get('category');
         if ($Q->num_rows() > 0) {
             foreach ($Q->result_array() as $row) {
@@ -85,9 +99,9 @@ class MCats extends CI_Model {
         $data = array();
         $this->db->select('category_id,name,parentid');
         $this->db->where('status', 'active');
-        $this->db->orderby('parentid', 'asc');
-        $this->db->orderby('name', 'asc');
-        $this->db->groupby('parentid,category_id');
+        $this->db->order_by('parentid', 'asc');
+        $this->db->order_by('name', 'asc');
+        $this->db->group_by('parentid,category_id');
         $Q = $this->db->get('category');
         if ($Q->num_rows() > 0) {
             foreach ($Q->result() as $row) {

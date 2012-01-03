@@ -9,20 +9,30 @@ function get_tag_condition($condition, $pre="AND") {
     } return false;
 }
 
-function css_dir(){
-    return base_url().'assets/css/';
+function css_dir() {
+    return base_url() . 'assets/css/';
 }
 
-function js_dir(){
-    return base_url().'assets/js/';
+function js_dir() {
+    return base_url() . 'assets/js/';
 }
 
-function img_dir(){
-    return base_url().'assets/images/';
+function img_dir() {
+    return base_url() . 'assets/images/';
 }
-function backend_img_dir(){
-    return base_url().'assets/backend_img/';
+
+function prod_dir() {
+    return base_url() . 'assets/product/';
 }
+
+function prod_thumb_dir() {
+    return base_url() . 'assets/product_thumb/';
+}
+
+function backend_img_dir() {
+    return base_url() . 'assets/backend_img/';
+}
+
 function createfoldername($string) {
     $string = mb_strtolower($string, 'utf-8');
     $regexp = '/( |g)/iU';
@@ -136,7 +146,6 @@ function id_user() {
 function user_name() {
     return $_SESSION['csname'];
 }
-
 
 function basic_path() {
     $fr_loc = explode('/', $_SERVER['SCRIPT_NAME']);
@@ -397,7 +406,7 @@ function create_breadcrumb() {
     return $link;
 }
 
-/* 
+/*
  * Create flash message more like displaystatus() and flashdata
  */
 
@@ -405,4 +414,14 @@ function flashMsg($type= NULL, $message=NULL) {
     $CI = &get_instance();
     return $CI->session->set_flashdata($type, $message);
 }
+
+function del_ext($strName) {
+    $ext = strrchr($strName, '.');
+
+    if ($ext !== false) {
+        $strName = substr($strName, 0, -strlen($ext));
+    }
+    return $strName;
+}
+
 ?>

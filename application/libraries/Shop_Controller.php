@@ -19,7 +19,7 @@ class Shop_Controller Extends CI_Controller {
         $this->lang->load('webshop');
         // navigation
         $cats = array();
-        $cats = $this->mcats->getAllCategories();
+        $cats = $this->mcats->getAllActiveCategories();
         $nav = $this->mmenus->generateTree($nav, $parentid = 0);
         $this->categories = $cats;
         $this->template->set('nav', $nav);

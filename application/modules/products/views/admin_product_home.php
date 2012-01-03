@@ -35,8 +35,7 @@ if (count($products)){
 		echo "<td align='center'>".$list['grouping']."</td>\n";
 
 		echo "<td align='center'>";
-                $status = $list['status']=='1'?'Active':'InActive';
-		echo anchor('products/changeProductStatus/'.$list['product_id'],$status, array('class' => $status));
+		echo anchor('products/changeProductStatus/'.$list['product_id'],$list['status'], array('class' => $list['status']));
 		echo "</td>\n";
 
 		// echo "<td align='center'>".$list['category_id']."</td>\n";

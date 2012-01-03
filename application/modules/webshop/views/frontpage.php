@@ -36,5 +36,3 @@ foreach ($images as $image) {
     echo "</div>";
 }
 ?>
-
-

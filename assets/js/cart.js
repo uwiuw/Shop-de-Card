@@ -46,7 +46,7 @@ $(document).ready(function() {
             if(data == 'true'){
                 $.get(link + "webshop/total_cart", function(total_cart){
                     $("#total_cart").text(total_cart);
-                    $dialog.dialog('open').html('YOu buy this'+total_cart+'This dialog will show every time!');
+                    $dialog.dialog('open').html('You buy this '+total_cart+' ');
                 });
             }else{
                 alert("Product does not exist");

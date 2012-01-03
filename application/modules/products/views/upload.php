@@ -4,7 +4,7 @@
   upload */
 ?>
 
-<link rel="stylesheet" href="<?= css_dir() ?>jquery.fileupload-ui.css" type="tetext/css" />
+<link rel="stylesheet" href="<?= css_dir() ?>jquery.fileupload-ui.css" type="text/css" />
 <form id="fileupload" action="<?= site_url() ?>/products/uploaders" method="POST" enctype="multipart/form-data">
     <div class="row">
         <div class="span16 fileupload-buttonbar">

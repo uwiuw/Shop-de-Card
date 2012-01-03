@@ -34,13 +34,15 @@ class Products extends Admin_Controller {
 
         if ($this->input->post('name')) {
             // fields are filled up so do the followings
-            $this->mproducts->insertProduct();
+            $this->mproducts->updateProduct();
             // CI way to set flashdata, but we are not using it
             // flashMsg('message','Product created');
             // we are using Bep function for flash msg
             flashMsg('message', 'Product created');
             redirect('products/', 'refresh');
         } else {
+            $product_insert_id = $this->mproducts->insertIdProduct();
+            $data['product_id'] = $product_insert_id;
             // this must be the first time, so set variables
             $data['title'] = "Create Product";
             $data['categories'] = $this->mcats->getCategoriesDropDown();
@@ -49,10 +51,6 @@ class Products extends Admin_Controller {
             $data['module'] = 'products';
             $this->template->load($this->_container, 'admin_product_create', $data);
         }
-    }
-
-    function test() {
-        echo 'test';
     }
 
     function uploading() {
@@ -82,6 +80,7 @@ class Products extends Admin_Controller {
             // I am not using colors and sizes any more. But they are available if you want to use them.
             // I am loading product_right here which gives instructions.
             //$data['right'] = 'admin/product_right';
+            //print_r($data['product']);exit;
             if (!count($data['product'])) {
                 redirect('products/', 'refresh');
             }
@@ -105,14 +104,17 @@ class Products extends Admin_Controller {
         redirect('products', 'refresh');
     }
 
-    public function uploaders($options=null) {
+    public function uploaders() {
+        $options = null;
         $script_url = site_url() . '/products/uploader';
         //echo $script_url;
+        //print_r($this->options);
         $this->options = array(
             'script_url' => $script_url,
-            'upload_dir' => basic_path() . 'assets/images/files/', //dirname(__FILE__) . '/files/',
-            'upload_url' => img_dir(), //$this->getFullUrl() . '/files/',
+            'upload_dir' => basic_path() . 'assets/product/', //dirname(__FILE__) . '/files/',
+            'upload_url' => prod_dir(), //$this->getFullUrl() . '/files/',
             'param_name' => 'files',
+            'product_id' => $this->uri->segment(3),
             // The php.ini settings upload_max_filesize and post_max_size
             // take precedence over the following max_file_size setting:
             'max_file_size' => null,
@@ -136,8 +138,8 @@ class Products extends Admin_Controller {
                   ),
                  */
                 'thumbnail' => array(
-                    'upload_dir' => basic_path() . 'assets/images/thumbnails/',
-                    'upload_url' => img_dir() . '/thumbnails/',
+                    'upload_dir' => basic_path() . 'assets/product_thumb/',
+                    'upload_url' => prod_thumb_dir(),
                     'max_width' => 80,
                     'max_height' => 80
                 )
@@ -160,7 +162,12 @@ class Products extends Admin_Controller {
                 break;
             case 'HEAD':
             case 'GET':
-                $this->get();
+                $id = $this->uri->segment(3);
+                if ($id == null) {
+                    $this->get();
+                } else {
+                    $this->getImg($id);
+                }
                 break;
             case 'POST':
                 $this->post();
@@ -174,40 +181,45 @@ class Products extends Admin_Controller {
     }
 
     public function post() {
-        //
         if (isset($_REQUEST['_method']) && $_REQUEST['_method'] === 'DELETE') {
             return $this->delete_upload();
         }
         $upload = isset($_FILES[$this->options['param_name']]) ?
                 $_FILES[$this->options['param_name']] : null;
         $info = array();
-        //print_r($this->options['param_name']);
+        //echo 'prod='.$_POST['product_id'];exit;
+        //print_r($this->options['product_id']);exit;
         if ($upload && is_array($upload['tmp_name'])) {
             foreach ($upload['tmp_name'] as $index => $value) {
+
+                // Insert into database and create file name of product id
+                $img_data['name'] = $upload['name'][$index];
+                $img_data['size'] = $upload['size'][$index];
+                $img_data['type'] = $upload['type'][$index];
+                $img_data['extension'] = get_extension($upload['name'][$index]);
+                $img_data['url'] = '/assets/product/';
+                $img_data['product_id'] = isset($_POST['product_id']) ? $_POST['product_id'] : $this->options['product_id'];
+                $img_data['thumbnail_url'] = '/assets/product_thumb/';
+                // get last insert id $img
+                $img = $this->mproducts->addImage($img_data);
+                $img_name = $img . get_extension($img_data['name']);
+                //echo $img_name;
                 $info[] = $this->handle_file_upload(
-                                $upload['tmp_name'][$index],
-                                isset($_SERVER['HTTP_X_FILE_NAME']) ?
-                                        $_SERVER['HTTP_X_FILE_NAME'] : $upload['name'][$index],
-                                isset($_SERVER['HTTP_X_FILE_SIZE']) ?
-                                        $_SERVER['HTTP_X_FILE_SIZE'] : $upload['size'][$index],
-                                isset($_SERVER['HTTP_X_FILE_TYPE']) ?
-                                        $_SERVER['HTTP_X_FILE_TYPE'] : $upload['type'][$index],
-                                $upload['error'][$index]
+                        $upload['tmp_name'][$index], isset($_SERVER['HTTP_X_FILE_NAME']) ?
+                                $_SERVER['HTTP_X_FILE_NAME'] : $img_name, isset($_SERVER['HTTP_X_FILE_SIZE']) ?
+                                $_SERVER['HTTP_X_FILE_SIZE'] : $upload['size'][$index], isset($_SERVER['HTTP_X_FILE_TYPE']) ?
+                                $_SERVER['HTTP_X_FILE_TYPE'] : $upload['type'][$index], $upload['error'][$index]
                 );
             }
         } elseif ($upload || isset($_SERVER['HTTP_X_FILE_NAME'])) {
             $info[] = $this->handle_file_upload(
-                            isset($upload['tmp_name']) ? $upload['tmp_name'] : null,
-                            isset($_SERVER['HTTP_X_FILE_NAME']) ?
-                                    $_SERVER['HTTP_X_FILE_NAME'] : (isset($upload['name']) ?
-                                            isset($upload['name']) : null),
-                            isset($_SERVER['HTTP_X_FILE_SIZE']) ?
-                                    $_SERVER['HTTP_X_FILE_SIZE'] : (isset($upload['size']) ?
-                                            isset($upload['size']) : null),
-                            isset($_SERVER['HTTP_X_FILE_TYPE']) ?
-                                    $_SERVER['HTTP_X_FILE_TYPE'] : (isset($upload['type']) ?
-                                            isset($upload['type']) : null),
-                            isset($upload['error']) ? $upload['error'] : null
+                    isset($upload['tmp_name']) ? $upload['tmp_name'] : null, isset($_SERVER['HTTP_X_FILE_NAME']) ?
+                            $_SERVER['HTTP_X_FILE_NAME'] : (isset($img_name) ?
+                                    isset($img_name) : null), isset($_SERVER['HTTP_X_FILE_SIZE']) ?
+                            $_SERVER['HTTP_X_FILE_SIZE'] : (isset($upload['size']) ?
+                                    isset($upload['size']) : null), isset($_SERVER['HTTP_X_FILE_TYPE']) ?
+                            $_SERVER['HTTP_X_FILE_TYPE'] : (isset($upload['type']) ?
+                                    isset($upload['type']) : null), isset($upload['error']) ? $upload['error'] : null
             );
         }
         header('Vary: Accept');
@@ -240,7 +252,7 @@ class Products extends Admin_Controller {
                             . rawurlencode($file->name);
                 }
             }
-            $file->delete_url = site_url('/products/delete_upload/')
+            $file->delete_url = site_url('/upload/delete_upload/')
                     . '/' . rawurlencode($file->name);
             $file->delete_type = 'DELETE';
             return $file;
@@ -250,21 +262,19 @@ class Products extends Admin_Controller {
 
     private function get_file_objects() {
         return array_values(array_filter(array_map(
-                                array($this, 'get_file_object'),
-                                scandir($this->options['upload_dir'])
-                )));
+                                        array($this, 'get_file_object'), scandir($this->options['upload_dir'])
+                                )));
     }
 
     private function create_scaled_image($file_name, $options) {
         $file_path = $this->options['upload_dir'] . $file_name;
-        $new_file_path = basic_path() . 'assets/images/thumbnails/' . $file_name;
+        $new_file_path = basic_path() . 'assets/product_thumb/' . $file_name;
         list($img_width, $img_height) = @getimagesize($file_path);
         if (!$img_width || !$img_height) {
             return false;
         }
         $scale = min(
-                        $options['max_width'] / $img_width,
-                        $options['max_height'] / $img_height
+                $options['max_width'] / $img_width, $options['max_height'] / $img_height
         );
         if ($scale > 1) {
             $scale = 1;
@@ -294,13 +304,7 @@ class Products extends Admin_Controller {
                 $src_img = $image_method = null;
         }
         $success = $src_img && @imagecopyresampled(
-                        $new_img,
-                        $src_img,
-                        0, 0, 0, 0,
-                        $new_width,
-                        $new_height,
-                        $img_width,
-                        $img_height
+                        $new_img, $src_img, 0, 0, 0, 0, $new_width, $new_height, $img_width, $img_height
                 ) && $write_image($new_img, $new_file_path);
         // Free up memory (imagedestroy does not delete files):
         @imagedestroy($src_img);
@@ -392,9 +396,7 @@ class Products extends Admin_Controller {
                 // multipart/formdata uploads (POST method uploads)
                 if ($append_file) {
                     file_put_contents(
-                            $file_path,
-                            fopen($uploaded_file, 'r'),
-                            FILE_APPEND
+                            $file_path, fopen($uploaded_file, 'r'), FILE_APPEND
                     );
                 } else {
                     move_uploaded_file($uploaded_file, $file_path);
@@ -402,9 +404,7 @@ class Products extends Admin_Controller {
             } else {
                 // Non-multipart uploads (PUT method support)
                 file_put_contents(
-                        $file_path,
-                        fopen('php://input', 'r'),
-                        $append_file ? FILE_APPEND : 0
+                        $file_path, fopen('php://input', 'r'), $append_file ? FILE_APPEND : 0
                 );
             }
             $file_size = filesize($file_path);
@@ -424,8 +424,8 @@ class Products extends Admin_Controller {
                 $file->error = 'abort';
             }
             $file->size = $file_size;
-            $file->delete_url = $this->options['script_url']
-                    . '?file=' . rawurlencode($file->name);
+            $file->delete_url = site_url('/upload/delete_upload/')
+                    . '/' . rawurlencode($file->name);
             $file->delete_type = 'DELETE';
         } else {
             $file->error = $error;
@@ -433,21 +433,73 @@ class Products extends Admin_Controller {
         return $file;
     }
 
-    public function get() {
-        $file_name = isset($_REQUEST['file']) ?
-                basename(stripslashes($_REQUEST['file'])) : null;
-        if ($file_name) {
-            $info = $this->get_file_object($file_name);
+    public function getImg($id) {
+        $data_img = $this->mproducts->showProductImg($id);
+        //print_r($data_img);exit;
+        if ($data_img) {
+            foreach ($data_img as $row_img) {
+                $row_img->delete_url = site_url('/upload/delete_upload/') . '/' . rawurlencode($row_img->image_id);
+                $row_img->delete_type = 'DELETE';
+                $row_img->thumbnail_url = prod_thumb_dir() . $row_img->image_id . get_extension($row_img->name);
+                $row_img->url = prod_dir() . $row_img->image_id . get_extension($row_img->name);
+            }
         } else {
-            $info = $this->get_file_objects();
+            $data_img = array();
+            //$data_img = null;
         }
         header('Content-type: application/json');
-        echo json_encode($info);
+        echo json_encode($data_img);
     }
 
-    public function delete_upload($file_name) {
+    public function get() {
+        //echo $id;exit;
+        $data_img = $this->mproducts->showAllProductImg();
+        //print_r($data_img);exit;
+        /*
+        if ($data_img) {
+            foreach ($data_img as $row_img) {
+                $row_img->delete_url = site_url('/upload/delete_upload/') . '/' . rawurlencode($row_img->image_id);
+                $row_img->delete_type = 'DELETE';
+                $row_img->thumbnail_url = prod_thumb_dir() . $row_img->image_id . get_extension($row_img->name);
+                $row_img->url = prod_dir() . $row_img->image_id . get_extension($row_img->name);
+            }
+        } else {
+            $data_img = array();
+            //$data_img = null;
+        }*/
+        $data_img = array();
+        header('Content-type: application/json');
+        echo json_encode($data_img);
+        /*
+          $file_name = isset($_REQUEST['file']) ?
+          basename(stripslashes($_REQUEST['file'])) : null;
+          if ($file_name) {
+          $info = $this->get_file_object($file_name);
+          } else {
+          $info = $this->get_file_objects();
+          }
+          header('Content-type: application/json');
+          echo json_encode($info);
+          }
+         */
+    }
+
+    function test() {
+        $this->load->library('uploadhandler');
+    }
+
+    public function delete_test() {
+        unlink(basic_path() . 'assets/images/files/mc.gif');
+    }
+
+    public function delete_upload() {
+        $file_names = del_ext($this->uri->segment(3));
+        $file = del_ext($this->uri->segment(3));
+        //echo $file_name;
+        //print_r($this->options);
+        $file_name = isset($file_names) ?
+                basename(stripslashes($file_names)) : null;
         $file_path = $this->options['upload_dir'] . $file_name;
-        echo $this->options['upload_dir'];
         $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
         if ($success) {
             foreach ($this->options['image_versions'] as $version => $options) {
