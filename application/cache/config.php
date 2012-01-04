@@ -16,8 +16,8 @@
 */
 //$config['base_url'] = "http://".$_SERVER['HTTP_HOST'];
 //$config['base_url'] .= preg_replace('@/+$@','',dirname($_SERVER['SCRIPT_NAME'])).'/'; 
-//$config['base_url'] ='http://cherubdefense.com/cherub/';
-$config['base_url'] ='http://localhost/cherub/';
+$config['base_url'] ='http://cherubdefense.com/cherub/';
+//$config['base_url'] ='http://localhost/cherub/';
 /*
 |--------------------------------------------------------------------------
 | Index File
@@ -28,7 +28,7 @@ $config['base_url'] ='http://localhost/cherub/';
 | variable so that it is blank.
 |
 */
-$config['index_page'] = 'index.php/';
+$config['index_page'] = 'index.php';
 
 /*
 |--------------------------------------------------------------------------

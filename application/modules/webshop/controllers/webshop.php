@@ -201,7 +201,7 @@ class Webshop extends Shop_Controller {
 
             $data['title'] = lang('webshop_shop_name') . " | " . "Registration";
 
-            // set rules
+            /* set rules
             $rules['email'] = 'trim|required|matches[emailconf]|valid_email';
             $rules['emailconf'] = 'trim|required|valid_email';
             $rules['password'] = 'trim|required';
@@ -213,27 +213,31 @@ class Webshop extends Shop_Controller {
             $rules['post_code'] = 'trim|required|numeric';
             // if you want to use recaptcha, set modules/recaptcha/config and uncomment the following
             $rules['recaptcha_response_field'] = 'trim|required|valid_captcha';
-
-            $this->form_validation->set_rules($rules);
+             */
+            //$this->form_validation->set_rules($rules);
 
             // set fields. This will be used for error messages
             // for example instead of customer_first_name, First Name will be used in errors
-            $fields['email'] = lang('webshop_email');
-            $fields['emailconf'] = lang('webshop_email_confirm');
-            $fields['password'] = lang('webshop_pass_word');
-            $fields['customer_first_name'] = lang('webshop_first_name');
-            $fields['customer_last_name'] = lang('webshop_last_name');
-            $fields['phone_number'] = lang('webshop_mobile_tel');
-            $fields['address'] = lang('webshop_shipping_address');
-            $fields['city'] = lang('webshop_city');
-            $fields['post_code'] = lang('webshop_post_code');
+            $rules = array(
+            //array('field' => 'username', 'label' => 'Username', 'rules' => 'trim|required|min_length[5]|max_length[12]|xss_clean'),
+            array('field' => 'password', 'label' => 'Password', 'rules' => 'trim|required|matches[passconf]|md5'),
+            array('field' => 'passconf', 'label' => 'Password Confirmation', 'rules' => 'trim|required'),
+            array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|matches[emailconf]|valid_email'),
+            array('field' => 'emailconf', 'label' => 'Email Verified', 'rules' => 'trim|required|valid_email'),
+            array('field' => 'customer_first_name', 'First Name' => 'Username', 'rules' => 'trim|required|min_length[3]|max_length[20]'),
+            array('field' => 'customer_last_name', 'label' => 'Last Name', 'rules' => 'trim|required|min_length[3]|max_length[20]'),
+            array('field' => 'phone_number', 'label' => 'Phone', 'rules' => 'trim|required|min_length[8]|max_length[12]|numeric'),
+            array('field' => 'address', 'label' => 'Address', 'rules' => 'trim|required'),
+            array('field' => 'city', 'label' => 'City', 'rules' => 'trim|required|alpha_dash'),
+            array('field' => 'post_code', 'label' => 'Post Code', 'rules' => 'trim|required|numeric')
+                    );
+            //print_r($rules);exit;
             //$fields['recaptcha_response_field'] = 'Recaptcha';
 
-            $this->form_validation->set_rules($fields);
+            $this->form_validation->set_rules($rules);
             // run form_validation
             if ($this->form_validation->run() == FALSE) {
                 // if false outputs errors
-                $this->form_validation->output_errors();
                 // and take them to registration page to show errors
                 $data['module'] = lang('webshop_folder');
                 $this->template->load($this->_container, 'registration', $data);
@@ -243,15 +247,17 @@ class Webshop extends Shop_Controller {
                 $numrow = $this->mcustomers->checkCustomer($e);
                 if ($numrow == TRUE) {
                     // you have registered before, set the message and redirect to login page.
-                    //flashMsg('info', lang('webshop_registed_before'));
+                    flashMsg('message', lang('webshop_registed_before'));
+                    $this->template->load($this->_container, 'registration', $data);
                     // $this->session->set_flashdata('msg', lang('webshop_registed_before'));
-                    redirect(lang('webshop_folder') . '/login', 'refresh');
-                }
+                    //redirect(lang('webshop_folder') . '/login', 'refresh');
+                } else {
                 // a customer is new, so create the new customer, set message and redirect to login page.
                 $this->mcustomers->addCustomer();
-                //flashMsg('success', lang('webshop_thank_registration'));
+                flashMsg('message', lang('webshop_thank_registration'));
                 // $this->session->set_flashdata('msg', lang('webshop_thank_registration'));
                 redirect(lang('webshop_folder') . '/login');
+                }
             }
         }// end of if($this->input->post('email'))
 
@@ -436,7 +442,7 @@ class Webshop extends Shop_Controller {
      *  Show total cart
      */
 
-    function total_cart() {
+    function total() {
         echo $this->cart->total();
     }
 
@@ -462,8 +468,8 @@ class Webshop extends Shop_Controller {
         // You need to modify this. This is for Norwegian system. At the moment, if a max of individual product is more
         // than 268 kr, then shipping price will be 65 kr otherwise 0 kr or 25 kr.
         $maxprice = 0;
-        if (isset($_SESSION['cart'])) {
-            foreach ($_SESSION['cart'] as $item) {
+        if ($this->cart->total()) {
+            foreach ($this->cart->contents() as $item) {
                 if ($item['price'] > $maxprice) {
                     $maxprice = $item['price'];
                 }
@@ -494,7 +500,7 @@ class Webshop extends Shop_Controller {
         $data['shippingprice'] = $shippingprice['shippingprice'];
 
         $data['grandtotal'] = 0;
-
+        //echo $_SESSION['phone_number'];exit;
         if (isset($_SESSION['customer_id'])) {
             $data['fname'] = $_SESSION['customer_first_name'];
             $data['lname'] = $_SESSION['customer_last_name'];
@@ -555,6 +561,7 @@ class Webshop extends Shop_Controller {
         $data['title'] = lang('webshop_shop_name') . " | " . "checkout";
 
         // old way of form_validation, I hope Bep will update to CI 1.7.2
+        /*
         $fields['customerr_first_name'] = lang('orders_first_name');
         $fields['customerr_last_name'] = lang('orders_last_name');
         $fields['telephone'] = lang('orders_mobile_tel');
@@ -575,16 +582,29 @@ class Webshop extends Shop_Controller {
         $rules['city'] = 'trim|required';
         $rules['post_code'] = 'trim|required';
 
-        $this->form_validation->set_rules($rules);
+        */
+
+        $rules = array(
+            //array('field' => 'username', 'label' => 'Username', 'rules' => 'trim|required|min_length[5]|max_length[12]|xss_clean'),
+            array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|matches[emailconf]|valid_email'),
+            array('field' => 'emailconf', 'label' => 'Email Verified', 'rules' => 'trim|required|valid_email'),
+            array('field' => 'customer_first_name', 'First Name' => 'Username', 'rules' => 'trim|required|min_length[3]|max_length[20]'),
+            array('field' => 'customer_last_name', 'label' => 'Last Name', 'rules' => 'trim|required|min_length[3]|max_length[20]'),
+            array('field' => 'telephone', 'label' => 'Telephone', 'rules' => 'trim|required|min_length[8]|max_length[12]|numeric'),
+            array('field' => 'shippingaddress', 'label' => 'Shipping Address', 'rules' => 'trim|required'),
+            array('field' => 'city', 'label' => 'City', 'rules' => 'trim|required|alpha_dash'),
+            array('field' => 'post_code', 'label' => 'Post Code', 'rules' => 'trim|required|numeric')
+                    );
 
         $shippingprice = $this->shippingprice();
         $data['shippingprice'] = $shippingprice['shippingprice'];
 
+        $this->form_validation->set_rules($rules);
         if ($this->form_validation->run() == FALSE) {
             // $this->session->set_flashdata('msg', 'Please fill all the fields. Please try again!');
             // send back to confirmorder. form_validation error will be displayed automatically
 
-            $this->form_validation->output_errors();
+            //$this->form_validation->output_errors();
             $data['module'] = lang('webshop_folder');
             $this->template->load($this->_container, 'confirmorder', $data);
         } else {

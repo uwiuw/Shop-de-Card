@@ -5,10 +5,9 @@
 		<br />
 		
 		<?php
-		if ($this->session->flashdata('msg')|| $this->session->flashdata('error')){ 
+		if ($this->session->flashdata('message')|| $this->session->flashdata('error')){
 			echo "<div class='status_box'>";
-			echo $this->session->flashdata('msg');
-			echo $this->session->flashdata('error');
+			echo $this->session->flashdata('message');
 			echo "</div>";
 		}
 		?>
@@ -24,7 +23,10 @@
 		
 		<h3>*<?php echo $this->lang->line('webshop_pass_word'); ?></h3>
 		<input type="password" name="password" value="" size="20" />
-		
+
+                <h3>*Retype Password</h3>
+		<input type="password" name="passconf" value="" size="20" />
+                
 		<h3>*<?php echo $this->lang->line('webshop_first_name'); ?></h3>
 		<input type="text" name="customer_first_name" value="<?php echo set_value('customer_first_name'); ?>" size="30" />
 		

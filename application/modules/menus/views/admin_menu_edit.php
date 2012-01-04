@@ -13,6 +13,10 @@ echo form_input($data) ."</p>\n";
 echo "<p><label for='page_uri'>Page you want to show.(URI)</label><br/>\n";
 echo form_dropdown('page_uri',$pages, $menu['page_uri']) ."</p>\n";
 
+echo "<p><label for='page_uri'>Create Own Link (URL)</label><br/>\n";
+$data = array('name'=>'own_url','menu_id'=>'short','size'=>40);
+echo form_input($data) ."</p>\n";
+
 echo "<p><label for='status'>Status</label><br/>\n";
 $options = array('active' => 'active', 'inactive' => 'inactive');
 echo form_dropdown('status',$options, $menu['status']) ."</p>\n";

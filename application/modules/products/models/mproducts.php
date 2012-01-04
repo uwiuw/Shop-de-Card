@@ -18,7 +18,7 @@ class MProducts extends CI_Model {
         $options = array('product_id' => id_clean($id));
         //$Q = $this->db->get_where('product', $options, 1);
 
-        $Q = $this->db->query('SELECT *,p.name AS name FROM product p
+        $Q = $this->db->query('SELECT *,p.name AS name, p.product_id as product_id FROM product p
                                 LEFT JOIN image i ON p.product_id = i.product_id
                                 WHERE p.product_id ="' . $id . '"
                                  AND STATUS ="active" ORDER BY p.name ASC');
@@ -41,6 +41,7 @@ class MProducts extends CI_Model {
 
     function showProductImg($id) {
         $sql = $this->db->query('SELECT * FROM image WHERE product_id =' . $id);
+        //echo $this->db->last_query();
         return $sql->result();
     }
 
@@ -248,17 +249,23 @@ class MProducts extends CI_Model {
 
     function search($term) {
         $data = array();
-        $this->db->select('product_id,name,shortdesc,thumbnail');
+        $sql = $this->db->query("SELECT * FROM product p
+                                INNER JOIN image i ON i.product_id = p.product_id
+                                WHERE (p.name LIKE '%$term%' OR shortdesc LIKE '%$term%' OR longdesc LIKE '%$term%')
+                                AND status='active' ORDER BY p.name ASC LIMIT 50
+            ");
+        /*
+        $this->db->select('product_id,name,shortdesc');
         $this->db->where("(name LIKE '%$term%' OR shortdesc LIKE '%$term%' OR longdesc LIKE '%$term%') AND status='active'");
         $this->db->orderby('name', 'asc');
         $this->db->limit(50);
-        $Q = $this->db->get('product');
-        if ($Q->num_rows() > 0) {
-            foreach ($Q->result_array() as $row) {
+        $Q = $this->db->get('product');*/
+        if ($sql->num_rows() > 0) {
+            foreach ($sql->result_array() as $row) {
                 $data[] = $row;
             }
         }
-        $Q->free_result();
+        $sql->free_result();
         return $data;
     }
 

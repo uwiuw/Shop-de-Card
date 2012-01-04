@@ -57,29 +57,28 @@ class MCustomers extends CI_Model {
             'address' => db_clean($_POST['address'], 50),
             'city' => db_clean($_POST['city'], 25),
             'post_code' => db_clean($_POST['post_code'], 10),
-            'password' => db_clean(dohash($_POST['password']), 16)
+            'password' => db_clean($_POST['password'], 100)
         );
+        //print_r($data);exit;
         $this->db->insert('customer', $data);
     }
 
     function checkCustomer($e) {
-        $numrow = 0;
         $this->db->select('customer_id');
         $this->db->where('email', db_clean($e));
         $this->db->limit(1);
         $Q = $this->db->get('customer');
+        //echo $this->db->last_query();exit;
         if ($Q->num_rows() > 0) {
-            $numrow = TRUE;
-            return $numrow;
+            return TRUE;
         } else {
-            $numrow = FALSE;
-            return $numrow;
+            return FALSE;
         }
     }
 
     function verifyCustomer($e, $pw) {
         $this->db->where('email', db_clean($e, 50));
-        $this->db->where('password', db_clean(dohash($pw), 16));
+        $this->db->where('password', db_clean(do_hash($pw, 'md5'), 100));
         $this->db->limit(1);
         $Q = $this->db->get('customer');
         if ($Q->num_rows() > 0) {
@@ -98,15 +97,20 @@ class MCustomers extends CI_Model {
     }
 
     function updateCustomer() {
+
         $data = array('customer_first_name' => db_clean($_POST['customer_first_name'], 25),
             'customer_last_name' => db_clean($_POST['customer_last_name'], 25),
             'phone_number' => db_clean($_POST['phone_number'], 15),
             'email' => db_clean($_POST['email'], 50),
             'address' => db_clean($_POST['address'], 50),
             'city' => db_clean($_POST['city'], 25),
-            'post_code' => db_clean($_POST['post_code'], 10),
-            'password' => db_clean(dohash($_POST['password']), 16)
+            'post_code' => db_clean($_POST['post_code'], 10)
         );
+        if ($_POST['password'] != "") {
+            $data['password'] = db_clean(do_hash($_POST['password'], 'md5'), 100);
+            //$data['password_reg'] = db_clean($_POST['password'],20);
+        }
+        //print_r($data);exit;
         $this->db->where('customer_id', id_clean($_POST['customer_id']));
         $this->db->update('customer', $data);
     }
@@ -146,4 +150,5 @@ class MCustomers extends CI_Model {
     }
 
 }
+
 ?>

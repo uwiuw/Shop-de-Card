@@ -22,6 +22,12 @@ class MMenus extends CI_Model {
         }
     }
 
+    function getExtLinks(){
+        $sql = $this->db->query("SELECT * FROM menu
+                                WHERE status ='active' AND ext_url !='0' ORDER BY name ASC");
+        return $sql->result();
+    }
+
     function generateallTree(&$tree, $parentid = 0) {
         $this->db->select('menu_id,name,shortdesc,status,parentid,page_uri,order');
         $this->db->where('parentid', $parentid);
@@ -165,6 +171,12 @@ class MMenus extends CI_Model {
             'page_uri' => db_clean($_POST['page_uri'])
         );
 
+        if ($_POST['own_url'] != "") {
+            $data['page_uri'] = db_clean($_POST['own_url'], 100);
+            $data['ext_url'] = 1;
+            //$data['password_reg'] = db_clean($_POST['password'],20);
+        }
+        //print_r($data);
         $this->db->insert('menu', $data);
     }
 
@@ -177,7 +189,11 @@ class MMenus extends CI_Model {
             'parentid' => id_clean($_POST['parentid']),
             'page_uri' => db_clean($_POST['page_uri'])
         );
-
+        if ($_POST['own_url'] != "") {
+            $data['page_uri'] = db_clean($_POST['own_url'], 100);
+            $data['ext_url'] = 1;
+            //$data['password_reg'] = db_clean($_POST['password'],20);
+        }
         $this->db->where('menu_id', id_clean($_POST['menu_id']));
         $this->db->update('menu', $data);
     }

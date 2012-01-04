@@ -18,7 +18,7 @@ $(document).ready(function() {
             //alert(data);
             if(data == 'true'){
                 $("#item-"+prod_id).remove();
-                $.get(link + "webshop/total_cart", function(total_cart){
+                $.get(link + "webshop/total", function(total_cart){
                     $("#total_cart").replaceWith(total_cart);
                 });
             }else{
@@ -44,9 +44,11 @@ $(document).ready(function() {
         function(data){
             
             if(data == 'true'){
-                $.get(link + "webshop/total_cart", function(total_cart){
-                    $("#total_cart").text(total_cart);
-                    $dialog.dialog('open').html('You buy this '+total_cart+' ');
+                var link_cart = '<a href="'+link+'webshop/cart">Here</a>'
+                $.get(link + "webshop/total", function(total_cart){
+                    $(".total_price").text('$ '+total_cart);
+                    $dialog.dialog('open').html('You buy this item and your total cart is<div class="price"> $'+total_cart+'</div> \n\
+                    You Can check your shopping cart '+link_cart);
                 });
             }else{
                 alert("Product does not exist");

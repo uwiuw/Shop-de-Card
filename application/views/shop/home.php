@@ -19,6 +19,7 @@
             <div class="container">
                 <!-- Wrap All contain using CSS3 Box Shadow -->
                 <div class="container_wrap">
+                    <!--Header -->
                     <?php $this->load->view('shop/header'); ?>
                     <!--main product-->
                     <div class="main_product">

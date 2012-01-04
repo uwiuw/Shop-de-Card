@@ -163,6 +163,7 @@ class Products extends Admin_Controller {
             case 'HEAD':
             case 'GET':
                 $id = $this->uri->segment(3);
+                //echo $id;exit;
                 if ($id == null) {
                     $this->get();
                 } else {

@@ -13,21 +13,18 @@ $image = convert_image_path(base_url() . $imageinfo);
 $image = prod_dir() . $product['image_id'] . $product['extension'];
 if ($images > 0) {
     foreach ($images as $img) {
-        echo "<img src='" . prod_dir() . $img . $product['extension'] . "' class='prod_img' width='260' align='left'/>\n";
-    }
-} else {
-    echo "<img src='" . $image . "' class='prod_img' width='260' align='left'/>\n";
-}
-echo "<div class=\"product_buy\"><h2>" . $product['name'] . "</h2>\n";
-echo $product['shortdesc'] . "<br />\n";
-echo $product['longdesc'] . "\n";
-echo "<br />";
-echo "<p><b>" . $this->lang->line('webshop_price') . "</b>: " . $this->lang->line('webshop_currency_symbol') . $product['price'] . "</p>\n";
-echo '<input type="submit" value="Buy" name="add" />';
-echo '<input type="hidden" name="product_id" value="' . $product['product_id'] . '" />';
-echo '<input type="hidden" name="qty" value="1" />';
-echo '</div>'
-//echo '<p><a class="cartlinkbut" href="' . site_url() . "/" .
-//$this->lang->line('webshop_folder') . '/add_cart_item/' . $product['product_id'] .
-//'"><span class="addtocart addcart">' . $this->lang->line('webshop_buy') . '</span></a></p></div>';
-?>
+        ?>
+        <img src='<?= prod_dir() . $img . $product['extension'] ?>' class='prod_img' width='260' align='left'/>
+  <?php  }
+} else { ?>
+    <img src='<?= $image ?>' class='prod_img' width='260' align='left'/>
+<?php } ?>
+<div class="product_buy"><h2><?=$product['name'] ?></h2>
+<?=$product['shortdesc'];?>
+<?=$product['longdesc'];?>
+<br />
+<p>$ <?= $product['price']; ?></p>
+<input type="submit" value="Buy" name="add" />
+<input type="hidden" name="product_id" value="<?= $product['product_id'] ?>" />
+<input type="hidden" name="qty" value="1" />
+</div>

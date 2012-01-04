@@ -20,7 +20,12 @@ body {
     margin:0px; padding:0px;  
     /*    background-color:#f6f6f6;  */
     font-family: Arial;
-}  
+}
+
+a:link {text-decoration: none;}      /* unvisited link */
+a:visited {text-decoration: none;}  /* visited link */
+a:hover {text-decoration: none; color: #F9BB00;}  /* mouse over link */
+a:active {text-decoration: none;}  /* selected link */
 
 #main {  
     /*    background-color:#f6f6f6;  */
@@ -55,6 +60,12 @@ body {
     font-weight: bold;
     font-style: italic;
 }
+.my_account a:link, .my_account a:visited{
+    color: #fff;
+}
+.my_account a:hover{
+    color: #F9BB00;
+}
 #logo{
     float:left;
     background: #fff;
@@ -82,6 +93,13 @@ body {
 .total_price{
     color: red;
     font-style: italic;
+    font-weight: bold;
+}
+.price {
+    display: inline;
+    font-weight: bold;
+}
+.price_category{
     font-weight: bold;
 }
 .phone{
@@ -298,10 +316,10 @@ p.p_desc{
     border:1px solid #ffffff;
 }
 .product_desc{
+    margin-left: 10px;
     text-align:center;
     font-weight:normal;
     width:150px;
-    margin-left: 10px;
 }
 .button, .button:visited {
     background-color: #dddddd; -webkit-box-shadow:: 0 0 9px #333;

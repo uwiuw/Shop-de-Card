@@ -140,11 +140,11 @@ $lang['orders_thank_you'] = "Thank you for your order! We will get in touch as s
  
 /* controllers/webshop/emailorder*/
 
-$lang['email_here_is'] = "Here is the details of order submitted to www.webshop.com";
+$lang['email_here_is'] = "Here is the details of order submitted to orders@cherubdefense.com";
 $lang['email_number_of_order'] = "Nummer of bestilling";
-$lang['email_product_name'] = "Product navn";
-$lang['email_product_price'] = "product pris";
-$lang['email_we_will_call'] = "Thank you for your order. We will call you as soon as possible.";
+$lang['email_product_name'] = "Product name";
+$lang['email_product_price'] = "product price";
+$lang['email_we_will_call'] = "Thank you for your order. We will call you as soon as possible. Cherubdefense.com";
 $lang['email_order_conf'] = "Order confirmation";
 
 
