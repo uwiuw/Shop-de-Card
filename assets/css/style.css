@@ -260,6 +260,7 @@ ol, ul{
     float:left;
     background: #fff;
     margin-left: 300px;
+    margin-top:20px;
     position: relative;
     min-height: 500px;
 }
@@ -404,20 +405,30 @@ p.p_desc{
 li a{
     text-decoration: none;
 }
-#links{
+.links{
     /* The navigation menu bar: */
     float:left;
     color: white;
     margin-top: 5px;
     margin-bottom: 20px;
-    border-right: 1px solid #DDD;
     border-left: 1px solid #000;
+    border-right: 1px solid #DDD;
     width: 325px;
     margin: 0px auto ;
     text-transform: uppercase;
 }
 
-.links li a{
+.links p{
+    margin-left:48px;
+    font-weight: bold;
+}
+.links p.email_deals{
+    margin-left:80px;
+}
+.links p.small{
+    font-size: 12px;
+}
+.link_list li a{
     /* CSS3 rounded corners for both the navigation bar and the buttons: */
     -moz-border-radius:4px;
     -webkit-border-radius:4px;
@@ -428,12 +439,12 @@ li a{
     color: #fff;
 }
 
-.links li{
+.link_list li{
     /* This will arrange the LI-s next to each other */
     display: block;
 }
 
-.links li a,.links li a:visited{
+.link_list li a,.link_list li a:visited{
     /* Styling the hyperlinks of the menu as buttons */
 
     font-weight:bold;
@@ -460,7 +471,7 @@ li a{
     text-shadow:0 1px black;
 }
 
-.links li a:hover{
+.link_list li a:hover{
     color:#000;
     /* On hover show the top, lighter, part of the background: */
     background-position:center top;
@@ -481,6 +492,7 @@ input.sign_up {
     -moz-box-shadow:0 0 5px #666 inset;
     box-shadow:0 0 5px #666 inset;
     height:25px;
+    margin-bottom: 10px;
     line-height:25px;
     width:200px;
     text-indent:5px;
@@ -496,6 +508,9 @@ input.sign_up {
     text-align: center;
     background:url(../images/footer_center.png) repeat-x #000;
     width: 1000px;
+    font-size: 12px;
     height: 62px;
 }
 
+p.footer_center{
+}

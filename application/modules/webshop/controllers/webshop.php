@@ -4,6 +4,7 @@ class Webshop extends Shop_Controller {
 
     function __construct() {
         parent::__construct();
+        $this->load->library('Paypal_Lib');
         // load the form_validation library
         //$this->load->model('subscribers/msubscribers');
     }
@@ -15,7 +16,7 @@ class Webshop extends Shop_Controller {
         $webshop = $this->lang->line('webshop_folder');
         $page = $this->mpages->getPagePath($webshop);
         //echo 'we='.$webshop;exit;
-        $featureimages = $this->mproducts->getFrontFeature($webshop);
+        $featureimages = $this->mproducts->getFrontFeature($webshop,'most sold');
 
         // load slideshow preference
         //$this->bep_assets->load_asset_group($this->preference->item('webshop_slideshow'));
@@ -25,7 +26,7 @@ class Webshop extends Shop_Controller {
         $data['slides'] = $slideimages;
         $data['content'] = 'cart/products'; // Select view to display
         $data['images'] = $featureimages;
-        $data['title'] = $page['name'];
+        $data['title'] =  lang('webshop_shop_name');
         $data['module'] = lang('webshop_folder');
 
         $this->template->load($this->_home, 'frontpage', $data);
@@ -108,7 +109,7 @@ class Webshop extends Shop_Controller {
     function pages($path) {
       
             $page = $this->mpages->getPagePath($path);
-            if (!empty($page)) {//$page will return empty array if there is no page
+            if (!empty($page)) { //$page will return empty array if there is no page
                 $data['pagecontent'] = $page;
                 $data['title'] = lang('webshop_shop_name') . " | " . $page['name'];
             } else {
@@ -295,6 +296,41 @@ class Webshop extends Shop_Controller {
         session_destroy();
 
         redirect(lang('webshop_folder') . '/index', 'refresh');
+    }
+
+    function sign_up(){
+        $data['title'] = lang('webshop_shop_name') . " | " . "Registration";
+        $email = $this->input->post('email');
+        $rules = array(
+        array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|valid_email'),
+        array('field' => 'emailconf', 'label' => 'Email Confirmation', 'rules' => 'trim|required|matches[emailconf]|valid_email'),
+        array('field' => 'customer_first_name', 'label' => 'First Name', 'rules' => 'trim|required|'),
+        array('field' => 'password', 'label' => 'Password', 'rules' => 'trim|required|md5'),
+        //array('field' => 'passconf', 'label' => 'Password Confirmation', 'rules' => 'trim|required|matches[passconf]|md5')
+         );
+
+        $this->form_validation->set_rules($rules);
+        // run form_validation
+        if ($this->form_validation->run() == FALSE) {
+            $data['module'] = lang('webshop_folder');
+            $this->template->load($this->_container, 'registration', $data);
+        } else {
+            $numrow = $this->mcustomers->checkCustomer($email);
+            if ($numrow == TRUE) {
+                // you have registered before, set the message and redirect to login page.
+                flashMsg('message', lang('webshop_registed_before'));
+                $this->template->load($this->_container, 'registration', $data);
+                // $this->session->set_flashdata('msg', lang('webshop_registed_before'));
+                //redirect(lang('webshop_folder') . '/login', 'refresh');
+            } else {
+                // a customer is new, so create the new customer, set message and redirect to login page.
+                $this->mcustomers->signUp();
+                flashMsg('message', lang('webshop_thank_registration'));
+                // $this->session->set_flashdata('msg', lang('webshop_thank_registration'));
+                redirect(lang('webshop_folder') . '/login');
+            }
+        }
+         
     }
 
     function subscribe() {
@@ -515,21 +551,24 @@ class Webshop extends Shop_Controller {
         $this->template->load($this->_container, 'confirmorder', $data);
     }
 
-    function search() {
+    function search($search_url=NULL) {
         /**
          * form in views/header.php point to this search
          * form_open("websearch");
          * This will look in name, shortdesc and longdesc
          *
          */
-        if ($this->input->post('term')) {
+        $term = $this->input->post('term');
+        
+        if ($term) {
             /**
              * In CodeIgniter, the way to check for form input is to use the $this - > input - > post() method
              */
-            $data['results'] = $this->mproducts->search($this->input->post('term'));
+            $data['results'] = $this->mproducts->search($term);
             /**
              * This output id,name,shortdesc,thumbnail
              */
+            //redirect(lang('webshop_folder') . '/search/'.$term);
         } else {
             redirect(lang('webshop_folder') . '/index', 'refresh');
             /**
@@ -683,6 +722,94 @@ class Webshop extends Shop_Controller {
         $data['title'] = lang('webshop_shop_name') . " | " . "Contact us";
         $data['module'] = lang('webshop_folder');
         $this->template->load($this->_container, 'ordersuccess', $data);
+    }
+
+    function form() {
+
+        $this->paypal_lib->add_field('business', 'coder5@ymail.com');
+        $this->paypal_lib->add_field('return', site_url('paypal/success'));
+        $this->paypal_lib->add_field('cancel_return', site_url('paypal/cancel'));
+        $this->paypal_lib->add_field('notify_url', site_url('paypal/ipn')); // <-- IPN url
+        $this->paypal_lib->add_field('custom', '1234567890'); // <-- Verify return
+
+        $this->paypal_lib->add_field('item_name', 'Paypal Test Transaction');
+        $this->paypal_lib->add_field('item_number', '6941');
+        $this->paypal_lib->add_field('amount', '197');
+
+        // if you want an image button use this:
+        $this->paypal_lib->image('button_03.gif');
+
+        // otherwise, don't write anything or (if you want to
+        // change the default button text), write this:
+        // $this->paypal_lib->button('Click to Pay!');
+
+        $data['paypal_form'] = $this->paypal_lib->paypal_form();
+
+        $this->load->view('paypal/form', $data);
+    }
+
+    function auto_form() {
+        $this->paypal_lib->add_field('business', 'coder5@ymail.com');
+        $this->paypal_lib->add_field('return', site_url('paypal/success'));
+        $this->paypal_lib->add_field('cancel_return', site_url('paypal/cancel'));
+        $this->paypal_lib->add_field('notify_url', site_url('paypal/ipn')); // <-- IPN url
+        $this->paypal_lib->add_field('custom', '1234567890'); // <-- Verify return
+
+        $this->paypal_lib->add_field('item_name', 'Paypal Test Transaction');
+        $this->paypal_lib->add_field('item_number', '6941');
+        $this->paypal_lib->add_field('amount', '197');
+
+        $this->paypal_lib->paypal_auto_form();
+    }
+
+    function cancel() {
+        $this->load->view('paypal/cancel');
+    }
+
+    function success() {
+        // This is where you would probably want to thank the user for their order
+        // or what have you.  The order information at this point is in POST
+        // variables.  However, you don't want to "process" the order until you
+        // get validation from the IPN.  That's where you would have the code to
+        // email an admin, update the database with payment status, activate a
+        // membership, etc.
+        // You could also simply re-direct them to another page, or your own
+        // order status page which presents the user with the status of their
+        // order based on a database (which can be modified with the IPN code
+        // below).
+
+        $data['pp_info'] = $this->input->post();
+        $this->load->view('paypal/success', $data);
+    }
+
+    function ipn() {
+        // Payment has been received and IPN is verified.  This is where you
+        // update your database to activate or process the order, or setup
+        // the database with the user's order details, email an administrator,
+        // etc. You can access a slew of information via the ipn_data() array.
+        // Check the paypal documentation for specifics on what information
+        // is available in the IPN POST variables.  Basically, all the POST vars
+        // which paypal sends, which we send back for validation, are now stored
+        // in the ipn_data() array.
+        // For this example, we'll just email ourselves ALL the data.
+        $to = 'YOUR@EMAIL.COM';    //  your email
+
+        if ($this->paypal_lib->validate_ipn()) {
+            $body = 'An instant payment notification was successfully received from ';
+            $body .= $this->paypal_lib->ipn_data['payer_email'] . ' on ' . date('m/d/Y') . ' at ' . date('g:i A') . "\n\n";
+            $body .= " Details:\n";
+
+            foreach ($this->paypal_lib->ipn_data as $key => $value)
+                $body .= "\n$key: $value";
+
+            // load email lib and email results
+            $this->load->library('email');
+            $this->email->to($to);
+            $this->email->from($this->paypal_lib->ipn_data['payer_email'], $this->paypal_lib->ipn_data['payer_name']);
+            $this->email->subject('CI paypal_lib IPN (Received Payment)');
+            $this->email->message($body);
+            $this->email->send();
+        }
     }
 
 }

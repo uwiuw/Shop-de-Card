@@ -11,7 +11,7 @@
             <ul class="cat">
                 <?php
                 foreach ($this->categories as $cat) {
-                    echo "<li><a href='" . site_url() . "/webshop/cat/" . $cat['category_id'] . "'>" . $cat['name'] . "</a></li>\n";
+                    echo "<li><a href='" . site_url("/webshop") . "/cat/" . $cat['category_id'] . "'>" . $cat['name'] . "</a></li>\n";
                 }
                 ?>
             </ul>

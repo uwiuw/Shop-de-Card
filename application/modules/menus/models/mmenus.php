@@ -13,6 +13,7 @@ class MMenus extends CI_Model {
         $this->db->select('menu_id,name,shortdesc,status,parentid,page_uri,order');
         $this->db->where('status', 'active');
         $this->db->where('page_uri !=','0');
+        $this->db->where('ext_url' ,'0');
         $this->db->order_by('order asc, parentid asc');
         $res = $this->db->get('menu');
         if ($res->num_rows() > 0) {
@@ -24,7 +25,7 @@ class MMenus extends CI_Model {
 
     function getExtLinks(){
         $sql = $this->db->query("SELECT * FROM menu
-                                WHERE status ='active' AND ext_url !='0' ORDER BY name ASC");
+                                WHERE status ='active' AND ext_url !='0' ORDER BY `order` ASC");
         return $sql->result();
     }
 
@@ -50,6 +51,7 @@ class MMenus extends CI_Model {
 
         $this->db->join('page', 'menu.id = page.menu_id');
         $this->db->where('parentid', $parentid);
+        $this->db->where('ext_url', 0);
 
         $this->db->order_by('order asc, parentid asc');
         $res = $this->db->get('menu');

@@ -48,6 +48,15 @@ class MCustomers extends CI_Model {
         return $this->db->get('customer');
     }
 
+    function signUp(){
+        $data = array(
+                'customer_first_name' => db_clean($_POST['customer_first_name'], 25),
+                 'email' => db_clean($_POST['email'], 50),
+                'password' => db_clean($_POST['password'], 100)
+        );
+        $this->db->insert('customer',$data);
+    }
+
     function addCustomer() {
         $data = array(
             'customer_first_name' => db_clean($_POST['customer_first_name'], 25),

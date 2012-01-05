@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 03, 2012 at 06:59 PM
+-- Generation Time: Jan 05, 2012 at 07:53 PM
 -- Server version: 5.1.49
 -- PHP Version: 5.3.6-8ubuntu0ppa5~maverick1
 
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `be_users` (
 --
 
 INSERT INTO `be_users` (`id_user`, `username`, `password`, `email`, `active`, `group`, `activation_key`, `last_visit`, `created`, `modified`) VALUES
-(1, 'Administrator', 'a424c7ae34227766c8f477c860fad0a1b98078f2', 'coder5@ymail.com', 1, 2, NULL, '2011-12-27 14:15:55', '2011-12-21 19:54:32', NULL);
+(1, 'Administrator', 'a424c7ae34227766c8f477c860fad0a1b98078f2', 'admin@cherubdefense.com', 1, 2, NULL, '2012-01-05 16:41:20', '2011-12-21 19:54:32', NULL);
 
 -- --------------------------------------------------------
 
@@ -158,24 +158,26 @@ CREATE TABLE IF NOT EXISTS `customer` (
   `password` varchar(50) NOT NULL,
   `customer_first_name` varchar(50) NOT NULL,
   `customer_last_name` varchar(50) NOT NULL,
-  `phone_number` int(10) unsigned NOT NULL,
+  `phone_number` varchar(20) NOT NULL,
   `email` varchar(50) NOT NULL,
   `address` varchar(50) NOT NULL,
   `city` varchar(50) NOT NULL,
   `post_code` int(10) unsigned NOT NULL,
   PRIMARY KEY (`customer_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=82 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=94 ;
 
 --
 -- Dumping data for table `customer`
 --
 
 INSERT INTO `customer` (`customer_id`, `password`, `customer_first_name`, `customer_last_name`, `phone_number`, `email`, `address`, `city`, `post_code`) VALUES
-(76, 'da39a3ee5e6b4b0d', 'haidar', 'mar''ie', 4294967295, 'coder5@ahamail.co.id', 'jl. raden saleh 1 no 3a', 'bandung', 40291),
-(77, 'da39a3ee5e6b4b0d', 'doni', 'irawans', 182313, 'coders@ahamail.co.id', 'jl. ters sindang barang no.14', 'bandung', 40291),
-(79, 'a1190e457b064c0c', 'haidar', 'mar''ie', 4294967295, 'coder5@ymail.com', 'jl. ters sindang barang no .14', 'bandung', 40291),
-(80, '', 'Danny', 'Test', 3082098, 'coder5@aha.co.id', 'jl. ter sindang barang no.14', 'bandung', 209831),
-(81, '', 'roni', 'cod', 12312313, 'darmawan.soad@yahoo.com', 'jl. ter sindang barang no.14', 'bandung', 23423424);
+(76, '1acf7bbc7ac25ef58455', 'haidar', 'mar''ie', '15555555', 'coder5@ahamail.co.id', 'jl. raden saleh 1 no 3a', 'bandung', 40291),
+(93, '1acf7bbc7ac25ef584552fdb1314ebda', 'haidar', '', '', 'coders@ahamail.co.id', '', '', 0),
+(80, '', 'Danny', 'Test', '3082098', 'coder5@aha.co.id', 'jl. ter sindang barang no.14', 'bandung', 209831),
+(81, '', 'roni', 'cod', '12312313', 'darmawan.soad@yahoo.com', 'jl. ter sindang barang no.14', 'bandung', 23423424),
+(90, 'da39a3ee5e6b4b0d', 'uwiw', 'uwiuw ', '11111111111', 'uwiuw.inlove@gmail.com', 'jl. citra 1231', 'bandung', 2423),
+(89, '1acf7bbc7ac25ef584552fdb1314ebda', 'haidar', 'mari', '666666666666666', 'coder5@ymail.com', 'jl. ter sindang barang no.14', 'bandung', 1234),
+(91, '1acf7bbc7ac25ef5', 'hai', 'hai', '12312321312', 'admin@cherubdefense.com', 'jl. citra', 'bandung', 2423);
 
 -- --------------------------------------------------------
 
@@ -195,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `image` (
   `medium_url` varchar(255) NOT NULL,
   `thumbnail_url` varchar(255) NOT NULL,
   PRIMARY KEY (`image_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=22 ;
 
 --
 -- Dumping data for table `image`
@@ -212,7 +214,9 @@ INSERT INTO `image` (`image_id`, `product_id`, `name`, `default`, `extension`, `
 (16, 123, 'books1.jpg', 0, '.jpg', '77984', 'image/jpeg', '/assets/product/', '', '/assets/product_thumb/'),
 (17, 124, 'buku-tamu.gif', 0, '.gif', '29074', 'image/gif', '/assets/product/', '', '/assets/product_thumb/'),
 (18, 0, '5099.jpg', 0, '.jpg', '5541', 'image/jpeg', '/assets/product/', '', '/assets/product_thumb/'),
-(19, 0, '5099.jpg', 0, '.jpg', '5541', 'image/jpeg', '/assets/product/', '', '/assets/product_thumb/');
+(19, 0, '5099.jpg', 0, '.jpg', '5541', 'image/jpeg', '/assets/product/', '', '/assets/product_thumb/'),
+(20, 0, 'RUNT-45R.jpg', 0, '.jpg', '21772', 'image/jpeg', '/assets/product/', '', '/assets/product_thumb/'),
+(21, 126, '5099.jpg', 0, '.jpg', '5541', 'image/jpeg', '/assets/product/', '', '/assets/product_thumb/');
 
 -- --------------------------------------------------------
 
@@ -225,33 +229,38 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `name` varchar(255) NOT NULL,
   `shortdesc` varchar(255) NOT NULL,
   `content` text NOT NULL,
-  `page_uri` varchar(60) NOT NULL,
+  `page_uri` varchar(100) NOT NULL,
+  `ext_url` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `status` enum('active','inactive') NOT NULL,
   `parentid` int(10) NOT NULL,
   `order` int(11) NOT NULL,
   PRIMARY KEY (`menu_id`),
   KEY `page_id` (`page_uri`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=132 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=137 ;
 
 --
 -- Dumping data for table `menu`
 --
 
-INSERT INTO `menu` (`menu_id`, `name`, `shortdesc`, `content`, `page_uri`, `status`, `parentid`, `order`) VALUES
-(107, 'Webshop', '', '', '0', 'active', 0, 20),
-(112, 'Home', '', '', 'webshop', 'active', 107, 10),
-(113, 'About', '', '', 'about_us', 'inactive', 107, 20),
-(114, 'Returns Policy', 'Returns Policy', '', 'return_policy', 'active', 107, 30),
-(115, 'My Account', '', '', 'productinformation', 'inactive', 114, 10),
-(116, 'Gift card', '', '', 'gift_card', 'inactive', 114, 20),
-(117, 'Shipping', '', '', 'shipping', 'active', 107, 30),
-(118, 'Term & Condition', 'Term & Condition', '', 'payment.html', 'active', 107, 40),
-(120, 'Return Policy', '', '', '0', 'active', 107, 60),
-(121, 'Products', '', '', '0', 'inactive', 107, 25),
-(122, 'News', '', '', 'news', 'active', 107, 50),
-(124, 'Contact us', '', '', 'contact_us', 'active', 107, 70),
-(125, 'Go to checkout', 'shopping cart', '', 'checkout', 'active', 107, 80),
-(131, 'payment', 'payment', '', 'payment', 'active', 107, 122);
+INSERT INTO `menu` (`menu_id`, `name`, `shortdesc`, `content`, `page_uri`, `ext_url`, `status`, `parentid`, `order`) VALUES
+(107, 'Webshop', '', '', '0', 0, 'active', 0, 20),
+(112, 'Home', '', '', 'webshop', 0, 'active', 107, 10),
+(113, 'About', '', '', 'about_us', 0, 'inactive', 107, 20),
+(114, 'Returns Policy', 'Returns Policy', '', 'return_policy', 0, 'active', 107, 30),
+(115, 'My Account', '', '', 'productinformation', 0, 'inactive', 114, 10),
+(116, 'Gift card', '', '', 'gift_card', 0, 'inactive', 114, 20),
+(117, 'Shipping', '', '', 'shipping', 0, 'active', 107, 30),
+(118, 'Term & Condition', 'Term & Condition', '', 'payment.html', 0, 'active', 107, 40),
+(120, 'Return Policy', '', '', '0', 0, 'active', 107, 60),
+(121, 'Products', '', '', '0', 0, 'inactive', 107, 25),
+(122, 'News', '', '', 'news', 0, 'inactive', 107, 50),
+(124, 'Contact us', '', '', 'contact_us', 0, 'inactive', 107, 70),
+(125, 'Go to checkout', 'shopping cart', '', 'checkout', 0, 'active', 107, 80),
+(131, 'payment', 'payment', '', 'payment', 0, 'inactive', 107, 122),
+(132, 'Blog', 'Cherub Blog', '', 'http://cherubdefense.com/blog/', 1, 'active', 0, 1),
+(134, 'Youtube', 'Youtube cherub', '', 'http://www.youtube.com/user/CherubDefense/videos', 1, 'active', 0, 2),
+(135, 'Facebook', 'Facebook Cherub', '', 'http://www.facebook.com/pages/Cherub-Defense-LLC/249536598401588', 1, 'active', 0, 3),
+(136, 'Twitter', 'Twitter Cherub', '', 'http://twitter.com/cherubdefense', 1, 'active', 0, 4);
 
 -- --------------------------------------------------------
 
@@ -268,7 +277,7 @@ CREATE TABLE IF NOT EXISTS `order` (
   `payment_date` datetime NOT NULL,
   PRIMARY KEY (`customer_id`,`total`,`delivery_date`,`payment_date`),
   UNIQUE KEY `order_id` (`order_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=64 ;
 
 --
 -- Dumping data for table `order`
@@ -276,7 +285,9 @@ CREATE TABLE IF NOT EXISTS `order` (
 
 INSERT INTO `order` (`order_id`, `customer_id`, `total`, `order_date`, `delivery_date`, `payment_date`) VALUES
 (60, 80, 268, '2011-12-28 12:25:22', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(61, 81, 686, '2011-12-28 14:12:27', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(61, 81, 686, '2011-12-28 14:12:27', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(62, 89, 313, '2012-01-04 16:47:39', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(63, 89, 99, '2012-01-04 17:01:08', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -291,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `order_item` (
   `quantity` int(10) unsigned NOT NULL,
   `price` decimal(10,2) NOT NULL,
   PRIMARY KEY (`order_item_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=87 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=89 ;
 
 --
 -- Dumping data for table `order_item`
@@ -300,7 +311,9 @@ CREATE TABLE IF NOT EXISTS `order_item` (
 INSERT INTO `order_item` (`order_item_id`, `order_id`, `product_id`, `quantity`, `price`) VALUES
 (84, 60, 77, 1, 268.00),
 (85, 61, 97, 1, 268.00),
-(86, 61, 75, 1, 418.00);
+(86, 61, 75, 1, 418.00),
+(87, 62, 117, 1, 313.00),
+(88, 63, 123, 1, 99.00);
 
 -- --------------------------------------------------------
 
@@ -330,7 +343,7 @@ INSERT INTO `page` (`page_id`, `name`, `keywords`, `description`, `path`, `conte
 (27, 'Product information', '', '', 'productinformation', '<h2>Product information</h2>\nThunder, thundeercats! Thundercats!', 'active', 0),
 (28, 'Shopping guide', '', '', 'shopping_guide', '<h1>Shopping guide</h1>\nTop Cat! The most effectual.', 'active', 0),
 (29, 'Gift card', '', '', 'gift_card', '<h2>Gift card</h2>\nLorem ipsum dolor.', 'active', 0),
-(30, 'Shipping', '', '', 'shipping', '<h2>Shipping information</h2><Lorem ipsum dolor sit ameerat', 'active', 0),
+(30, 'Shipping', '', '', 'shipping', '<h2>Shipping information</h2>Shipping information Shipping informationShipping informationShipping informationShipping informationShipping informationShipping informationShipping informationShipping informationShipping information', 'active', 0),
 (33, 'News', '', '', 'news', '<h2>News</h2>\nUlysses, Ulyssese.', 'active', 0),
 (35, 'Contact us', 'contact_us', 'contact_us', 'contact_us', 'Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us Contact Us v', 'active', 0),
 (38, 'Go to checkout', '', '', 'checkout', '', 'active', 0),
@@ -353,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `product` (
   `product_order` int(11) NOT NULL,
   `class` varchar(255) NOT NULL,
   `grouping` varchar(16) NOT NULL,
-  `status` enum('active','inactive') NOT NULL,
+  `status` enum('active','inactive') NOT NULL DEFAULT 'active',
   `featured` enum('none','front','webshop') NOT NULL,
   `other_feature` enum('none','most sold','new product') NOT NULL,
   `image` varchar(255) NOT NULL,
@@ -363,42 +376,36 @@ CREATE TABLE IF NOT EXISTS `product` (
   `create_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`category_id`,`name`,`price`,`stock`,`product_id`),
   UNIQUE KEY `product_id` (`product_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=127 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=139 ;
 
 --
 -- Dumping data for table `product`
 --
 
 INSERT INTO `product` (`product_id`, `category_id`, `name`, `shortdesc`, `longdesc`, `product_order`, `class`, `grouping`, `status`, `featured`, `other_feature`, `image`, `thumbnail`, `price`, `stock`, `create_date`) VALUES
-(71, 102, 'Shortland2', '', '', 0, '', '', 'active', 'webshop', 'none', 'assets/images/digital_downloads/242x440_5.jpg', 'assets/images/digital_downloads/thumbnails/114x207_5.jpg', 268, 0, '2011-12-22 06:21:43'),
-(72, 102, 'D2301-01', '', '', 0, '', '', 'active', 'webshop', 'new product', 'assets/images/computers_&_office/242x440_8.jpg', 'assets/images/computers_&_office/thumbnails/114x207_8.jpg', 268, 0, '2011-12-22 06:21:43'),
-(73, 102, 'Friendship', '', '', 0, '', '', 'active', 'webshop', 'none', 'assets/images/movies,_music_&_games/242x440_8.jpg', 'assets/images/movies,_music_&_games/thumbnails/114x207_8.jpg', 198, 0, '2011-12-22 06:21:43'),
-(74, 101, 'Placerat', '', '', 0, '', '', 'active', 'webshop', 'new product', 'assets/images/movies,_music_&_games/242x440_9.jpg', 'assets/images/movies,_music_&_games/thumbnails/114x207_9.jpg', 268, 0, '2011-12-22 06:21:43'),
-(75, 101, 'Elementum', '', '', 0, '', '', 'active', 'webshop', 'most sold', 'assets/images/movies,_music_&_games/242x440_2.jpg', 'assets/images/movies,_music_&_games/thumbnails/114x207_2.jpg', 418, 0, '2011-12-22 06:21:43'),
-(76, 101, 'Porttitor', '', '', 0, '', '', 'active', 'webshop', '', 'assets/images/movies,_music_&_games/242x440_10.jpg', 'assets/images/movies,_music_&_games/thumbnails/114x207_10.jpg', 268, 0, '2011-12-22 06:21:43'),
-(77, 103, 'Rerefe', '', '', 0, '', '', 'active', 'webshop', 'most sold', 'assets/images/computers_&_office/242x440_17.jpg', 'assets/images/computers_&_office/thumbnails/114x207_17.jpg', 268, 0, '2011-12-22 06:21:43'),
-(78, 103, 'Rre resettr', '', '', 0, '', '', 'active', 'webshop', 'most sold', 'assets/images/computers_&_office/242x440_11.jpg', 'assets/images/computers_&_office/thumbnails/114x207_11.jpg', 268, 0, '2011-12-22 06:21:43'),
-(79, 103, 'Pruyyuty', '', '', 0, '', '', 'active', 'webshop', 'new product', 'assets/images/computers_&_office/242x440_12.jpg', 'assets/images/computers_&_office/thumbnails/114x207_12.jpg', 268, 0, '2011-12-22 06:21:43'),
-(82, 99, 'Gfwee', '', '', 0, '', '', 'active', 'webshop', '', 'assets/images/books/242x440_14.jpg', 'assets/images/books/thumbnails/114x207_14.jpg', 268, 0, '2011-12-22 06:21:43'),
-(84, 99, 'Sjuer', '', '', 0, '', '', 'active', 'webshop', '', 'assets/images/books/242x440_16.jpg', 'assets/images/books/thumbnails/114x207_16.jpg', 268, 0, '2011-12-22 06:21:43'),
-(85, 99, 'Isbjorn', '', '', 0, '', '', 'active', 'webshop', 'most sold', 'assets/images/books/242x440_16.jpg', 'assets/images/books/thumbnails/114x207_16.jpg', 498, 0, '2011-12-22 06:21:43'),
-(89, 99, 'Medite eret', '', '', 0, '', '', 'active', 'webshop', 'most sold', 'assets/images/books/242x440_17.jpg', 'assets/images/books/thumbnails/114x207_17.jpg', 268, 0, '2011-12-22 06:21:43'),
-(97, 104, 'Oyenter', '', '', 0, '', '', 'active', 'webshop', 'most sold', 'assets/images/electronics/242x440_7.jpg', 'assets/images/electronics/thumbnails/114x207_7.jpg', 268, 0, '2011-12-22 06:21:43'),
-(103, 104, 'Ville hjempener', '', '', 0, '', '', 'active', 'webshop', 'most sold', 'assets/images/movies,_music_&_games/242x440_10.jpg', 'assets/images/movies,_music_&_games/thumbnails/114x207_10.jpg', 418, 0, '2011-12-22 06:21:43'),
-(104, 104, 'Den here ire ierrr tere', '', '', 0, '', '', 'active', 'webshop', 'new product', 'assets/images/movies,_music_&_games/242x440_4.jpg', 'assets/images/movies,_music_&_games/thumbnails/114x207_4.jpg', 418, 0, '2011-12-22 06:21:43'),
-(105, 100, 'Alvieun', '', '', 0, '', '', 'active', 'webshop', 'new product', 'assets/images/movies,_music_&_games/242x440_7.jpg', 'assets/images/movies,_music_&_games/thumbnails/114x207_7.jpg', 418, 0, '2011-12-22 06:21:43'),
-(106, 100, 'Truatu', '', '', 0, '', '', 'active', 'webshop', 'most sold', 'assets/images/movies,_music_&_games/242x440_2.jpg', 'assets/images/movies,_music_&_games/thumbnails/114x207_2.jpg', 268, 0, '2011-12-22 06:21:43'),
-(118, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-02 08:42:33'),
-(123, 99, 'books', 'books books books books books ', 'books books books books ', 0, 'books', 'books', 'active', 'front', 'none', '', '', 99, 0, '2012-01-03 11:07:19'),
-(108, 102, 'product2', 'product2', 'product2', 1, '', '', 'active', 'none', 'none', '', '', 90, 0, '2011-12-22 07:03:13'),
-(122, 1, 'navicat', 'navicat', 'navicat', 0, '', '', 'active', 'none', 'none', '', '', 111, 0, '2012-01-02 13:11:57'),
-(121, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-02 08:46:56'),
-(120, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-02 08:45:27'),
-(119, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-02 08:44:45'),
-(117, 102, 'Shirts haidar testing this', 'Shirts haidar testing this', 'haidar testing this', 0, '', '', 'active', 'none', 'none', '', '', 313, 0, '2012-01-02 04:04:41'),
-(124, 99, 'Buku 2', 'Buku 2 Buku 2 Buku 2 Buku 2 Buku 2 Buku 2', 'Buku 2 Buku 2Buku 2 Buku 2Buku 2 Buku 2Buku 2 Buku 2Buku 2 Buku 2Buku 2 Buku 2Buku 2 Buku 2', 0, '', 'books', 'active', 'none', 'none', '', '', 44, 0, '2012-01-03 11:09:01'),
-(125, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-03 11:10:15'),
-(126, 102, 'Cherub Defense', 'Cherub Defense Cherub Defense Cherub Defense Cherub Defense ', 'Cherub Defense Cherub Defense Cherub Defense ', 0, 'defense', 'defense', 'active', 'none', 'none', '', '', 55, 0, '2012-01-03 11:11:38');
+(129, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-05 09:55:09'),
+(130, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-05 09:55:52'),
+(131, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-05 09:56:06'),
+(132, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-05 09:57:45'),
+(133, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-05 10:00:42'),
+(134, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-05 10:01:32'),
+(135, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-05 10:03:26'),
+(136, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-05 10:08:15'),
+(137, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-05 12:23:52'),
+(138, 0, '1', '', '', 0, '', '', 'active', 'none', 'none', '', '', 0, 0, '2012-01-05 12:24:53'),
+(118, 0, '1', '', '', 0, '', '', 'active', 'webshop', 'most sold', '', '', 0, 0, '2012-01-02 08:42:33'),
+(123, 99, 'books', 'books books books books books ', 'books books books books ', 0, 'books', 'books', 'active', 'webshop', 'most sold', '', '', 99, 0, '2012-01-03 11:07:19'),
+(108, 102, 'product2', 'product2', 'product2', 1, '', '', 'active', 'webshop', 'most sold', '', '', 90, 0, '2011-12-22 07:03:13'),
+(122, 1, 'navicat', 'navicat', 'navicat', 0, '', '', 'active', 'webshop', 'most sold', '', '', 111, 0, '2012-01-02 13:11:57'),
+(121, 0, '1', '', '', 0, '', '', 'active', 'webshop', 'most sold', '', '', 0, 0, '2012-01-02 08:46:56'),
+(120, 0, '1', '', '', 0, '', '', 'active', 'webshop', 'most sold', '', '', 0, 0, '2012-01-02 08:45:27'),
+(119, 0, '1', '', '', 0, '', '', 'active', 'webshop', 'most sold', '', '', 0, 0, '2012-01-02 08:44:45'),
+(117, 102, 'Shirts haidar testing this', 'Shirts haidar testing this', 'haidar testing this', 0, '', '', 'active', 'webshop', 'most sold', '', '', 313, 0, '2012-01-02 04:04:41'),
+(124, 99, 'Buku 2', 'Buku 2 Buku 2 Buku 2 Buku 2 Buku 2 Buku 2', 'Buku 2 Buku 2Buku 2 Buku 2Buku 2 Buku 2Buku 2 Buku 2Buku 2 Buku 2Buku 2 Buku 2Buku 2 Buku 2', 0, '', 'books', 'active', 'webshop', 'most sold', '', '', 44, 0, '2012-01-03 11:09:01'),
+(125, 0, '1', '', '', 0, '', '', 'active', 'webshop', 'most sold', '', '', 0, 0, '2012-01-03 11:10:15'),
+(126, 107, 'Cherub Defense', 'Cherub Defense Cherub Defense Cherub Defense Cherub Defense ', 'Cherub Defense Cherub Defense Cherub Defense ', 0, 'defense', 'defense', 'active', 'webshop', 'most sold', '', '', 55, 0, '2012-01-03 11:11:38'),
+(127, 0, '1', '', '', 0, '', '', 'active', 'webshop', 'most sold', '', '', 0, 0, '2012-01-04 10:37:45'),
+(128, 0, '1', '', '', 0, '', '', 'active', 'webshop', 'most sold', '', '', 0, 0, '2012-01-05 00:16:19');
 
 -- --------------------------------------------------------
 

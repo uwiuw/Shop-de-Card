@@ -7,9 +7,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />  
-        <script type="text/javascript" src="<?= js_dir() ?>jquery-1.7.1.min.js"></script>
-        <script type="text/javascript" src="<?= js_dir() ?>jquery-ui-1.8.16.custom.min.js"></script>
-        <script type="text/javascript" src="<?= js_dir() ?>cart.js"></script>
         <link href="<?php  echo css_dir(); ?>style.css" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="<?= css_dir() ?>smoothness/jquery-ui-1.8.16.custom.css" />
         <title><?= $title ?></title>

@@ -13,11 +13,18 @@
             echo "<span class='hdrproduct'>";
             echo anchor('/product/' . $list['product_id'], $list['name']);
             echo "</span>\n";
-            echo $list['shortdesc'] . "<br/>";
-            echo '<a href="' . site_url() . $this->lang->line('webshop_folder') . '/cart/' . $list['product_id'] . '"><p class="addtocart">' . $this->lang->line('webshop_buy') . '</p></a></div>';
+            echo $list['shortdesc'] . "<br/>"; ?>
+
+            <div class="product_buy">
+                <input type="hidden" name="product_id" value="<?= $list['product_id'] ?>" />
+                <input type="hidden" name="qty" value="1" />
+                <input type="submit" value="Buy" name="add" />
+            </div>        
+        </div>
+<?php
         }
     } else {
         echo "<p>Sorry, no records were found to match your search term.</p>";
     }
-    ?>
+?>
 </div>

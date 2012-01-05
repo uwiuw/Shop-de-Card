@@ -19,10 +19,10 @@
 
     <!--search bar-->
     <div id="search_bar">
-        <form  method="post" action="<?= site_url() ?>/webshop/search"  id="searchform">
+        <form  method="post" name="search" action="<?= site_url() ?>webshop/search/"  id="searchform">
             <div class="search">Search 
-                <input type="text" name="term" id="search"/>
-                <input type="submit" name="submit" value="Go" />
+                <input type="text" name="term" id="search" class="searching"/>
+                <input type="submit" name="submit"  value="Go" />
             </div>
         </form>
     </div>

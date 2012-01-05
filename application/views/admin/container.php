@@ -14,6 +14,7 @@
         <link rel="stylesheet" media="screen,projection" type="text/css" href="<?php echo css_dir(); ?>FlashStatus.css" /> <!-- WRITE YOUR CSS CODE HERE -->
         <script type="text/javascript" src="<?php echo js_dir(); ?>jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="<?php echo js_dir(); ?>jquery-ui-1.8.16.custom.min.js"></script>
+        <script type="text/javascript" src="<?php echo js_dir(); ?>cherub.js"></script>
         <script type="text/javascript">
 	
         </script>

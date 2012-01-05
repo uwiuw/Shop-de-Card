@@ -1,0 +1,11 @@
+1.) When a customer registers, they cannot put in a password. You can only put in a password in the admin panel. ... Done & Fixed
+2.) When you login, you cannot logout. .. Done & Fixed
+3.) The "YOUR CART $ XXX.XX" in red at the top does not update price.  .. Done & Fixed
+4.) Search bar does not work … Done & Fixed (Can see any product result)
+5.) I created item "Pepper Spray."  The picture does not show up on webshop frontpage (see attached picture). … Done & Fixed (file permission was denied before)
+6.) In admin panel under Customers tab - "Phone Number" is not the number I entered.  …. Done & Fixed
+7.) Please see menu / page I created "Terms & Conditions" - I was trying to link a menu page to an existing Cherub Defense Blog page. It does not work. Is it possible for me to change Menu pages to be able to direct to any website? Or for it to recognize /blog/ directory and redirect accordingly?
+-- You can check on admin new input type  Create Own Link (URL)  http://cherubdefense.com/cherub/index.php/menus/edit/132  
+
+8.) Please see order confirmation I forwarded - Order confirmations come from "elmerq@gator1287.hostgator.com" and say they're from "webshop.com" can we have this email come from a new email address: "orders@cherubdefense.com" and say they're from Cherub Defense? Also note, the phone number I put in is correct here (was wrong in #6). … Done & Fixed
+

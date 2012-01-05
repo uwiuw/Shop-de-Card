@@ -18,11 +18,10 @@ class MProducts extends CI_Model {
         $options = array('product_id' => id_clean($id));
         //$Q = $this->db->get_where('product', $options, 1);
 
-        $Q = $this->db->query('SELECT *,p.name AS name, p.product_id as product_id FROM product p
+        $Q = $this->db->query('SELECT *,p.name AS name, p.status AS pstatus, p.product_id as product_id FROM product p
                                 LEFT JOIN image i ON p.product_id = i.product_id
-                                WHERE p.product_id ="' . $id . '"
-                                 AND STATUS ="active" ORDER BY p.name ASC');
-        
+                                WHERE p.product_id ="' . $id . '" ORDER BY p.name ASC LIMIT 1');
+        //echo $this->db->last_query();
         if ($Q->num_rows() > 0 && $Q->num_rows() == 1) {
             $data = $Q->row_array();
         } elseif ($Q->num_rows > 1) {
@@ -160,19 +159,28 @@ class MProducts extends CI_Model {
         return $data;
     }
 
-    function getFrontFeature($feature) {
+    function getFrontFeature($feature,$other_feature=NULL) {
         $data = array();
+        /*
+        $this->db->join('image', 'image.product_id = product.product_id','left');
         $this->db->where('featured', $feature);
         $this->db->where('status', 'active');
         $this->db->LIMIT(4);
         $this->db->order_by('name', 'random');
-        $Q = $this->db->get('product');
-        if ($Q->num_rows() > 0) {
-            foreach ($Q->result_array() as $row) {
+        $Q = $this->db->get('product'); */
+        $others = $other_feature == NULL?'':"AND other_feature ='{$other_feature}'";
+        //echo $others;exit;
+        $sql = $this->db->query("SELECT *,p.product_id AS product_id, p.name  AS name, LEFT(shortdesc, 30) as shortdesc  FROM product p
+                        INNER JOIN `image` i ON i.product_id = p.product_id
+                        WHERE `featured` = '$feature' $others AND `status` = 'active' AND p.name!=1
+                        ORDER BY RAND() LIMIT 4");
+        //echo $this->db->last_query();
+        if ($sql->num_rows() > 0) {
+            foreach ($sql->result_array() as $row) {
                 $data[] = $row;
             }
         }
-        $Q->free_result();
+        $sql->free_result();
         return $data;
     }
 
@@ -449,13 +457,15 @@ class MProducts extends CI_Model {
         // getting status of page
         $productinfo = array();
         $productinfo = $this->getProduct($id);
-        $status = $productinfo['status'];
+        $status = $productinfo['pstatus'];
+
+        //print_r($status);exit;
         if ($status == 'active') {
-            $data = array('status' => '0');
+            $data = array('status' => 'inactive');
             $this->db->where('product_id', id_clean($id));
             $this->db->update('product', $data);
         } else {
-            $data = array('status' => '1');
+            $data = array('status' => 'active');
             $this->db->where('product_id', id_clean($id));
             $this->db->update('product', $data);
         }

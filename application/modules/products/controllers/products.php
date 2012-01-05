@@ -100,7 +100,8 @@ class Products extends Admin_Controller {
 
     function changeProductStatus($id) {
         $this->mproducts->changeProductStatus($id);
-        flashMsg('message', 'Page status changed');
+        $this->session->set_flashdata('message', 'sdfdsfsdf');
+        //flashMsg('message', 'Page status changed');
         redirect('products', 'refresh');
     }
 

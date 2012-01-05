@@ -8,8 +8,8 @@
         </style>
     </head>
     <body>
-        <p style="left:10px; position:absolute; top:10px;"><a href="<?= site_url() ?>">&laquo; Live Site</a></p>
-        <form id="start" method="post" action="admin/log_in">
+        <p class="live"><a href="<?= site_url() ?>">&laquo; Live Site</a></p>
+        <form id="start" method="post" action="<?= site_url() ?>/admin/log_in">
             <h1>Cherub Admin Backend</h1>
             <p>
                 <label for="email">Email</label>
@@ -20,14 +20,14 @@
                 <input id="password" name="password" type="password" />
             </p>
             <p>
-                <label for="remember">Remeber This ?</label>
-                <input id="remember" name="remember" type="checkbox" />
+                <?php
+                if ($this->session->flashdata('message')) {
+                    echo $this->session->flashdata('message');
+                } ?>
+
             </p>
-            <p></p>
             <p>
-                <input type="submit" value="Submit" name="submit" class="submit" /> &nbsp;&nbsp;&nbsp; <a href="<?php echo site_url('auth/forgotten_password') ?>">
-            			Forget Password
-                </a>
+                <input type="submit" value="Submit" name="submit" class="submit" />
             </p>
             <div id="finish">
                 <p>
@@ -36,6 +36,6 @@
             </div>
         </form>
         <p id="credits">Cherub Defense Admin Backend .<br />
-            <a href="http://bbxdesign.com/2010/03/24/tutoriel-formulaire-css3-sans-image-sans-javascript">Brands up Developement</a>.</p>
+            <a href="http://www.brands-up.com/">Brands up Developement</a>.</p>
     </body>
 </html>

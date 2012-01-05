@@ -17,7 +17,7 @@
 /* Webshop field names */
 
 // Change this according to your module folder name. 
-$lang['webshop_shop_name'] = 'CI shop';
+$lang['webshop_shop_name'] = 'Cherub Defense Warehouse';
 $lang['webshop_folder'] = 'webshop';
 $lang['webshop_buy'] = 'BUY';
 

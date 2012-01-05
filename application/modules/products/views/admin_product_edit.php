@@ -16,9 +16,12 @@
             echo form_input($data) . "</p>\n";
 
             echo "<p><label for='short'>Short Description</label><br/>\n";
-            $data = array('name' => 'shortdesc', 'product_id' => 'short', 'rows' => 5, 'cols' => '80', 'value' => $product['shortdesc']);
-            echo form_textarea($data) . "</p>\n";
+            //$data = array('name' => 'shortdesc', 'product_id' => 'short', 'rows' => 5, 'cols' => '80', 'value' => $product['shortdesc']);
+            //echo form_textarea($data) . "</p>\n";
             ?>
+            <textarea name="shortdesc" rows="5" cols="80" id="shortdesc"><?=$product['shortdesc']?></textarea></p>
+            You have <span id="charsLeft"></span> chars left.
+        
             <a href="javascript:toggleEditor('short');">Add/Remove editor</a><br /><br />
             <?php
             echo "<p><label for='long'>Long Description</label><br/>\n";

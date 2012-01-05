@@ -5,7 +5,7 @@
 
     <?php
     $data = lang('orders_go_to_cart');
-    echo anchor("/cart", $data);
+    echo anchor("webshop/cart", $data);
     ?>.</p>
 <?php
     if ($this->data['customer_status'] == 0) {

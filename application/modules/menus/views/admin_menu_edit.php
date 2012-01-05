@@ -14,7 +14,7 @@ echo "<p><label for='page_uri'>Page you want to show.(URI)</label><br/>\n";
 echo form_dropdown('page_uri',$pages, $menu['page_uri']) ."</p>\n";
 
 echo "<p><label for='page_uri'>Create Own Link (URL)</label><br/>\n";
-$data = array('name'=>'own_url','menu_id'=>'short','size'=>40);
+$data = array('name'=>'own_url','menu_id'=>'short','size'=>40, 'value' => $menu['page_uri']);
 echo form_input($data) ."</p>\n";
 
 echo "<p><label for='status'>Status</label><br/>\n";

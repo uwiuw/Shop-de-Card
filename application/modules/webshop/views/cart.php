@@ -52,7 +52,7 @@ else:
         <p><?php echo form_submit('', 'Update your Cart');
                 echo anchor('webshop/empty_cart', 'Empty Cart', 'class="empty"'); ?></p>
             <p><small>If the quantity is set to zero, the item will be removed from the cart.</small></p>
-            <h2><a href="<?=site_url()?>webshop/checkout">Go To Checkout</a></h2>
+            <h2><a href="<?=site_url()?>/webshop/checkout">Go To Checkout</a></h2>
 <?php
                 echo form_close();
             endif;
