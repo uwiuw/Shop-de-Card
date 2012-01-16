@@ -58,6 +58,7 @@ a:active {text-decoration: none;}  /* selected link */
 }
 .my_account{
     font-weight: bold;
+    margin-right: 10px;
     font-style: italic;
 }
 .my_account a:link, .my_account a:visited{
@@ -89,6 +90,9 @@ a:active {text-decoration: none;}  /* selected link */
 .shop_cart{
     width: 295px;
     margin-top: 30px; 
+}
+.popup{
+    text-align: center;
 }
 .total_price{
     color: red;
@@ -399,8 +403,6 @@ p.p_desc{
     height: 200px;
 }
 
-
-
 /*Links navigation*/
 li a{
     text-decoration: none;
@@ -409,13 +411,21 @@ li a{
     /* The navigation menu bar: */
     float:left;
     color: white;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border-left: 1px solid #000;
-    border-right: 1px solid #DDD;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-left: 1px solid #8C8C8C;
+    border-right: 1px solid #000;
     width: 325px;
-    margin: 0px auto ;
+    height: 250px;
     text-transform: uppercase;
+}
+.links:first-child{
+    border-right: 1px solid #000;
+    border-left: none;
+}
+.links:last-child{
+    border-left: 1px solid #8C8C8C;
+    border-right: none;
 }
 
 .links p{

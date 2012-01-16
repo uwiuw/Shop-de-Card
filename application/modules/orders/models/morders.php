@@ -251,7 +251,6 @@ class Morders extends CI_Model {
         $this->db->set('order_date', 'NOW()', FALSE);
         $this->db->insert('order', $data);
         $order_id = $this->db->insert_id();
-        $cart = $_SESSION['cart'];
          foreach ($this->cart->contents() as $items){
             $data = array(
                 'order_id' => $order_id,

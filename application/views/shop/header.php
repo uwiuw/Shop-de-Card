@@ -11,7 +11,7 @@
     <!--logo-->
     <div id="logo">
         <div class="cart">
-            <div class="shop_cart"><a href="<?= site_url('webshop/cart/') ?>" >your cart</a> <div class="total_price">$ <?= $this->cart->format_number($this->total_cart) ?></div></div>
+            <div class="shop_cart"><a href="<?= site_url('/webshop/cart/') ?>" >your cart</a> <div class="total_price">$ <?= $this->cart->format_number($this->total_cart) ?></div></div>
         </div>
         <div class="phone"></div>
         <a href="<?= site_url() ?>"><img src="<?= img_dir() ?>cherub_logo.png" width="675" height="149" /></a>
@@ -19,7 +19,7 @@
 
     <!--search bar-->
     <div id="search_bar">
-        <form  method="post" name="search" action="<?= site_url() ?>webshop/search/"  id="searchform">
+        <form  method="post" name="search" action="<?= site_url() ?>/webshop/search/"  id="searchform">
             <div class="search">Search 
                 <input type="text" name="term" id="search" class="searching"/>
                 <input type="submit" name="submit"  value="Go" />

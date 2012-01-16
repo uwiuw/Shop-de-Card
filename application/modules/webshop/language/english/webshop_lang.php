@@ -135,7 +135,7 @@ $lang['orders_email_order'] = "Email Order";
 
 
 /*ordersuccess.php */
-$lang['orders_thank_you'] = "Thank you for your order! We will get in touch as soon as possible. Please check your email. We have sent confirmation email.";
+$lang['orders_thank_you'] = "Thank you for your order! We will get in touch as soon as possible. Please check your email. We have sent confirmation email And will you pay via Paypal?.";
  
  
 /* controllers/webshop/emailorder*/

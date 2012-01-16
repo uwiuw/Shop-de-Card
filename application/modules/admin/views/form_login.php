@@ -4,8 +4,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
         <title>Cherub Defense Warehouse Admin Backend</title>
         <link rel="stylesheet" type="text/css" href="<?= css_dir() ?>login.css" media="screen" title="bbxcss" />
-        <style type="text/css">
-        </style>
     </head>
     <body>
         <p class="live"><a href="<?= site_url() ?>">&laquo; Live Site</a></p>
@@ -19,23 +17,15 @@
                 <label for="password">Password</label>
                 <input id="password" name="password" type="password" />
             </p>
-            <p>
-                <?php
-                if ($this->session->flashdata('message')) {
-                    echo $this->session->flashdata('message');
-                } ?>
-
-            </p>
+            <?php
+            if ($this->session->flashdata('message')) {
+                echo "<p><div class='msg'>*" . $this->session->flashdata('message') . '</div></p>';
+            } ?>
             <p>
                 <input type="submit" value="Submit" name="submit" class="submit" />
             </p>
-            <div id="finish">
-                <p>
-			Cherub Admin Backend
-                </p>
-            </div>
         </form>
         <p id="credits">Cherub Defense Admin Backend .<br />
-            <a href="http://www.brands-up.com/">Brands up Developement</a>.</p>
+            <a href="http://www.brands-up.com">Brands up Developement</a>.</p>
     </body>
 </html>

@@ -48,13 +48,18 @@ class MCustomers extends CI_Model {
         return $this->db->get('customer');
     }
 
-    function signUp(){
+    function getPassword($email) {
+        $data = $this->db->get_where('customer', array("email " => $email));
+        return $data->row();
+    }
+
+    function newsletter() {
         $data = array(
-                'customer_first_name' => db_clean($_POST['customer_first_name'], 25),
-                 'email' => db_clean($_POST['email'], 50),
-                'password' => db_clean($_POST['password'], 100)
+            'name' => db_clean($_POST['first_name'], 25),
+            'email' => db_clean($_POST['email'], 50),
+            'zip_code' => db_clean($_POST['zip_code'], 100)
         );
-        $this->db->insert('customer',$data);
+        $this->db->insert('newsletter', $data);
     }
 
     function addCustomer() {
@@ -70,6 +75,18 @@ class MCustomers extends CI_Model {
         );
         //print_r($data);exit;
         $this->db->insert('customer', $data);
+    }
+
+    function checkNewsletter($e) {
+        $this->db->select('id_newsletter');
+        $this->db->where('email', db_clean($e));
+        $this->db->limit(1);
+        $Q = $this->db->get('newsletter');
+        if ($Q->num_rows() > 0) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
     }
 
     function checkCustomer($e) {
@@ -156,6 +173,15 @@ class MCustomers extends CI_Model {
             $this->db->where('id', id_clean($id));
             $this->db->update('admin', $data);
         }
+    }
+
+    // Function change poassword
+
+    function changePassword() {
+        
+        $data = array('password' => db_clean($_POST['password']));
+        $this->db->where('email', $data['email']);
+        $this->db->update('customer', $data);
     }
 
 }

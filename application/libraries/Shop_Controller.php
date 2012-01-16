@@ -37,12 +37,11 @@ class Shop_Controller Extends CI_Controller {
         // For customer login status
         if (isset($_SESSION['customer_first_name'])) {
             $this->data['customer_status'] = 1;
-            $this->data['loginstatus'] = lang('general_hello') . $_SESSION['customer_first_name'] . ". " . lang('general_logged_in') . "</a>
+            $this->data['loginstatus'] = lang('general_hello') . $_SESSION['customer_first_name'] . " | " . lang('general_logged_in') . "</a>
 			<a href=" . site_url() . '/webshop' . "/logout \">Log out</a>";
         } else {
             $this->data['customer_status'] = 0;
-            $this->data['loginstatus'] = "You are not logged in. <a href=" . site_url() . '/webshop' . "/login \">" . lang('general_login') . "</a>
-                <a href=" . site_url() . '/webshop' . "/registration \">" . lang('general_register') . "</a>";
+            $this->data['loginstatus'] = "<a href='" . site_url() . "/webshop/login' >You are not logged in.</a> | <a href=" . site_url() . '/webshop/login' . "/registration \">My Account</a>";
         }
         // Total price will be displayed
         // handlekurv means shopping cart in Norwegian
@@ -52,6 +51,11 @@ class Shop_Controller Extends CI_Controller {
             $this->data['handlekurv'] = $_SESSION['totalprice'];
         } else {
             $this->data['handlekurv'] = 0;
+        }
+
+        if ($this->uri->segment(2) != 'login') {
+            $last_url = str_replace(site_url(), '', current_url());
+            $_SESSION['last_url_shop'] = $last_url;
         }
     }
 

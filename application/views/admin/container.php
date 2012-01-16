@@ -38,7 +38,7 @@
 
                 </p>
 
-                <p class="f-right">User: <strong><a href="#"><?=$_SESSION['ca_username']?></a></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><a href="<?=site_url()?>/admin/logout" id="logout">Log out</a></strong></p>
+                <p class="f-right">User: <strong><a href="#"><?= $_SESSION['ca_username'] ?></a></strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong><a href="<?= site_url() ?>/admin/logout" id="logout">Log out</a></strong></p>
 
             </div> <!--  /tray -->
 
@@ -58,7 +58,7 @@
                     <div class="padding box">
 
                         <!-- Logo (Max. width = 200px) -->
-                        <p id="logo"><a href="<?php echo site_url(); ?>"><img src="<?php echo backend_img_dir(); ?>/cherub.png" alt="Our logo" title="Visit Site" /></a></p>
+                        <p id="logo"><a href="<?php echo site_url(); ?>" target="_blank"><img src="<?php echo backend_img_dir(); ?>/cherub.png"  alt="Our logo" title="Visit Site" /></a></p>
 
                         <!-- Search -->
                         <form action="#" method="get" id="search">
@@ -84,29 +84,29 @@
 
 
                     </div> <!-- /padding -->
+                    <?php
+                    $check_url = $this->uri->segment(1);
+                    $current_url = current_url();
+                    $active = 'id="submenu-active"';
+                    ?>
 
                     <ul class="box">
-                        <li><a href="#">Lorem ipsum</a></li>
-                        <li><a href="#">Lorem ipsum</a></li>
-                        <li><a href="#">Lorem ipsum</a></li>
-                        <li id="submenu-active"><a href="#">Active Page</a> <!-- Active -->
-                            <ul>
+                        <li <?php echo $check_url =='users'?$active:''?>><a href="<?php echo site_url(); ?>/users">Users</a></li>
+                        <li <?php echo $check_url =='products'?$active:''?>><a href="<?php echo site_url(); ?>/products">Products</a></li>
+                        <li <?php echo $check_url =='categories'?$active:''?>><a href="<?php echo site_url(); ?>/categories">Categories</a></li>
+                        <li <?php echo $check_url =='customers'?$active:''?>><a href="<?php echo site_url(); ?>/customers">Customers</a></li>
+                        <li <?php echo $check_url =='orders'?$active:''?>><a href="<?php echo site_url(); ?>/orders">Orders</a></li>
+
+                        <!-- For new Orders -->
+                        <ul>
                                 <li><a href="#">Lorem ipsum</a></li>
                                 <li><a href="#">Lorem ipsum</a></li>
                                 <li><a href="#">Lorem ipsum</a></li>
                                 <li><a href="#">Lorem ipsum</a></li>
                                 <li><a href="#">Lorem ipsum</a></li>
                             </ul>
-                        </li>
-                        <li><a href="#">Lorem ipsum</a></li>
-                        <li><a href="#">Lorem ipsum</a>
-                            <ul>
-                                <li><a href="#">Lorem ipsum</a></li>
-                                <li><a href="#">Lorem ipsum</a></li>
-                                <li><a href="#">Lorem ipsum</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="#">Lorem ipsum</a></li>
+                        <li <?php echo $check_url =='menus'?$active:''?>><a href="#">Menu</a></li>
+                        <li <?php echo $check_url =='pages'?$active:''?>><a href="#">Pages</a></li>
                     </ul>
 
                 </div> <!-- /aside -->
@@ -125,9 +125,9 @@
                     <!-- Footer -->
                     <div id="footer" class="box">
 
-                        <p class="f-left">&copy; 2009 <a href="#">Your Company</a>, All Rights Reserved &reg;</p>
+                        <p class="f-left">&copy; <?=date('Y'); ?> <a href="#">Cherub Defense</a>, All Rights Reserved &reg;</p>
 
-                        <p class="f-right">Templates by <a href="http://www.adminizio.com/">Adminizio</a></p>
+                        <p class="f-right">Developed by <a href="http://www.brands-up.com/">Brands Up</a></p>
 
                     </div> <!-- /footer -->
 

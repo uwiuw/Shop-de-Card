@@ -191,6 +191,30 @@ class Webshop extends Shop_Controller {
         }
     }
 
+    /*
+     * forgot password send to email 
+     */
+    function forgot_pass(){
+        $email = $this->input->post('email_req');
+
+        
+        if(isset($email)){
+            $data = $this->mcustomers->getPassword($email);
+            
+            $this->load->library('email');
+
+            $this->email->from('admin@cherubdefense.com', 'Cherub Defense');
+            $this->email->to('coder5@ymail.com');
+
+            $this->email->subject('Cherub Defense Forgot Password');
+            $this->email->message('Try to reset your pass by clicking this link.');
+
+            $this->email->send();
+
+            echo $this->email->print_debugger();
+        }
+    }
+    
     function registration() {
         /* If you are using recaptcha, don't forget to configure modules/recaptcha/config/recaptcha.php
          * Add your own key
@@ -276,7 +300,11 @@ class Webshop extends Shop_Controller {
                 //$this->session->set_flashdata('info', lang('success'));
                 flashMsg('message', 'Success login');
                 //echo 'success';exit;
-                redirect(lang('webshop_folder') . '/', 'refresh');
+                if(isset($_SESSION['last_url_shop'])){
+                    $last_url = $_SESSION['last_url_shop'];
+                }
+
+                redirect($last_url, 'refresh');
             }
             //echo 'failed';exit;
             flashMsg('message', 'Login incorrect');
@@ -298,14 +326,13 @@ class Webshop extends Shop_Controller {
         redirect(lang('webshop_folder') . '/index', 'refresh');
     }
 
-    function sign_up(){
+    function newsletter(){
         $data['title'] = lang('webshop_shop_name') . " | " . "Registration";
         $email = $this->input->post('email');
         $rules = array(
         array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|valid_email'),
-        array('field' => 'emailconf', 'label' => 'Email Confirmation', 'rules' => 'trim|required|matches[emailconf]|valid_email'),
-        array('field' => 'customer_first_name', 'label' => 'First Name', 'rules' => 'trim|required|'),
-        array('field' => 'password', 'label' => 'Password', 'rules' => 'trim|required|md5'),
+        array('field' => 'first_name', 'label' => 'First Name', 'rules' => 'trim|required|'),
+        array('field' => 'zip_code', 'label' => 'Zip Code', 'rules' => 'trim|required|numeric'),
         //array('field' => 'passconf', 'label' => 'Password Confirmation', 'rules' => 'trim|required|matches[passconf]|md5')
          );
 
@@ -313,21 +340,21 @@ class Webshop extends Shop_Controller {
         // run form_validation
         if ($this->form_validation->run() == FALSE) {
             $data['module'] = lang('webshop_folder');
-            $this->template->load($this->_container, 'registration', $data);
+            $this->template->load($this->_container, 'frontpage', $data);
         } else {
-            $numrow = $this->mcustomers->checkCustomer($email);
+            $numrow = $this->mcustomers->checkNewsletter($email);
             if ($numrow == TRUE) {
                 // you have registered before, set the message and redirect to login page.
                 flashMsg('message', lang('webshop_registed_before'));
-                $this->template->load($this->_container, 'registration', $data);
+                $this->template->load($this->_container, 'webshop', $data);
                 // $this->session->set_flashdata('msg', lang('webshop_registed_before'));
                 //redirect(lang('webshop_folder') . '/login', 'refresh');
             } else {
                 // a customer is new, so create the new customer, set message and redirect to login page.
-                $this->mcustomers->signUp();
+                $this->mcustomers->newsletter();
                 flashMsg('message', lang('webshop_thank_registration'));
                 // $this->session->set_flashdata('msg', lang('webshop_thank_registration'));
-                redirect(lang('webshop_folder') . '/login');
+                redirect(lang('webshop_folder') . '/index');
             }
         }
          
@@ -425,6 +452,7 @@ class Webshop extends Shop_Controller {
         $data['cart'] = 'cart';
         $data['title'] = 'Your Shopping Cart';
         $this->template->load($this->_container, 'cart', $data);
+        //$this->load->view('cart',$data);
     }
 
     /*
@@ -525,31 +553,7 @@ class Webshop extends Shop_Controller {
         }
     }
 
-    function checkout() {
-
-        // $this->morders->verifyCart();
-        //$data['main'] = 'webconfirmorder';// this is using views/confirmaorder.php
-        $data['title'] = lang('webshop_shop_name') . " | " . "Order Confirmation";
-
-
-        $shippingprice = $this->shippingprice();
-        $data['shippingprice'] = $shippingprice['shippingprice'];
-
-        $data['grandtotal'] = 0;
-        //echo $_SESSION['phone_number'];exit;
-        if (isset($_SESSION['customer_id'])) {
-            $data['fname'] = $_SESSION['customer_first_name'];
-            $data['lname'] = $_SESSION['customer_last_name'];
-            $data['telephone'] = $_SESSION['phone_number'];
-            $data['email'] = $_SESSION['email'];
-            $data['address'] = $_SESSION['address'];
-            $data['city'] = $_SESSION['city'];
-            $data['pcode'] = $_SESSION['post_code'];
-        }
-
-        $data['module'] = lang('webshop_folder');
-        $this->template->load($this->_container, 'confirmorder', $data);
-    }
+    
 
     function search($search_url=NULL) {
         /**
@@ -595,34 +599,43 @@ class Webshop extends Shop_Controller {
         $this->template->load($this->_container, 'webtemplate', $data);
     }
 
+    function checkout() {
+
+        // $this->morders->verifyCart();
+        //$data['main'] = 'webconfirmorder';// this is using views/confirmaorder.php
+        $data['title'] = lang('webshop_shop_name') . " | " . "Order Confirmation";
+
+
+        $totalprice = $this->cart->total();
+        //echo 'totaaaal ='.$totalprice;
+        $shippingprice = $this->shippingprice();
+        $grandtotal = (int) $totalprice + $shippingprice['shippingprice'];
+
+        $data['shippingprice'] = $shippingprice['shippingprice'];
+        if (isset($_SESSION['customer_id'])) {
+            $data['fname'] = $_SESSION['customer_first_name'];
+            $data['lname'] = $_SESSION['customer_last_name'];
+            $data['telephone'] = $_SESSION['phone_number'];
+            $data['email'] = $_SESSION['email'];
+            $data['address'] = $_SESSION['address'];
+            $data['city'] = $_SESSION['city'];
+            $data['pcode'] = $_SESSION['post_code'];
+
+
+        }
+        $data['grandtotal'] = 0;
+        //echo $_SESSION['phone_number'];exit;
+
+
+        $data['module'] = lang('webshop_folder');
+        $this->template->load($this->_container, 'confirmorder', $data);
+    }
+
     function emailorder() {
 
         $data['title'] = lang('webshop_shop_name') . " | " . "checkout";
 
-        // old way of form_validation, I hope Bep will update to CI 1.7.2
-        /*
-        $fields['customerr_first_name'] = lang('orders_first_name');
-        $fields['customerr_last_name'] = lang('orders_last_name');
-        $fields['telephone'] = lang('orders_mobile_tel');
-        $fields['email'] = lang('orders_email');
-        $fields['emaildonf'] = lang('orders_email_confirm');
-        $fields['shippingaddress'] = lang('orders_shipping_address');
-        $fields['city'] = lang('orders_post_code');
-        $fields['post_code'] = lang('orders_city');
-
-        $this->form_validation->set_rules($fields);
-
-        $rules['customer_first_name'] = 'trim|required|min_length[3]|max_length[20]';
-        $rules['customer_last_name'] = 'trim|required|min_length[3]|max_length[20]';
-        $rules['telephone'] = 'trim|required|min_length[8]|max_length[12]|numeric';
-        $rules['email'] = 'trim|required|matches[emailconf]|valid_email';
-        $rules['emailconf'] = 'trim|required|valid_email';
-        $rules['shippingaddress'] = 'required';
-        $rules['city'] = 'trim|required';
-        $rules['post_code'] = 'trim|required';
-
-        */
-
+        
         $rules = array(
             //array('field' => 'username', 'label' => 'Username', 'rules' => 'trim|required|min_length[5]|max_length[12]|xss_clean'),
             array('field' => 'email', 'label' => 'Email', 'rules' => 'trim|required|matches[emailconf]|valid_email'),
@@ -637,6 +650,7 @@ class Webshop extends Shop_Controller {
 
         $shippingprice = $this->shippingprice();
         $data['shippingprice'] = $shippingprice['shippingprice'];
+
 
         $this->form_validation->set_rules($rules);
         if ($this->form_validation->run() == FALSE) {
@@ -671,11 +685,11 @@ class Webshop extends Shop_Controller {
             // $shipping= 65;
             $shipping = $_SESSION['shippingprice'];
             $body .= "<table border='1' cellspacing='0' cellpadding='5' width='80%'><tr><td><b>" . lang('email_number_of_order') . "</b></td><td><b>" . lang('email_product_name') . "</b></td><td><b>" . lang('email_product_price') . "</b></td></tr>";
-            if (count($_SESSION['cart'])) {
+            if (count($this->cart->total())) {
                 $count = 1;
-                foreach ($_SESSION['cart'] as $PID => $row) {
+                foreach ($this->cart->contents() as $items) {
 
-                    $body .= "<tr><td><b>" . $row['count'] . "</b></td><td><b>" . $row['name'] . "</b></td><td><b>" . $row['price'] . "</b></td></tr>";
+                    $body .= "<tr><td><b>" . $items['qty'] . "</b></td><td><b>" . $items['name'] . "</b></td><td><b>" . $items['price'] . "</b></td></tr>";
                 }
             }
             $grandtotal = (int) $totalprice + $shipping;
@@ -717,53 +731,36 @@ class Webshop extends Shop_Controller {
     }
 
     function ordersuccess() {
-
-        $this->cart->destroy();
-        $data['title'] = lang('webshop_shop_name') . " | " . "Contact us";
-        $data['module'] = lang('webshop_folder');
-        $this->template->load($this->_container, 'ordersuccess', $data);
-    }
-
-    function form() {
-
-        $this->paypal_lib->add_field('business', 'coder5@ymail.com');
-        $this->paypal_lib->add_field('return', site_url('paypal/success'));
-        $this->paypal_lib->add_field('cancel_return', site_url('paypal/cancel'));
-        $this->paypal_lib->add_field('notify_url', site_url('paypal/ipn')); // <-- IPN url
+        $totalprice = $this->cart->total();
+        $shippingprice = $this->shippingprice();
+        $grandtotal = (int) $totalprice + $shippingprice['shippingprice'];
+        $this->paypal_lib->add_field('business', 'admin@cherubdefense.com');
+        $this->paypal_lib->add_field('return', site_url('webshop/success'));
+        $this->paypal_lib->add_field('cancel_return', site_url('webshop/cancel'));
+        $this->paypal_lib->add_field('notify_url', site_url('webshop/ipn')); // <-- IPN url
         $this->paypal_lib->add_field('custom', '1234567890'); // <-- Verify return
 
-        $this->paypal_lib->add_field('item_name', 'Paypal Test Transaction');
-        $this->paypal_lib->add_field('item_number', '6941');
-        $this->paypal_lib->add_field('amount', '197');
+        $this->paypal_lib->image('/assets/images/btn_paypal.gif');
+        $this->paypal_lib->add_field('item_name', 'Payment For Cherub Defense Items');
 
-        // if you want an image button use this:
-        $this->paypal_lib->image('button_03.gif');
+        foreach ($this->cart->contents() as $items) {
+           // $this->paypal_lib->add_field($items['name'], $items['price']);
+        }
+        $this->paypal_lib->add_field('amount', $grandtotal);
+
 
         // otherwise, don't write anything or (if you want to
         // change the default button text), write this:
         // $this->paypal_lib->button('Click to Pay!');
 
         $data['paypal_form'] = $this->paypal_lib->paypal_form();
-
-        $this->load->view('paypal/form', $data);
-    }
-
-    function auto_form() {
-        $this->paypal_lib->add_field('business', 'coder5@ymail.com');
-        $this->paypal_lib->add_field('return', site_url('paypal/success'));
-        $this->paypal_lib->add_field('cancel_return', site_url('paypal/cancel'));
-        $this->paypal_lib->add_field('notify_url', site_url('paypal/ipn')); // <-- IPN url
-        $this->paypal_lib->add_field('custom', '1234567890'); // <-- Verify return
-
-        $this->paypal_lib->add_field('item_name', 'Paypal Test Transaction');
-        $this->paypal_lib->add_field('item_number', '6941');
-        $this->paypal_lib->add_field('amount', '197');
-
-        $this->paypal_lib->paypal_auto_form();
+        $data['title'] = lang('webshop_shop_name') . " | " . "Contact us";
+        $data['module'] = lang('webshop_folder');
+        $this->template->load($this->_container, 'ordersuccess', $data);
     }
 
     function cancel() {
-        $this->load->view('paypal/cancel');
+        $this->template->load($this->_container, 'paypal/cancel');
     }
 
     function success() {
@@ -779,7 +776,7 @@ class Webshop extends Shop_Controller {
         // below).
 
         $data['pp_info'] = $this->input->post();
-        $this->load->view('paypal/success', $data);
+        $this->template->load($this->_container, 'paypal/success', $data);
     }
 
     function ipn() {

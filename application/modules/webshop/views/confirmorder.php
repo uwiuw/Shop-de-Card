@@ -1,4 +1,4 @@
-<?php //print displayStatus(); ?>
+<?php //print displayStatus();  ?>
 
 <h1><?php echo lang('orders_plz_confirm'); ?></h1>
 <p class="padnmgn"><?php echo lang('orders_confirm_before'); ?>
@@ -55,50 +55,50 @@
 
 <h3><?php echo lang('orders_last_name'); ?></h3>
 <input type="text" name="customer_last_name" value="<?php
-    if (isset($lname)) {
-        echo $lname;
-    } else {
-        echo set_value('customer_last_name');
-    }
+       if (isset($lname)) {
+           echo $lname;
+       } else {
+           echo set_value('customer_last_name');
+       }
 ?>" size="30" />
 
 <h3><?php echo lang('orders_mobile_tel'); ?></h3>
-    <input type="text" name="telephone" value="<?php
-    if (isset($telephone)) {
-        echo $telephone;
-    } else {
-        echo set_value('telephone');
-    }
+<input type="text" name="telephone" value="<?php
+       if (isset($telephone)) {
+           echo $telephone;
+       } else {
+           echo set_value('telephone');
+       }
 ?>" size="15" />
 
 <h3><?php echo lang('orders_email'); ?></h3>
-    <input type="text" name="email" value="<?php
-    if (isset($email)) {
-        echo $email;
-    } else {
-        echo set_value('email');
-    }
+<input type="text" name="email" value="<?php
+       if (isset($email)) {
+           echo $email;
+       } else {
+           echo set_value('email');
+       }
 ?>" size="40" />
 
-    <h3><?php echo lang('orders_email_confirm'); ?></h3>
-    <input type="text" name="emailconf" value="<?php
-    if (isset($email)) {
-        echo $email;
-    } else {
-        echo set_value('emailconf');
-    }
+<h3><?php echo lang('orders_email_confirm'); ?></h3>
+<input type="text" name="emailconf" value="<?php
+       if (isset($email)) {
+           echo $email;
+       } else {
+           echo set_value('emailconf');
+       }
 ?>" size="40" />
 
-    <h3><?php echo lang('orders_shipping_address'); ?></h3>
-    <input type="text" name="shippingaddress" value="<?php
-    if (isset($address)) {
-        echo $address;
-    } else {
-        echo set_value('shippingaddress');
-    }
+<h3><?php echo lang('orders_shipping_address'); ?></h3>
+<input type="text" name="shippingaddress" value="<?php
+       if (isset($address)) {
+           echo $address;
+       } else {
+           echo set_value('shippingaddress');
+       }
 ?>" size="50" />
 
-    <h3><?php echo lang('orders_post_code'); ?></h3>
+<h3><?php echo lang('orders_post_code'); ?></h3>
 <input type="text" name="post_code" value="<?php
        if (isset($pcode)) {
            echo $pcode;
@@ -107,7 +107,7 @@
        }
 ?>" size="8" />
 
-       <h3><?php echo lang('orders_city'); ?></h3>
+<h3><?php echo lang('orders_city'); ?></h3>
 <input type="text" name="city" value="<?php
        if (isset($city)) {
            echo $city;
@@ -116,7 +116,9 @@
        }
 ?>" size="20" />
 
-       <br />
        <input type="submit" name="submit" value="<?php echo lang('orders_email_order'); ?>" />
-
 <?php echo form_close(); ?>
+       <br />
+
+<?php //}?>
+

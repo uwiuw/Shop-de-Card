@@ -24,7 +24,8 @@ class User_model extends CI_Model {
      */
 
     function login($get_user) {
-        $sql = 'SELECT * FROM be_users WHERE email="' . $get_user['email'] . '" AND password="' . $this->encode_password($get_user['password']) . '" AND active="1"';
+        $password = sha1($get_user['password'].$this->config->item('encryption_key'));
+        $sql = 'SELECT * FROM be_users WHERE email="' . $get_user['email'] . '" AND password="' . $password . '" AND active="1"';
         $query = $this->db->query($sql);
         $data = $query->row();
         if (!empty($data)) {
@@ -36,7 +37,6 @@ class User_model extends CI_Model {
             $new_log['user_status'] = 'online';
             $new_log['last_visit'] = $_SESSION['ca_last_visit'];
             $new_log['login_failed'] = '0';
-
             //die(print_r($_SESSION));
             return TRUE;
         } else {
@@ -44,21 +44,8 @@ class User_model extends CI_Model {
         }
     }
 
-    function encode_password($string=NULL) {
-        $CI = &get_instance();
-        if ($string == NULL) {
-            return NULL;
-        }
-
-        // Append the salt to the password
-        $string .= $CI->config->item('encryption_key');
-
-        // Return the SHA-1 encryption
-        return sha1($string);
-    }
-
     public function is_activate($email) {
-        $query = $this->db->get_where('be_users', array('email' => $email));
+        $query = $this->db->get_where('be_users', array('email' => $email,'active'=>0));
         $data = $query->row();
         //echo $this->db->last_query();exit;
         if ($query->num_rows()) {

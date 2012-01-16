@@ -36,9 +36,11 @@ form{
     -moz-box-shadow:0 0 15px #aaa;
     -webkit-box-shadow:0 0 15px #aaa;
     margin:60px auto 0;
-    top:0;
+    top:50%;
+    left:50%;
     height: 100%;
     padding:20px;
+    padding-bottom:40px;
     width:440px;
 }
 h1{
@@ -181,4 +183,8 @@ a.submit:focus{
     font-size:11px;
     margin-top:20px;
     text-align:center;
+}
+.msg{
+    color: red;
+    text-align: center;
 }

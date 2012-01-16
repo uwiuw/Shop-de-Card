@@ -9,7 +9,7 @@ foreach ($images as $image) {
     $thumbnail = prod_thumb_dir() . $image['image_id'] . $image['extension'];
 ?>
 <div class="product_list">
-    <a href="<?= site_url('/webshop') .'/' .$image['product_id'] ?>">
+    <a href="<?= site_url('/webshop') .'/product/' .$image['product_id'] ?>">
         <img src='<?= $thumbnail ?>' border='0' class='thumbnail' width='118' height='150'/></a>
     <div class="product_desc"><?= $image['name'] . $image['shortdesc'] ?><div class="price_category">$ <?= $image['price']; ?></div>
         <div class="product_buy">

@@ -19,7 +19,7 @@ else:
         <?php $i = 1; ?>
         <?php foreach ($this->cart->contents() as $items): ?>
 
-
+            <?php echo form_hidden('rowid[]', $items['rowid']); ?>
             <tr id="item-<?= $items['id'] ?>" <?php
             if ($i & 1) {
                 echo 'class="alt" ';
@@ -34,7 +34,7 @@ else:
             <td><?php echo $items['price']; ?></td>
             <td><?php echo $items['subtotal']; ?></td>
 
-            <td><div class="del_item"><?php echo form_hidden('rowid[]', $items['rowid']); ?><input type="button" value="Delete" class="delete_item" name="delete_item" /><input type="hidden" name="id" value="<?= $items['id'] ?>" /></div></td>
+            <td><div class="del_item"><input type="button" value="Delete" class="delete_item" name="delete_item" /><input type="hidden" name="id" value="<?= $items['id'] ?>" /></div></td>
         </tr>
 
         <?php $i++; ?>

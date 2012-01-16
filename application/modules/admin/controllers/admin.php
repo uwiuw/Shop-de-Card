@@ -26,21 +26,16 @@ class Admin Extends Admin_Controller {
         if (isset($email)) {
             $data['email'] = strtolower($this->input->post('email', TRUE));
             $data['password'] = strtolower($this->input->post('password', TRUE));
-            // $get_user = $this->user_model->is_online($data);
             if ($this->user_model->login($data)) {
-                //echo 'correct';
                 if (isset($_SESSION['last_url'])) {
                     redirect($_SESSION['last_url']);
                 } else {
                     redirect('categories');
-                    //$this->redirect_logged();
                 }
             } elseif ($this->user_model->is_activate($email)) {
                 flashMsg('message', 'You cannot Acces, because your account is not Activated, Please Ask Admin to Activated it');
                 redirect('admin/index');
-                //echo 'You cannot Acces, because your account is not Activated, Please Ask Admin to Activated it';
             } else {
-                //echo 'Please type the correct username and password You have  failed';exit;
                 flashMsg('message', 'Please type the correct username and password You have  failed');
                 redirect('admin/index');
             }

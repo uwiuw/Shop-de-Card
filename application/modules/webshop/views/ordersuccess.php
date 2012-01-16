@@ -6,7 +6,11 @@ if ($this->session->flashdata('msg')){
 }
 ?>
 <h1>
-<?php
-echo lang('orders_thank_you');
-?>
+    <?php
+    echo lang('orders_thank_you');
+    ?>
+    <?php
+    //if(isset($_SESSION['email'])){
+    echo $paypal_form;
+    ?>
 </h1>
