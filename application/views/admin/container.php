@@ -12,12 +12,10 @@
         <link rel="stylesheet" media="screen,projection" type="text/css" href="<?php echo css_dir(); ?>style_backend.css" /> <!-- GRAPHIC THEME -->
         <link rel="stylesheet" media="screen,projection" type="text/css" href="<?php echo css_dir(); ?>mystyle.css" /> <!-- WRITE YOUR CSS CODE HERE -->
         <link rel="stylesheet" media="screen,projection" type="text/css" href="<?php echo css_dir(); ?>FlashStatus.css" /> <!-- WRITE YOUR CSS CODE HERE -->
+        <link rel="stylesheet" media="screen,projection" type="text/css" href="<?php echo css_dir(); ?>smoothness/jquery-ui-1.8.16.custom.css" /> <!-- WRITE YOUR CSS CODE HERE -->
         <script type="text/javascript" src="<?php echo js_dir(); ?>jquery-1.7.1.min.js"></script>
         <script type="text/javascript" src="<?php echo js_dir(); ?>jquery-ui-1.8.16.custom.min.js"></script>
         <script type="text/javascript" src="<?php echo js_dir(); ?>cherub.js"></script>
-        <script type="text/javascript">
-	
-        </script>
         <title><?= $title ?></title>
     </head>
     <body>
@@ -72,8 +70,8 @@
                                 <div id="search-options" style="display:none;">
 
                                     <p>
-                                        <label><input type="checkbox" name="" checked="checked" /> Option I.</label><br />
-                                        <label><input type="checkbox" name="" /> Option II.</label><br />
+                                        <label><input type="checkbox" name="" checked="checked" /> Option I.</label>
+                                        <label><input type="checkbox" name="" /> Option II.</label>
                                         <label><input type="checkbox" name="" /> Option III.</label>
                                     </p>
 
@@ -91,22 +89,22 @@
                     ?>
 
                     <ul class="box">
-                        <li <?php echo $check_url =='users'?$active:''?>><a href="<?php echo site_url(); ?>/users">Users</a></li>
-                        <li <?php echo $check_url =='products'?$active:''?>><a href="<?php echo site_url(); ?>/products">Products</a></li>
-                        <li <?php echo $check_url =='categories'?$active:''?>><a href="<?php echo site_url(); ?>/categories">Categories</a></li>
-                        <li <?php echo $check_url =='customers'?$active:''?>><a href="<?php echo site_url(); ?>/customers">Customers</a></li>
-                        <li <?php echo $check_url =='orders'?$active:''?>><a href="<?php echo site_url(); ?>/orders">Orders</a></li>
+                        <li <?php echo $check_url == 'users' ? $active : '' ?>><a href="<?php echo site_url(); ?>/users">Users</a></li>
+                        <li <?php echo $check_url == 'products' ? $active : '' ?>><a href="<?php echo site_url(); ?>/products">Products</a></li>
+                        <li <?php echo $check_url == 'categories' ? $active : '' ?>><a href="<?php echo site_url(); ?>/categories">Categories</a></li>
+                        <li <?php echo $check_url == 'customers' ? $active : '' ?>><a href="<?php echo site_url(); ?>/customers">Customers</a></li>
+                        <li <?php echo $check_url == 'orders' ? $active : '' ?>><a href="<?php echo site_url(); ?>/orders">Orders</a></li>
 
                         <!-- For new Orders -->
                         <ul>
-                                <li><a href="#">Lorem ipsum</a></li>
-                                <li><a href="#">Lorem ipsum</a></li>
-                                <li><a href="#">Lorem ipsum</a></li>
-                                <li><a href="#">Lorem ipsum</a></li>
-                                <li><a href="#">Lorem ipsum</a></li>
-                            </ul>
-                        <li <?php echo $check_url =='menus'?$active:''?>><a href="#">Menu</a></li>
-                        <li <?php echo $check_url =='pages'?$active:''?>><a href="#">Pages</a></li>
+                            <li><a href="#">Lorem ipsum</a></li>
+                            <li><a href="#">Lorem ipsum</a></li>
+                            <li><a href="#">Lorem ipsum</a></li>
+                            <li><a href="#">Lorem ipsum</a></li>
+                            <li><a href="#">Lorem ipsum</a></li>
+                        </ul>
+                        <li <?php echo $check_url == 'menus' ? $active : '' ?>><a href="#">Menu</a></li>
+                        <li <?php echo $check_url == 'pages' ? $active : '' ?>><a href="#">Pages</a></li>
                     </ul>
 
                 </div> <!-- /aside -->
@@ -125,7 +123,7 @@
                     <!-- Footer -->
                     <div id="footer" class="box">
 
-                        <p class="f-left">&copy; <?=date('Y'); ?> <a href="#">Cherub Defense</a>, All Rights Reserved &reg;</p>
+                        <p class="f-left">&copy; <?= date('Y'); ?> <a href="#">Cherub Defense</a>, All Rights Reserved &reg;</p>
 
                         <p class="f-right">Developed by <a href="http://www.brands-up.com/">Brands Up</a></p>
 
@@ -133,5 +131,10 @@
 
                 </div> <!-- /main -->
 
+                <div id="dialog-confirm" title="Delete this?">
+                    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+                        These items will be permanently deleted and cannot be recovered. Are you sure?
+                        <input type="hidden" name="id_delete" value="" /></p>
+                </div>
                 </body>
                 </html>

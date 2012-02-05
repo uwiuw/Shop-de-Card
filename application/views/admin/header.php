@@ -20,6 +20,7 @@ $active = 'id="menu-active"';
         <li <?php echo $check_url =='orders'?$active:''?>><a href="<?php echo site_url(); ?>/orders"><span>Orders</span></a></li>
         <li <?php echo $check_url =='menus'?$active:''?>><a href="<?php echo site_url(); ?>/menus"><span>Menu</span></a></li>
         <li <?php echo $check_url =='pages'?$active:''?>><a href="<?php echo site_url(); ?>/pages"><span>Pages</span></a></li>
+        <li <?php echo $check_url =='users'?$active:''?>><a href="<?php echo site_url(); ?>/users"><span>Users</span></a></li>
     </ul>
 
 </div> 

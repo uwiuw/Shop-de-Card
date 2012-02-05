@@ -1,3 +1,5 @@
 /nbproject/
 /assets/images/
+/assets/script/cache/
+/assets/script/tmp/
 /application/config/database.php

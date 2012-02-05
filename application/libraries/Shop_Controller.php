@@ -20,11 +20,9 @@ class Shop_Controller Extends CI_Controller {
         // navigation
         $cats = array();
         $cats = $this->mcats->getAllActiveCategories();
-        $nav = $this->mmenus->generateTree($nav, $parentid = 0);
         $this->categories = $cats;
-        $this->template->set('nav', $nav);
-        $this->nav_list = $nav;
-        $this->ext_links = $this->mmenus->getExtLinks();
+        $this->nav_list = $this->mmenus->getLinks($position="left");
+        $this->ext_links = $this->mmenus->getLinks($position="right");
         // Set Container Template
         $this->_container = 'shop/container';
         $this->_home = 'shop/home';
@@ -41,7 +39,7 @@ class Shop_Controller Extends CI_Controller {
 			<a href=" . site_url() . '/webshop' . "/logout \">Log out</a>";
         } else {
             $this->data['customer_status'] = 0;
-            $this->data['loginstatus'] = "<a href='" . site_url() . "/webshop/login' >You are not logged in.</a> | <a href=" . site_url() . '/webshop/login' . "/registration \">My Account</a>";
+            $this->data['loginstatus'] = "<a href='" . site_url() . "/webshop/login' >You are not logged in.</a> | <a href=\"" . site_url() . '/webshop/login' . "/registration \">My Account</a>";
         }
         // Total price will be displayed
         // handlekurv means shopping cart in Norwegian

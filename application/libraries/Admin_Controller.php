@@ -1,7 +1,7 @@
 <?php
 
 /*
- * A Website backend system
+ * A Website Admin backend system
  */
 
 class Admin_Controller Extends CI_Controller {
@@ -11,16 +11,11 @@ class Admin_Controller Extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        $this->load->helper('image_helper');
         $this->load->library('form_validation');
-        $this->load->model('admin/user_model');
         // Set Container Template
         $this->_container = 'admin/container';
-        $this->current = 1;
-        //print_r($_SESSION);
-    }
 
-    protected function check() {
+        // Admin Authentication
         $resource = $this->uri->segment(1);
         if (isset($_SESSION['ca_email'])) {
             $this->data['loginstatus'] = 1;

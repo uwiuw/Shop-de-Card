@@ -24,13 +24,23 @@ function img_dir() {
 function prod_dir() {
     return base_url() . 'assets/product/';
 }
-
+function timthumb($img,$h=NULL,$w=NULL){
+    $height = $h!=NULL?'&h='.$h:'';
+    $width = $w!=NULL?'&w='.$w:'';
+    return base_url() . 'assets/script/timthumb.php?src='.$img.$height.$width;
+}
 function prod_thumb_dir() {
     return base_url() . 'assets/product_thumb/';
 }
 
 function backend_img_dir() {
     return base_url() . 'assets/backend_img/';
+}
+
+function resize($image, $width, $height) {
+    $new_image = imagecreatetruecolor($width, $height);
+    imagecopyresampled($new_image, $image, 0, 0, 0, 0, $width, $height, imagesx($image), imagesy($image));
+    $image = $new_image;
 }
 
 function createfoldername($string) {
@@ -136,7 +146,7 @@ function id_clean($id, $size=11) {
 }
 
 function db_clean($string, $size=255) {
-    return xss_clean((substr($string, 0, $size)));
+    return htmlspecialchars(xss_clean((substr($string, 0, $size))));
 }
 
 function id_user() {

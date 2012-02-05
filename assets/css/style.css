@@ -22,6 +22,8 @@ body {
     font-family: Arial;
 }
 
+a {color:#0085cc;}
+a:hover, a:active, a:focus {color:#df0000;}
 a:link {text-decoration: none;}      /* unvisited link */
 a:visited {text-decoration: none;}  /* visited link */
 a:hover {text-decoration: none; color: #F9BB00;}  /* mouse over link */
@@ -165,6 +167,38 @@ input#search {
     text-transform:uppercase;
     font-size: 12pt;
 }
+#imageview{
+    height: 230px;
+}
+#imageview img{
+    float: left;
+    display: block;
+    padding: 20px;
+    border: 1px solid #CCCCCC;
+}
+#image{
+    float: left;
+    width: 300px;
+}
+#thumbnails{
+    display: block;
+}
+.prod_img{
+    display: block;
+    padding: 5px;
+    border: 1px solid #CCCCCC;
+    margin: 10px 15px 0 0;
+}
+.left_desc{
+    float: left;
+    width: 300px;
+}
+.long_desc{
+    display: block;
+    margin: 15px;
+    padding-top: 10px;
+    clear: both;
+}
 .categories_center{
     float:left;
     display: block;
@@ -231,6 +265,7 @@ p.client{
 ul.cat  {
     margin-top: 5px;
     margin-right: 5px;
+    list-style: none;
     padding: 0;
     color: #929292; 
     width: 230px;
@@ -253,9 +288,7 @@ ul.cat li {
     margin-right: 4px;
     border-top: 1px solid #c8c8c8;
 } 
-ol, ul{
-    list-style: none;
-}
+
 
 .main_product{
     float: left;
@@ -295,18 +328,15 @@ p.p_desc{
 }
 .products{
     float: left;
-    border:1px solid #000;
     width: auto;
     margin-left: 275px;
 }
 .product_list  {
+    text-align:center;
+    float:left;
     margin-top: 7px;
     margin-bottom: 7px;
     border-right:1px solid #000;
-    height:275px;
-    width:177px;
-    float:left;
-    text-align:center;
 }
 .product_list:last-child{
     border-right: none;
@@ -314,15 +344,14 @@ p.p_desc{
 }
 
 .product_list img {
-    display:inline;
-    width: 118px;
-    height: 150px;
+    display: block;
     margin:3px;
+    margin-left:20px;
     border:1px solid #ffffff;
 }
 .product_desc{
+    float: left;
     margin-left: 10px;
-    text-align:center;
     font-weight:normal;
     width:150px;
 }
@@ -363,7 +392,7 @@ p.p_desc{
     float: left;
     background-color: #fff;
     width: 1000px;
-    min-height: 261px;
+    min-height: 200px;
     margin-bottom: 20px;
 }
 .item_in{
@@ -420,11 +449,9 @@ li a{
     text-transform: uppercase;
 }
 .links:first-child{
-    border-right: 1px solid #000;
     border-left: none;
 }
 .links:last-child{
-    border-left: 1px solid #8C8C8C;
     border-right: none;
 }
 
@@ -458,11 +485,10 @@ li a{
     /* Styling the hyperlinks of the menu as buttons */
 
     font-weight:bold;
-    background:url(img/button_bg.jpg) repeat-x center bottom #666666;
+    background: #666666;
 
     /* display:block allows for additinal CSS rules to take effect, such as paddings: */
     display:block;
-    border:1px solid #4D4D4D;
     color:#CCCCCC;
     border-top-color:#565656;
 

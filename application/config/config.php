@@ -357,7 +357,15 @@ $config['rewrite_short_tags'] = FALSE;
 | Comma-delimited, e.g. '10.0.1.200,10.0.1.201'
 |
 */
+
 $config['proxy_ips'] = '';
+
+/*
+| Module Location
+*/ 
+$modules_location = '../modules';
+$config['modules_locations'] = array(APPPATH . $modules_location .'/' => '../'.$modules_location.'/'); 
+
 
 
 /* End of file config.php */

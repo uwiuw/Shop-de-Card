@@ -10,6 +10,37 @@ $(function() {
     });
 
 
+    $( "#dialog-confirm" ).dialog({
+        resizable: false,
+        autoOpen: false,
+        height:220,
+        modal: true,
+        buttons: {
+            "Delete": function() {
+
+               
+                var delete_link = $('input[name=id_delete]').val();
+                var data = $(":checkbox:checked").map(function(i,n)
+                {
+                    return $(n).val();
+                }).get();
+                $.post(delete_link,{
+                    'deleteCB[]': data
+                },
+                function(data){
+                    $(".status_box").html(data);
+                });
+                $(":checked").each(function() {
+                    $(this).parent().parent().remove()
+                });
+                $( this ).dialog( "close" );
+            },
+            Cancel: function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });
+
     $( "#forget_pass" ).dialog({
         autoOpen: false,
         height: 300,
@@ -35,12 +66,39 @@ $(function() {
         }
     });
 
-    $( ".forgot_pass" )
-    .click(function() {
-        $( "#forget_pass" ).dialog( "open" );
+    $('.tablesorter tr')
+    .filter(':has(:checkbox:checked)')
+    .addClass('selected')
+    .end()
+    .click(function(event) {
+        if (event.target.type !== 'checkbox') {
+            $(':checkbox', this).trigger('click');
+        }
+    })
+    .find(':checkbox')
+    .click(function(event) {
+        $(this).parents('tr:first').toggleClass('selected');
+    });
+
+    $("#selectAll").click(function()
+    {
+        var checked_status = this.checked;
+        $('input[name="deleteCB[]"]').each(function()
+        {
+            this.checked = checked_status;
+        });
+    });
+    
+    $(".del_selected").click(function(){
+        //alert($(this).attr("href"));
+        $('input[name=id_delete]').val($(this).attr("href"));
+        $( "#dialog-confirm" ).dialog("open");
+        return false;
     });
 });
-
+function removeRow(trId){
+    $('#' + trId).remove();
+}
 // Close dialog on buy
 function closeDialog(){
     $('.popup').dialog('close');
@@ -82,7 +140,10 @@ $(document).ready(function() {
         $( "#forgot_pass" ).dialog('open');
     });
 
-    
+
+    $('#thumbnails').simplethumbs({
+        slideshow: '#imageview'
+    });
     // buy / add to shopping cart
     $(".product_buy").click(function() {
         // Get the product ID and the quantity

@@ -14,20 +14,23 @@ body {background-color:#eaeaea; color:#303030;}
 a {color:#0085cc;}
 a:hover, a:active, a:focus {color:#df0000;}
 #content h2 {color:#0085cc;}
+#content dl dt {color:#df0000;}
+#content fieldset {border:1px solid #ccc;}
+
+#content legend {background:#FFF; color:#0085cc;}
+#content acronym, #content abbr, #content .help {border-bottom:1px dotted #cfcfcf;}
+/*
 #content table {border:2px solid #cfcfcf;}
 #content table th {border-right:1px solid #0074B3; background-color:#0085cc; color:#fff;}
 #content table td {border:1px solid #cfcfcf;}
 #content table tr.bg td {background-color:#e8f6ff;}
-#content dl dt {color:#df0000;}
-#content fieldset {border:1px solid #ccc;}
-#content legend {background:#FFF; color:#0085cc;}
-#content acronym, #content abbr, #content .help {border-bottom:1px dotted #cfcfcf;}
 
-/* =============================================================================
+/*=============================================================================
 HTML - without styles
 ============================================================================= */
-
+label {  display:block; }
 table.nostyle th, dl.nostyle dt {color:#303030 !important;}
+.selected td {background-color: #990000;color: white;}
 
 /* =============================================================================
 LAYOUT
@@ -81,5 +84,6 @@ MESSAGES
 .msg.warning {border:2px solid #F2DD8C; background-color:#FFF5CC;}
 .msg.warning a {color:#df0000;} .msg.warning a:hover, .msg.warning a:active, .msg.warning a:focus {color:#303030;}
 .msg.info {border:2px solid #B8E2FB; background-color:#E8F6FF;}
+.message {border:2px solid #B8E2FB; background-color:#E8F6FF;}
 .msg.done {border:2px solid #BBDF8D; background-color:#EAF7D9;}
 .msg.error {border:2px solid #FFAEAE; background-color:#FEEBEB;}

@@ -24,7 +24,8 @@ a{
     text-decoration:underline;
 }
 .live {
-    left:10px; position:absolute; top:10px;
+    left:10px; position:absolute; top:10px; display: block;
+    z-index: 1;
 }
 form{
     background:#f7f7f7;
@@ -35,13 +36,14 @@ form{
     -webkit-border-radius:10px;
     -moz-box-shadow:0 0 15px #aaa;
     -webkit-box-shadow:0 0 15px #aaa;
-    margin:60px auto 0;
+    z-index: 0;
+    margin: -160px 0 0 -230px;
+    position: absolute;
     top:50%;
     left:50%;
-    height: 100%;
+    height: 190px;
     padding:20px;
-    padding-bottom:40px;
-    width:440px;
+    width:400px;
 }
 h1{
     border-bottom:1px solid #ccc;
@@ -55,7 +57,7 @@ h1{
 form p{
     margin-bottom:20px;
 }
-form p:last-child{ /* S�lecteur avanc� pour s�lectionner le dernier paragraphe du formulaire */
+form p:last-child{ 
                    margin-bottom:0;
 }
 label{
@@ -124,6 +126,7 @@ a.submit{
     font-size:12px;
     font-weight:bold;
     margin-left:120px;
+    margin-bottom: 0px;
     padding:5px 10px;
     text-decoration:none;
     text-shadow:0 1px 1px #333;
@@ -181,7 +184,9 @@ a.submit:focus{
 }
 #credits{
     font-size:11px;
-    margin-top:20px;
+    top:80px;
+    position: relative;
+    display: block;
     text-align:center;
 }
 .msg{
